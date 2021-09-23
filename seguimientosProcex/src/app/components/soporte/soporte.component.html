@@ -1,0 +1,68 @@
+<div class="y-card" style="height: 100%; width: 100%;">
+    <div class="y-card-header">
+        <div class="row">
+            <div class="col-md-12" id="">
+                <button type="button" id="button" class="btn btn-secondary" (click)="open(content)"><i
+                        class="fas fa-file-alt"></i> Nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="y-card-body" style="overflow: hidden; padding: 5px;">
+        <p-table [value]="soporte" styleClass="p-datatable-sm " [scrollable]="true" scrollHeight="261px"
+            tableStyleClass="prime-table">
+            <ng-template pTemplate="header">
+                <tr tableStyleClass="header">
+                    <th style="width:90px;background-color: #02adb5e0; color: white;">Tipo Archivo<i class="fas fa-filter"
+                            style="cursor: pointer;"></i> </th>
+                    <th style="width:150px;background-color: #02adb5e0; color: white;">Nombre Archivo <i
+                            class="fas fa-filter" style="cursor: pointer;"></i> </th>
+                    <th style="width:110px;background-color: #02adb5e0; color: white;">Fecha creacion</th>
+                    <th style="width:100px;background-color: #02adb5e0; color: white;">Usuario creacion</th>
+                    <th style="width:100px;background-color: #02adb5e0; color: white;">Descargar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data>
+                <tr>
+                    <td style="width:90px">{{data.tipo_archivo}}</td>
+                    <td style="width:145px">{{data.nombre_archivo}}</td>
+                    <td style="width:118px">{{data.fecha_creacion | date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                    <td style="width:100px">{{data.usuario_creacion}}</td>
+                    <td style="width:80px"><i class="fas fa-download" style="cursor: pointer" (click)="(Descargarsoporte(data.PKId))"></i></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="y-card-footer" style="padding: 0px;">
+        <p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginador($event)"
+            [rowsPerPageOptions]="[5,10,20,30,50]"></p-paginator>
+    </div>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss" id="pagina">
+    <div class="modal-header" id="soporte">
+        <strong class="modal-title" id="modal-basic-title">Carga de soportes </strong>
+        <button type="button" class="close" id="cerrar" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <select name="tipo_archivo" id="" class="form-control" [(ngModel)]="tipo_archivo">
+                        <option value="">Seleccione tipo</option>
+                        <option value="Imagen">Imagen</option>
+                        <option value="PDF">Pdf</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input type="file"  accept="image/gif, image/png, image/jpeg, application/pdf"
+                        (change)="onphotoselected($event)">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

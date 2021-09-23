@@ -1,0 +1,96 @@
+<div class="y-card" style="height: 100%; width: 100%;">
+    <div class="y-card-header">
+        <div class="row">
+            <div class="col-md-12" id="">
+                <i class="fas fa-arrow-circle-left" (click)="redireccionar()" style="margin-top: 10px; margin-left: 15px; font-size: 25px; color: #02adb5e0;cursor: pointer;"></i>
+                <button id="button" type="button"  [disabled]="isReadonly" class="btn btn-success" (click)="cerrarcaso()">
+                    <i class="fas fa-folder-plus"> Cerrar caso</i>
+                </button>
+
+                <button id="button" type="button"  [disabled]="isReadonly" (click)="open(content)" class="btn btn-secondary">
+                    <i class="fas fa-folder-plus" > Nueva gestión</i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="y-card-body" style="overflow: hidden; padding: 5px;">
+
+        <p-table [value]="gestionSeguimiento" styleClass="p-datatable-sm " tableStyleClass="prime-table"
+            selectionMode="single" dataKey="code" (onRowSelect)="onRowSelect($event,contentUpdate)">
+            <ng-template pTemplate="header">
+                <tr tableStyleClass="header">
+                    <th style="background-color: #02adb5e0; color: white;">Fecha Creacion</th>
+                    <th style="background-color: #02adb5e0; color: white;">Usuario Creación</th>
+                    <th style="background-color: #02adb5e0; color: white;">Comentarios</th>
+                    <th style="background-color: #02adb5e0; color: white;">Soportes</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data>
+                <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente' }"
+                    [pSelectableRow]="data">
+                    <td>{{data.FECHA_CREACION | date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                    <td>{{data.USUARIO_CREACION}}</td>
+                    <td>{{data.Comentarios}}</td>
+                    <td [routerLink]="['/Soporte/'+data.ID_GESTION_SEGUIMIENTO]"><i class="fas fa-folder-open"></i></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="y-card-footer" style="padding: 0px;">
+        <p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginador($event)"
+            [rowsPerPageOptions]="[5,10,20,30,50]"></p-paginator>
+    </div>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Estado del seguimiento</h4>
+        <button type="button" class="btn btn-light" style="background: transparent; border: transparent;"
+            aria-label="Close" (click)="d('Cross click')">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div>
+                <label for="" class="form-label">Descripción:</label>
+                <textarea name="gestionseguimiento.DESCRIPCION"  [(ngModel)]="gestionseguimiento.DESCRIPCION" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" [disabled]="isReadonly" (click)="c('Save click')"
+            (click)="guardarGestion()"><i class="fas fa-save"></i> Guardar Gestion</button>
+    </div>
+</ng-template>
+
+<ng-template #contentUpdate let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Estado del seguimiento</h4>
+        <button type="button" class="btn btn-light" style="background: transparent; border: transparent;"
+            aria-label="Close" (click)="d('Cross click')">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                    <label for="" class="form-label">Descripción:</label>
+                    <textarea name="seguimiento2.DESCRIPCION" [disabled]="isReadonly" [(ngModel)]="seguimiento2.DESCRIPCION" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="col-md-6">
+                    <label for="" class="form-label">Comentarios:</label>
+                    <textarea name="seguimiento2.Comentarios"  [disabled]="isReadonly" [(ngModel)]="seguimiento2.Comentarios" class="form-control" rows="3"></textarea>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button"  [disabled]="isReadonly" class="btn btn-primary" (click)="c('Save click')"
+            (click)="editarSeguimiento()"><i class="fas fa-save"></i> Guardar Gestion</button>
+    </div>
+</ng-template>

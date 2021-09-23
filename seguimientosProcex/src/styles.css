@@ -1,0 +1,102 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.y-card{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+  .y-card-header{
+    order: 1;
+  }
+  .y-card-body{
+    flex-grow: 1;
+    order: 2;
+    overflow: initial;
+    margin: 0;
+  
+  }
+  .y-card-footer{
+    order: 3;
+    border-top: 1px solid rgb(204, 202, 202);
+    padding: 10px;
+    background-color: rgb(233, 232, 232);
+    
+  }
+  .prime-table{
+    text-align: center;
+    font-size: 11px;
+  }
+
+  .prime-table tbody tr td{
+    padding: 2px 0.5rem !important;
+  } 
+  .componenty .p-fileupload-buttonbar{
+    padding: 5px !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  
+  .componenty .p-fileupload-buttonbar .p-button{
+    /* width: 150px; */
+    padding: 5px !important;
+  }
+  
+  .componenty .p-fileupload-buttonbar .p-button .p-button-label{
+    font-size: 10px;
+  }
+  
+  .componenty .p-fileupload-buttonbar .p-button .p-button-icon{
+    font-size: 10px;
+  }
+  
+  .componenty .p-fileupload-content{
+    border: 2px dashed #4e92ce !important;
+    height: 30px;
+  }
+  .componenty .p-fileupload-content .ng-star-inserted .ng-star-inserted .ng-star-inserted{
+    background-color: rgb(144, 229, 238);
+    height: 100% !important;
+    width: 100%  !important ;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .componenty .p-fileupload-content .ng-star-inserted .ng-star-inserted .ng-star-inserted div:first-child{
+    display: none;
+  }
+
+  .componenty .p-fileupload-content .ng-star-inserted .ng-star-inserted .ng-star-inserted div{
+    font-size: 11px;
+  }
+  .componenty .p-fileupload-content .ng-star-inserted .ng-star-inserted .ng-star-inserted .p-button-icon-only{
+    background: #e04e4e;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    font-size: 12px;
+    border-color: #e04e4e;
+  }
+
+  .Porcentaje{
+    width: 72px;
+    height: 72px;
+    margin-top: 20px;
+    margin-left: 25px;
+  }
+  .p-datatable-sm{
+    height: 10px;
+}
+
+
+.cerrado{
+  background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%) !important;
+  color: aliceblue !important;
+}
+
+.pendiente{
+  background-image: linear-gradient(to top, #dcbf9b 0%, #eacda3 100%) !important;
+  color: floralwhite !important;
+}
