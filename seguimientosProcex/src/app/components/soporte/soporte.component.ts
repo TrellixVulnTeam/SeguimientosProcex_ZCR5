@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from '../../services/login/login.service'
 import { SoportesService } from '../../services/soportes/soportes.service'
-// import { saveAs } from 'file-saver'
+import { Router } from '@angular/router';
+import { saveAs } from 'file-saver'
 import Swal from 'sweetalert2';
 
 @Component({
@@ -28,7 +29,7 @@ export class SoporteComponent implements OnInit {
   page = 0;
   totalRecords
   constructor(config: NgbModalConfig, private modalService: NgbModal,
-    private loginservice: LoginService, activateRoute: ActivatedRoute,private SoporteService:SoportesService ) {
+    private loginservice: LoginService, activateRoute: ActivatedRoute,private SoporteService:SoportesService, private router: Router ) {
     config.backdrop = 'static';
     config.keyboard = false; this.usuario = this.loginservice.getCurrentUser(); this.ID_GESTION_SEGUIMIENTO = activateRoute.snapshot.params['id']
   }
@@ -80,18 +81,26 @@ export class SoporteComponent implements OnInit {
     })
   }
 
-  Descargarsoporte(PKId: string) {
-    // console.log(PKId)
-    // console.log('descarga')
-    // for (let i = 0; i < this.soporte.length; i++) {
-    //   if (PKId == this.soporte[i].PKId) {
-    //     const ruta = 'http://localhost:3000/' + this.soporte[i].Ruta_soporte
-    //     console.log(ruta)
-    //     saveAs(ruta)
-    //   }
-    // }
-
+  Descargarsoporte(ID_soporte: string) {
+    console.log(ID_soporte)
+    console.log('descarga')
+    for (let i = 0; i < this.soporte.length; i++) {
+      if (ID_soporte == this.soporte[i].ID_soporte) {
+        const ruta = 'http://localhost:3000/' + this.soporte[i].RUTA_SOPORTES
+        console.log(ruta)
+        saveAs(ruta)
+      }
+    }
   }
+
+  redireccionar() {
+    if (this.loginservice.isAnalistas || this.loginservice.isSoporte || this.loginservice.isDesarrollo) {
+      this.router.navigate(['/Seguimientos']);
+    }else{
+      this.router.navigate(['/Seguimientos-listar']);
+    }
+  }
+  
   paginador(event) {
     console.log(event);
     this.rows = event.rows;

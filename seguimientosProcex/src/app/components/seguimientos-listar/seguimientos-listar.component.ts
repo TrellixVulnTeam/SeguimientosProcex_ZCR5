@@ -52,7 +52,7 @@ export class SeguimientosListarComponent implements OnInit {
     USUARIO_CREACION: ''
   }
   constructor(private modalService: NgbModal, private seguimintoService: SeguimientosService, private listaComboSeguimientoService: ListacomboseguimientoService,
-    private usuarioService: UsuarioService, private router: Router, private gestionSeguimientoService: GestionSeguimientosService,private loginservice: LoginService,) {
+    private usuarioService: UsuarioService, private router: Router, private gestionSeguimientoService: GestionSeguimientosService,private loginservice: LoginService) {
       this.usuario = this.loginservice.getCurrentUser()
      }
 
