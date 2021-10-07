@@ -4,7 +4,7 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from "@angular/common";
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {BannerComponent} from './components/banner/banner.component';
 import { LoginComponent } from './components/login/login.component';
@@ -22,12 +22,16 @@ import {PaginatorModule} from 'primeng/paginator';
 import {FileUploadModule} from 'primeng/fileupload';
 import { KnobModule } from "primeng/knob";
 
+//graficos
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SeguimientosListarComponent } from './components/seguimientos-listar/seguimientos-listar.component';
 import { NgxUiLoaderModule } from  'ngx-ui-loader';
 import { SeguimientosPerfilComponent } from './components/seguimientos-perfil/seguimientos-perfil.component';
 import { GestionSeguimientosComponent } from './components/gestion-seguimientos/gestion-seguimientos.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
+import { InterceptorsService } from './services/interceptors/interceptors.service';
 
 
 @NgModule({
@@ -40,7 +44,8 @@ import { GestionSeguimientosComponent } from './components/gestion-seguimientos/
     UsuariosComponent,
     SoporteComponent,
     SeguimientosPerfilComponent,
-    GestionSeguimientosComponent
+    GestionSeguimientosComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +63,10 @@ import { GestionSeguimientosComponent } from './components/gestion-seguimientos/
     FileUploadModule,
     KnobModule,
     NgxUiLoaderModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxChartsModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard,{provide:HTTP_INTERCEPTORS,useClass:InterceptorsService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,60 +12,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registroControllers = void 0;
-const registro_1 = __importDefault(require("../dao/registro"));
-class RegistroControllers {
-    registrar(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var datos = yield registro_1.default.registrar(req.body);
-            res.json(datos);
-        });
-    }
-    crearUsuario(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var datos = yield registro_1.default.crearUsuario(req.body);
-            res.json(datos);
-        });
-    }
-    listarDatosUsuarios(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { usuario } = req.params;
-            const datos = yield registro_1.default.datosUsuario(usuario);
-            res.json(datos);
-        });
-    }
-    listarDatosRegistro(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const datos = yield registro_1.default.cargarRegistro();
-            res.json(datos);
-        });
-    }
-    listarResponsableSeguimiento(req, res) {
+exports.reportesControllers = void 0;
+const reportes_1 = __importDefault(require("../dao/reportes"));
+class ReportesControllers {
+    cargarReporteCasosPorPerfil(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { ID_PERFIL } = req.params;
-            const datos = yield registro_1.default.cargarResponsableSeguimiento(ID_PERFIL);
+            var datos = yield reportes_1.default.cargarReporteCasosPorPerfil(ID_PERFIL);
             res.json(datos);
         });
     }
-    cargarResponsableSeguimientoGest(req, res) {
+    cargarReportePerfilDesarrollo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const datos = yield registro_1.default.cargarResponsableSeguimientoGest();
+            const { ID_REGISTRO } = req.body;
+            var datos = yield reportes_1.default.cargarReportePerfilDesarrollo(ID_REGISTRO);
             res.json(datos);
         });
     }
-    eliminarRegistro(req, res) {
+    cargarReportePerfilAnalista(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { ID_REGISTRO } = req.params;
-            const datos = yield registro_1.default.eliminarRegistro(ID_REGISTRO);
+            const { ID_REGISTRO } = req.body;
+            var datos = yield reportes_1.default.cargarReportePerfilAnalista(ID_REGISTRO);
             res.json(datos);
         });
     }
-    eliminarUsuario(req, res) {
+    cargarReportePerfilSoporte(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { ID_REGISTRO } = req.params;
-            const datos = yield registro_1.default.eliminarUsuario(ID_REGISTRO);
+            const { ID_REGISTRO } = req.body;
+            var datos = yield reportes_1.default.cargarReportePerfilSoporte(ID_REGISTRO);
+            res.json(datos);
+        });
+    }
+    cargarReportePerfilAdminD(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var datos = yield reportes_1.default.cargarReportePerfilAdminD();
+            res.json(datos);
+        });
+    }
+    cargarReportePerfilAdminJ(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var datos = yield reportes_1.default.cargarReportePerfilAdminJ();
+            res.json(datos);
+        });
+    }
+    cargarReportePerfilCoordinadorSoporte(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var datos = yield reportes_1.default.cargarReportePerfilcoordinadorSoporte();
             res.json(datos);
         });
     }
 }
-exports.registroControllers = new RegistroControllers();
+exports.reportesControllers = new ReportesControllers();

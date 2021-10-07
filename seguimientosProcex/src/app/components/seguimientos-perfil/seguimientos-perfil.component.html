@@ -1,8 +1,33 @@
 <div class="y-card" style="height: 100%; width: 100%;">
     <div class="y-card-header">
         <div class="row">
-            <div class="col-md-12" id="">
-                <button id="button" type="button" (click)="formulario(content5)" class="btn btn-secondary">
+            <div class="col-md-6" id="">
+            </div>
+
+            <div class="col-md-3">
+                <div class="reporte" style=" float: right; margin-right: -192px;">
+                    <strong id="strong">Estado y totalidad de casos</strong>
+                    <table>
+                        <tr  *ngFor='let reporte of reporte'>
+                            <td>
+                                <button
+                                    style="background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%); color: white; border: none;">Realizado - {{reporte.Realizados}} </button>
+                            </td>
+                            <td>
+                                <button
+                                    style="border: none; background-image:linear-gradient(to top, #dcbf9b 0%, #eacda3 100%);  color: white;">Pendiente - {{reporte.Pendientes}}</button>
+                            </td>
+                            <td>
+                                <button style="border: none; background-color: whitesmoke; color: black;">En proceso - {{reporte.Proceso}} </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-3" id="">
+                <button id="button" style="margin-top: 20px;" type="button" (click)="formulario(content5)"
+                    class="btn btn-secondary">
                     <i class="fas fa-folder-plus"></i> Nuevo
                 </button>
             </div>
@@ -19,17 +44,17 @@
                             style="cursor: pointer;" (click)="filtroEps(content1)"></i></th>
                     <th style="background-color: #02adb5e0; color: white;">Fecha de requerimiento</th>
                     <th style="background-color: #02adb5e0; color: white;">Medio</th>
-                    <th style="background-color: #02adb5e0; color: white;">Tipo Requerimiento<i class="fas fa-filter"
+                    <th style="background-color: #02adb5e0; color: white;">T.Requerimiento<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroTiporequerimiento(content2)"></i></th>
                     <th style="background-color: #02adb5e0; color: white;">Titulo</th>
                     <th style="background-color: #02adb5e0; color: white;">Área validacion</th>
                     <th style="background-color: #02adb5e0; color: white;">Estado<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
                     <th style="background-color: #02adb5e0; color: white;">Fecha entrega</th>
-                    <th style="background-color: #02adb5e0; color: white;">Fecha Finalizacion</th>
+                    <th style="background-color: #02adb5e0; color: white;  width: 10%;">Fecha Finalizacion</th>
                     <th style="background-color: #02adb5e0; color: white;">Responsable<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroResponsable(content4)"></i> </th>
-
+                            <th style="background-color: #02adb5e0; color: white;">Asignar R.</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
@@ -43,8 +68,9 @@
                     <td>{{data.AREA_VALIDACION}}</td>
                     <td>{{data.ESTADO}}</td>
                     <td>{{data.FECHA_ENTREGA}}</td>
-                    <td>{{data.FECHA_FINALIZACION}}</td>
+                    <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
                     <td>{{data.Nombres}} - {{data.Apellidos}} </td>
+                    <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button" class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"  class="fas fa-user-plus"></i></button></td> 
                 </tr>
             </ng-template>
         </p-table>
@@ -142,26 +168,37 @@
                                         d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z" />
                                 </svg></span>
                         </div>
-                        <input type="date" class="form-control" name="seguimiento.FECHA_FINALIZACION"
+                        <input type="date" readonly="true" class="form-control" name="seguimiento.FECHA_FINALIZACION"
                             [(ngModel)]="seguimiento.FECHA_FINALIZACION" style="font-size: 12px;">
                     </div>
                 </div>
             </div>
             <div class="input-group mb-3">
                 <div class="col-md-5">
-                    <label style="font-size: 12px; color: black;">Categoría</label>
-                    <select name="" class="form-control" id="documento" name="seguimiento.Categoria"
-                        [(ngModel)]="seguimiento.Categoria" style="font-size: 12px;">
+                    <label style="font-size: 12px; color: black; margin-left: -21px;">Categoría</label>
+                    <select name="" class="form-control" id="documento"  name="seguimiento.Categoria"
+                        [(ngModel)]="seguimiento.Categoria" style="font-size: 12px; margin-left: -21px;">
                         <option *ngFor='let categoria of categoria'>
                             {{categoria.NOMBRE_OPCION}}
                         </option>
                     </select>
                 </div>
 
-                <div class="col-md-5" id="requerimiento">
-                    <label style="font-size: 12px; color: black;">Responsable</label>
+                <div class="col-md-2" id="">
+                    <label style="font-size: 12px; color: black; margin-left: 16px;">Área</label>
+                    <select name="" class="form-control" id="documento" name="seguimiento.ID_PERFIL"
+                        [(ngModel)]="seguimiento.ID_PERFIL" (click)="cargarResponsableSeguimiento()" style="font-size: 12px; margin-left: 16px;">
+                        <option *ngFor='let perfil of perfil'
+                            [ngValue]="perfil.ID_PERFIL">
+                            {{perfil.DESCRIPCION}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-3" id="">
+                    <label style="font-size: 12px; color: black; margin-left: 24px;">Responsable</label>
                     <select name="" class="form-control" id="documento" name="seguimiento.ID_REGISTRO"
-                        [(ngModel)]="seguimiento.ID_REGISTRO" style="font-size: 12px;">
+                        [(ngModel)]="seguimiento.ID_REGISTRO" style="font-size: 12px; margin-left: 24px;">
                         <option *ngFor='let responsableseguimiento of responsableseguimiento'
                             [ngValue]="responsableseguimiento.Nombres" [ngValue]="responsableseguimiento.ID_REGISTRO">
                             {{responsableseguimiento.Nombres}} - {{responsableseguimiento.Apellidos}}
@@ -193,7 +230,7 @@
                 class="fas fa-save" style="color: white; font-size: 12px;"></i>
             Guardar</button>
 
-        <button type="button" id="button" style="margin-left: -15px;" class="btn btn-secondary"> <i
+        <button type="button" (click)="nuevo()" id="button" style="margin-left: -15px;" class="btn btn-secondary"> <i
                 class="fas fa-file-alt" style="font-size: 12px;"></i>
             Nuevo</button>
     </div>
@@ -327,6 +364,30 @@
     </div>
     <div class="modal-footer">
         <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()"
+            (click)="d('Cross click')" style="margin-right: 4px;"></button>
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+            (click)="limpiarFiltros()" (click)="d('Cross click')"></button>
+    </div>
+</ng-template>
+
+<ng-template #content6 let-c="close" let-d="dismiss" id="pagina">
+    <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+                    <select name="" class="form-control" id="documento" name="ID_REGISTRO1"
+                    [(ngModel)]="ID_REGISTRO1" style="font-size: 12px;">
+                    <option *ngFor='let responsableseguimiento2 of responsableseguimiento2'
+                        [ngValue]="responsableseguimiento2.Nombres" [ngValue]="responsableseguimiento2.ID_REGISTRO">
+                        {{responsableseguimiento2.Nombres}} - {{responsableseguimiento2.Apellidos}}
+                    </option>
+                </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="asignarResponsable()"
             (click)="d('Cross click')" style="margin-right: 4px;"></button>
         <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
             (click)="limpiarFiltros()" (click)="d('Cross click')"></button>

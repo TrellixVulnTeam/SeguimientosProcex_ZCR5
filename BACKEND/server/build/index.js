@@ -13,6 +13,7 @@ const registroRoutes_1 = __importDefault(require("./Routes/registroRoutes"));
 const loginRoutes_1 = __importDefault(require("./Routes/loginRoutes"));
 const gestionSeguimientosRoutes_1 = __importDefault(require("./Routes/gestionSeguimientosRoutes"));
 const SoportesRoutes_1 = __importDefault(require("./Routes/SoportesRoutes"));
+const reportesRoutes_1 = __importDefault(require("./Routes/reportesRoutes"));
 const path_1 = __importDefault(require("path"));
 class Server {
     constructor() {
@@ -34,6 +35,7 @@ class Server {
         this.app.use('/api/registrar', registroRoutes_1.default);
         this.app.use('/api/login', loginRoutes_1.default);
         this.app.use('/api/gestionseguimiento', gestionSeguimientosRoutes_1.default);
+        this.app.use('/api/reportes', reportesRoutes_1.default);
         this.app.use('/api/soportes', SoportesRoutes_1.default);
         this.app.use('/soportes', express_1.default.static(path_1.default.resolve('soportes')));
     }

@@ -13,6 +13,7 @@ class SeguimientosRoutes {
         this.router.post('/almacenar', seguimientosControllers.guardarDatos);
         this.router.put('/:ID_SEGUIMIENTOS', seguimientosControllers.actualizarSeguimiento);
         this.router.get('/', seguimientosControllers.getNumeroRegistro);
+        this.router.get('/:ID_SEGUIMIENTOS', seguimientosControllers.cargarSeguimeintos);
     }
 }
 

@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100% !important}
 body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 .y-card{
     display: flex;
     flex-direction: column;
@@ -13,7 +14,7 @@ body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-
   .y-card-body{
     flex-grow: 1;
     order: 2;
-    overflow: initial;
+    overflow: auto;
     margin: 0;
   
   }
@@ -99,4 +100,9 @@ body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-
 .pendiente{
   background-image: linear-gradient(to top, #dcbf9b 0%, #eacda3 100%) !important;
   color: floralwhite !important;
+}
+
+.Proceso{
+  background-image:rgba(245, 245, 245, 0.692) !important;
+  color: black !important;
 }

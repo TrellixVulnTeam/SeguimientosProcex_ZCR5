@@ -49,7 +49,6 @@ export class BannerComponent implements OnInit {
   cargarDatosUsuarios(){
     this.UsuarioService.cargarDatosUsuario(this.usuario).subscribe(res=>{
       this.datosUsuario = res;
-      console.log(this.datosUsuario)
     })
   }
 

@@ -7,6 +7,7 @@ import {UsuariosComponent} from './components/usuarios/usuarios.component';
 import {SoporteComponent} from './components/soporte/soporte.component';
 import {SeguimientosPerfilComponent} from './components/seguimientos-perfil/seguimientos-perfil.component';
 import {GestionSeguimientosComponent} from './components/gestion-seguimientos/gestion-seguimientos.component';
+import {ReportesComponent} from './components/reportes/reportes.component';
 import { LoginService } from './services/login/login.service'
 
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'Usuarios', component: UsuariosComponent, canActivate: [AuthGuard]},
   { path: 'Soporte/:id', component: SoporteComponent, canActivate: [AuthGuard]},
   { path: 'gestion-seguimientos/:id', component: GestionSeguimientosComponent, canActivate: [AuthGuard]},
+  { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard]},
   { path: 'Login', component: LoginComponent }
 ];
 

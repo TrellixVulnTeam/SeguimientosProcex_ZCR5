@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.seguimientosControllers = void 0;
 const Seguimientos_1 = __importDefault(require("../dao/Seguimientos"));
-const notificarSeguimientoPorEmail_1 = __importDefault(require("../Logica/notificarSeguimientoPorEmail"));
+// import notificarSeguimientoPorEmail from '../Logica/notificarSeguimientoPorEmail';
 class SeguimientosControllers {
     CargarDatos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -41,9 +41,9 @@ class SeguimientosControllers {
     }
     guardarDatos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            // var almacenar = await Seguimientos.guardarDatos(req.body)
-            notificarSeguimientoPorEmail_1.default.notificarSeguimiento(req.body);
-            res.json('...');
+            var almacenar = yield Seguimientos_1.default.guardarDatos(req.body);
+            //  notificarSeguimientoPorEmail.notificarSeguimiento(req.body)
+            res.json(almacenar);
         });
     }
     actualizarSeguimiento(req, res) {
@@ -51,6 +51,13 @@ class SeguimientosControllers {
             const { ID_SEGUIMIENTOS } = req.params;
             var actualizar = yield Seguimientos_1.default.actualizarSeguimiento(req.body, ID_SEGUIMIENTOS);
             res.json(actualizar);
+        });
+    }
+    cargarSeguimeintos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { ID_SEGUIMIENTOS } = req.params;
+            var result = yield Seguimientos_1.default.cargarSeguimiento(ID_SEGUIMIENTOS);
+            res.json(result);
         });
     }
 }

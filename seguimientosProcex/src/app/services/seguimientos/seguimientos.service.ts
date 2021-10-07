@@ -33,4 +33,8 @@ export class SeguimientosService {
     return this.http.put(`${this.API_URI}/${ID_SEGUIMIENTOS}`, seguimiento)
   }
 
+  cargarSeguimeiento(ID_SEGUIMIENTOS) {
+    return this.http.get(`${this.API_URI}/${ID_SEGUIMIENTOS}`)
+  }
+
 }

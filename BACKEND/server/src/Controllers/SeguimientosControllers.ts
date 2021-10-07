@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Seguimientos from '../dao/Seguimientos';
-import notificarSeguimientoPorEmail from '../Logica/notificarSeguimientoPorEmail';
+// import notificarSeguimientoPorEmail from '../Logica/notificarSeguimientoPorEmail';
 
 class SeguimientosControllers {
   public async CargarDatos(req: Request, res: Response) {
@@ -24,9 +24,9 @@ class SeguimientosControllers {
   }
 
   public async guardarDatos(req: Request, res: Response) {
-    // var almacenar = await Seguimientos.guardarDatos(req.body)
-     notificarSeguimientoPorEmail.notificarSeguimiento(req.body)
-    res.json('...');
+    var almacenar = await Seguimientos.guardarDatos(req.body)
+    //  notificarSeguimientoPorEmail.notificarSeguimiento(req.body)
+    res.json(almacenar);
   }
 
   public async actualizarSeguimiento(req: Request, res: Response) {
@@ -35,6 +35,11 @@ class SeguimientosControllers {
     res.json(actualizar);
   }
 
+  public async cargarSeguimeintos(req: Request, res: Response) {
+    const { ID_SEGUIMIENTOS } = req.params
+    var result = await Seguimientos.cargarSeguimiento(ID_SEGUIMIENTOS)
+    res.json(result);
+  }
 
 }
 

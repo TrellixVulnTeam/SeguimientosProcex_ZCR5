@@ -8,6 +8,7 @@ import registroRoutes from './Routes/registroRoutes';
 import loginRoutes from './Routes/loginRoutes';
 import gestionSeguimientosRoutes from './Routes/gestionSeguimientosRoutes';
 import soportesRoutes from './Routes/SoportesRoutes';
+import reportesRoutes from './Routes/reportesRoutes';
 import paht from 'path';
 
 class Server {
@@ -35,6 +36,7 @@ class Server {
         this.app.use('/api/registrar',registroRoutes)
         this.app.use('/api/login',loginRoutes)
         this.app.use('/api/gestionseguimiento',gestionSeguimientosRoutes)
+        this.app.use('/api/reportes',reportesRoutes)
         this.app.use('/api/soportes', soportesRoutes);
         this.app.use('/soportes', express.static(paht.resolve('soportes')));
     }

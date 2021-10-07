@@ -1,9 +1,6 @@
 import pool from '../database';
 
 class soportes {
-
-
-
     public static GuardarSoporte(newsoporte,req) {
         return new Promise(function (resolev, reject) {
             try {

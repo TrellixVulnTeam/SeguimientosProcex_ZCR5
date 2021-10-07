@@ -24,6 +24,12 @@
         margin-top: 5px;
     }
 
+    #button2{
+      float: left;
+      margin-right: 30px;
+      margin-top: 5px;
+  }
+
     #requerimiento{
         margin-left: 40px;
     }
@@ -49,4 +55,8 @@
 
       .input-group{
         justify-content: center;
+      }
+
+      #strong{
+        margin-left: 51px;
       }

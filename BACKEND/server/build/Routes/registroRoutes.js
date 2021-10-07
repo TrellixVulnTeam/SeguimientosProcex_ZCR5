@@ -12,7 +12,8 @@ class RegistroRoutes {
         this.router.post('/usuario', RegistroControllers_1.registroControllers.crearUsuario);
         this.router.get('/:usuario', RegistroControllers_1.registroControllers.listarDatosUsuarios);
         this.router.get('/listar/usuario', RegistroControllers_1.registroControllers.listarDatosRegistro);
-        this.router.get('/listar/responsable', RegistroControllers_1.registroControllers.listarResponsableSeguimiento);
+        this.router.get('/responsable/:ID_PERFIL', RegistroControllers_1.registroControllers.listarResponsableSeguimiento);
+        this.router.get('/listar/responsable', RegistroControllers_1.registroControllers.cargarResponsableSeguimientoGest);
         this.router.delete('/registro/:ID_REGISTRO', RegistroControllers_1.registroControllers.eliminarRegistro);
         this.router.delete('/usuario/:ID_REGISTRO', RegistroControllers_1.registroControllers.eliminarUsuario);
     }

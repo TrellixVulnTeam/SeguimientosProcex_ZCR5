@@ -68,7 +68,21 @@ class Registro {
         });
     }
 
-   public static cargarResponsableSeguimiento() {
+    public static cargarResponsableSeguimiento(ID_PERFIL) {
+        return new Promise(function (resolev, reject) {
+            try {
+                pool.query("select R.ID_REGISTRO, R.Nombres, R.Apellidos from registro R, usuario U, perfil P where U.ID_REGISTRO = R.ID_REGISTRO and U.ID_PERFIL = P.ID_PERFIL and P.ID_PERFIL = ? ", [ID_PERFIL], function (err, result, fields) {
+                    if (err) throw err;
+                    resolev(result);
+                });
+            }
+            catch (error) {
+                //res.status(404).json({ error: 'No se pudieron almacenar datos' });
+            };
+        });
+    }
+
+   public static cargarResponsableSeguimientoGest() {
         return new Promise(function (resolev, reject) {
             try {
                 pool.query("select R.ID_REGISTRO, R.Nombres, R.Apellidos from registro R ", function (err, result, fields) {

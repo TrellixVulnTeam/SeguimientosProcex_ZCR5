@@ -25,7 +25,13 @@ class RegistroControllers {
     }
 
     public async listarResponsableSeguimiento(req: Request, res: Response) {
-        const datos = await registro.cargarResponsableSeguimiento();
+        const {ID_PERFIL} = req.params;
+        const datos = await registro.cargarResponsableSeguimiento(ID_PERFIL);
+        res.json(datos);
+    }
+
+    public async cargarResponsableSeguimientoGest(req: Request, res: Response) {
+        const datos = await registro.cargarResponsableSeguimientoGest();
         res.json(datos);
     }
     

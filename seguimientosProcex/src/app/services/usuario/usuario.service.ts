@@ -27,9 +27,14 @@ export class UsuarioService {
     return this.http.get(`${this.API_URI}/listar/usuario`)
   }
 
-  cargarResponsableSeguimiento(){
+  cargarResponsableSeguimiento(ID_PERFIL){
+    return this.http.get(`${this.API_URI}/responsable/${ID_PERFIL}`)
+  }
+
+  cargarResponsableSeguimientoGest(){
     return this.http.get(`${this.API_URI}/listar/responsable`)
   }
+
 
   eliminarUsuario(usuario){
     return this.http.delete(`${this.API_URI}/usuario/${usuario}`)
