@@ -38,6 +38,7 @@ export class GestionSeguimientosComponent implements OnInit {
   seguimientoObs
   isReadonly = false;
   isReadonly2 = false;
+  isReadonly3 = false;
   @Input() seguimientosCaso;
   private seguimientosCaso$: Observable<any[]>;
   gestionseguimiento: GestionSeguimiento = {
@@ -85,6 +86,7 @@ export class GestionSeguimientosComponent implements OnInit {
     this.cargarPrestador();
     this.actualizarIformacion();
     this.cargarperfil();
+    this.actualizarDescripcion();
   }
 
   cargarmedio() {
@@ -239,6 +241,16 @@ export class GestionSeguimientosComponent implements OnInit {
     }
   }
 
+  actualizarDescripcion(){
+    if (this.loginservice.isAdminD || this.loginservice.isAdminJ) {
+      this.isReadonly3 = true;
+      console.log('entro -----------------')
+    } else {
+      this.isReadonly3 = false;
+      console.log('no entro -----------------')
+    }
+  }
+
   editarSeguimiento() {
     delete this.seguimiento2.FECHA_CREACION;
     delete this.seguimiento2.FECHA_MODIFICACION;
@@ -285,7 +297,6 @@ export class GestionSeguimientosComponent implements OnInit {
     delete this.seguimiento.FECHA_REQUERIMIENTO;
     delete this.seguimiento1.Nombres;
     delete this.seguimiento1.Apellidos;
-    delete this.seguimiento1.ID_PERFIL;
     for (let i = 0; i < this.seguimiento1.length; i++) {
       this.seguimiento.ESTADO = this.seguimiento1[i].ESTADO;
       this.seguimiento.FECHA_FINALIZACION = this.seguimiento1[i].FECHA_FINALIZACION;
@@ -300,6 +311,7 @@ export class GestionSeguimientosComponent implements OnInit {
       this.seguimiento.Categoria = this.seguimiento1[i].Categoria;
       this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
       this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
+      this.seguimiento.ID_PERFIL =  this.seguimiento1[i].ID_PERFIL;
       console.log(this.seguimiento)
     }
     this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {

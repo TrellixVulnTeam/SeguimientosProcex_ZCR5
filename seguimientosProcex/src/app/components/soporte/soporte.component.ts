@@ -86,7 +86,7 @@ export class SoporteComponent implements OnInit {
     console.log('descarga')
     for (let i = 0; i < this.soporte.length; i++) {
       if (ID_soporte == this.soporte[i].ID_soporte) {
-        const ruta = 'http://localhost:3000/' + this.soporte[i].RUTA_SOPORTES
+        const ruta = 'http://192.168.1.25:3000/' + this.soporte[i].RUTA_SOPORTES
         console.log(ruta)
         saveAs(ruta)
       }
