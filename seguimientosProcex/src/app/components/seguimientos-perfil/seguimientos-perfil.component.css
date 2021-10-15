@@ -54,3 +54,8 @@
       #strong{
         margin-left: 68px;
       }
+      .spanError{
+        border-color: red !important;
+        background: #ff000017 !important;
+        color: #000000;
+    }

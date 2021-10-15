@@ -11,7 +11,7 @@
     </div>
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
        
-        <p-table [value]="Usuario" styleClass="p-datatable-sm " tableStyleClass="prime-table" selectionMode="single"
+        <p-table [value]="Usuario" styleClass="p-datatable-sm  p-datatable-gridlines" [scrollable]="true" scrollHeight="flex" tableStyleClass="prime-table" selectionMode="single"
             dataKey="code" (onRowSelect)="onRowSelect($event)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
@@ -46,7 +46,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">Digite la informacion del usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" (click)="nuevo()" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- <div>Digite la informacion del usuario</div> -->
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" (click)="nuevo()" data-bs-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-primary" (click)="registrar()"><i
                                 class="fas fa-user-plus"></i> Crear</button>
                     </div>

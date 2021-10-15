@@ -4,7 +4,7 @@ import { Seguimiento } from '../../Model/seguimiento';
 import { ListacomboseguimientoService } from '../../services/listacomboseguimiento/listacomboseguimiento.service';
 import { SeguimientosService } from '../../services/seguimientos/seguimientos.service';
 import { UsuarioService } from '../../services/usuario/usuario.service';
-import {GestionSeguimientosService} from '../../services/gestion-seguimientos/gestion-seguimientos.service';
+import { GestionSeguimientosService } from '../../services/gestion-seguimientos/gestion-seguimientos.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
 import Swal from 'sweetalert2';
@@ -43,6 +43,12 @@ export class SeguimientosPerfilComponent implements OnInit {
   ID_REGISTRO = ''
   TIPO_REQUERIMIENTO = ''
   ESTADO = ''
+
+  fechaEntregaAux = true;
+  areaAux = true;
+  descripcionAux = true;
+
+
   seguimiento: Seguimiento = {
     ID_SEGUIMIENTOS: 0,
     EPS: '',
@@ -59,12 +65,13 @@ export class SeguimientosPerfilComponent implements OnInit {
     ID_REGISTRO: '',
     RUTA_SOPORTES: '',
     Categoria: '',
-    USUARIO_CREACION: ''
+    USUARIO_CREACION: '',
+    ID_PERFIL: '',
+    Dias_Entrega: ''
   }
   constructor(private modalService: NgbModal, private seguimintoService: SeguimientosService, private listaComboSeguimientoService: ListacomboseguimientoService,
-    private usuarioService: UsuarioService,private router: Router, private gestionSeguimientoService:GestionSeguimientosService,private loginservice: LoginService,
-    private reporteService:ReportesService) 
-    {this.ID_PERFIL =  JSON.parse(localStorage.getItem('perfil'), this.usuario = this.loginservice.getCurrentUser()) }
+    private usuarioService: UsuarioService, private router: Router, private gestionSeguimientoService: GestionSeguimientosService, private loginservice: LoginService,
+    private reporteService: ReportesService) { this.ID_PERFIL = JSON.parse(localStorage.getItem('perfil'), this.usuario = this.loginservice.getCurrentUser()) }
 
   ngOnInit(): void {
     this.opcionesListas();
@@ -82,7 +89,7 @@ export class SeguimientosPerfilComponent implements OnInit {
   }
 
   CargarSeguimientos() {
-    this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL,this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_SEGUIMIENTO).subscribe(res => {
+    this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL, this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_SEGUIMIENTO).subscribe(res => {
       this.cargaseguimiento = res;
     })
   }
@@ -117,8 +124,8 @@ export class SeguimientosPerfilComponent implements OnInit {
     })
   }
 
-  cargarperfil(){
-    this.listaComboSeguimientoService.cargarPerfil().subscribe(res=>{
+  cargarperfil() {
+    this.listaComboSeguimientoService.cargarPerfil().subscribe(res => {
       this.perfil = res;
     })
   }
@@ -135,13 +142,13 @@ export class SeguimientosPerfilComponent implements OnInit {
     })
   }
 
-  
 
 
 
-  cargarReporteCasosPerfil(){
+
+  cargarReporteCasosPerfil() {
     let perfil = this.loginservice.getCurrentperfil()
-    this.reporteService.cargarReporteCasosPorPerfil(perfil).subscribe(res=>{
+    this.reporteService.cargarReporteCasosPorPerfil(perfil).subscribe(res => {
       this.reporte = res;
       console.log(this.reporte);
     })
@@ -150,7 +157,7 @@ export class SeguimientosPerfilComponent implements OnInit {
   onRowSelect(event, content) {
     this.seguimiento2 = event.data;
     this.gestionSeguimientoService.consultarSeguimientosOBS(this.seguimiento2)
-    if(this.seguimiento2.Nombres == null && this.seguimiento2.Apellidos == null){
+    if (this.seguimiento2.Nombres == null && this.seguimiento2.Apellidos == null) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -158,7 +165,7 @@ export class SeguimientosPerfilComponent implements OnInit {
         showConfirmButton: true,
         allowOutsideClick: false, // NO PERMITE QUE SE CIERRE AL DAR CLIC POR FUERA
       })
-    }else{
+    } else {
       this.router.navigate(['/gestion-seguimientos/', this.seguimiento2.ID_SEGUIMIENTOS]);
     }
     // if (this.seguimiento2.FECHA_FINALIZACION != "") {
@@ -171,30 +178,58 @@ export class SeguimientosPerfilComponent implements OnInit {
 
 
   guardarDatos() {
-    delete this.seguimiento.ID_SEGUIMIENTOS;
-    delete this.seguimiento.FECHA_REQUERIMIENTO;
-    if(this.seguimiento.ID_REGISTRO == ''){
-      this.seguimiento.ESTADO = 'En proceso';
-    }else{
-      this.seguimiento.ESTADO = 'Pendiente';
+    let entro = false;
+    if (this.seguimiento.FECHA_ENTREGA == '') {
+      this.fechaEntregaAux = false;
+      entro = true;
+    } else {
+      this.fechaEntregaAux = true;
     }
-    this.seguimiento.USUARIO_CREACION = this.usuario;
-
-    this.seguimintoService.guardarSeguimiento(this.seguimiento).subscribe(res => {
-      console.log(res);
+    if (this.seguimiento.ID_PERFIL == '') {
+      this.areaAux = false;
+      entro = true;
+    } else {
+      this.areaAux = true;
+    }
+    if (this.seguimiento.DESCRIPCION_REQUERIMIENTO == '') {
+      this.descripcionAux = false;
+      entro = true;
+    } else {
+      this.descripcionAux = true;
+    }
+    if (entro == true) {
       Swal.fire({
-        title: 'Almacenado!',
-        text: 'Datos almacenados con exito.',
-        icon: 'success',
-        allowOutsideClick: false
-      }
-
-      ).then((result) => {
-        if (result.value) {
-          this.CargarSeguimientos();
-        }
+        icon: 'error',
+        title: '¡Advertencia!',
+        text: 'Digite los campos obligatorios',
       })
-    })
+    } else {
+      delete this.seguimiento.ID_SEGUIMIENTOS;
+      delete this.seguimiento.FECHA_REQUERIMIENTO;
+      if (this.seguimiento.ID_REGISTRO == '') {
+        this.seguimiento.ESTADO = 'En proceso';
+      } else {
+        this.seguimiento.ESTADO = 'Pendiente';
+      }
+      this.seguimiento.USUARIO_CREACION = this.usuario;
+
+      this.seguimintoService.guardarSeguimiento(this.seguimiento).subscribe(res => {
+        console.log(res);
+        Swal.fire({
+          title: 'Almacenado!',
+          text: 'Datos almacenados con exito.',
+          icon: 'success',
+          allowOutsideClick: false
+        }
+
+        ).then((result) => {
+          if (result.value) {
+            this.CargarSeguimientos();
+          }
+        })
+      })
+    }
+
   }
 
   editarSeguimiento() {
@@ -249,7 +284,7 @@ export class SeguimientosPerfilComponent implements OnInit {
     this.modalService.open(content5, { size: 'sm', centered: true });
   }
 
-    asignarResponsabl(content6, data) {
+  asignarResponsabl(content6, data) {
     this.responsable = data
     this.cargarResponsableSeguimientoasig(data.ID_PERFIL);
     if (this.responsable.FECHA_FINALIZACION != "") {
@@ -260,10 +295,10 @@ export class SeguimientosPerfilComponent implements OnInit {
         showConfirmButton: true,
         allowOutsideClick: false, // NO PERMITE QUE SE CIERRE AL DAR CLIC POR FUERA
       })
-    }else{
+    } else {
       this.modalService.open(content6, { size: 'sm', centered: true });
     }
-  
+
   }
 
   asignarResponsable() {
@@ -290,34 +325,63 @@ export class SeguimientosPerfilComponent implements OnInit {
     })
   }
 
-    limpiarFiltros() {
-      this.EPS = '';
-      this.ID_REGISTRO = '';
-      this.TIPO_REQUERIMIENTO = '';
-      this.ESTADO = '';
-      this.CargarSeguimientos();
-    }
+  limpiarFiltros() {
+    this.EPS = '';
+    this.ID_REGISTRO = '';
+    this.TIPO_REQUERIMIENTO = '';
+    this.ESTADO = '';
+    this.CargarSeguimientos();
+  }
 
-    nuevo() {
-      this.seguimiento = {
-        ID_SEGUIMIENTOS: 0,
-        EPS: '',
-        FECHA_REQUERIMIENTO: '',
-        MEDIO: '',
-        TIPO_REQUERIMIENTO: '',
-        TITULO_REQUERIMIENTO: '',
-        DESCRIPCION_REQUERIMIENTO: '',
-        AREA_VALIDACION: '',
-        ESTADO: '',
-        FECHA_ENTREGA: '',
-        FECHA_FINALIZACION: '',
-        SEGUIMIENTO: '',
-        ID_REGISTRO: '',
-        RUTA_SOPORTES: '',
-        Categoria: '',
-        USUARIO_CREACION: ''
-      }
+  nuevo() {
+    this.seguimiento = {
+      ID_SEGUIMIENTOS: 0,
+      EPS: '',
+      FECHA_REQUERIMIENTO: '',
+      MEDIO: '',
+      TIPO_REQUERIMIENTO: '',
+      TITULO_REQUERIMIENTO: '',
+      DESCRIPCION_REQUERIMIENTO: '',
+      AREA_VALIDACION: '',
+      ESTADO: '',
+      FECHA_ENTREGA: '',
+      FECHA_FINALIZACION: '',
+      SEGUIMIENTO: '',
+      ID_REGISTRO: '',
+      RUTA_SOPORTES: '',
+      Categoria: '',
+      USUARIO_CREACION: ''
     }
-  
+  }
+
+  validacionFecha(fecha) {
+    var startDate = new Date(fecha);
+    var today = new Date();
+    if (startDate <= today) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la fecha',
+        text: 'la Fecha de entrega debe ser mayor o igual a la fecha actual',
+      })
+      this.seguimiento.FECHA_ENTREGA = '';
+    }
+  }
+
+  aprobarFecha(dato) {
+    if (dato != '') {
+      this.fechaEntregaAux = true;
+    }
+  }
+  aprobarDes(dato) {
+    if (dato != '') {
+      this.descripcionAux = true;
+    }
+  }
+  aprobarArea(dato) {
+    if (dato != '') {
+      this.areaAux = true;
+    }
+  }
+
 
 }

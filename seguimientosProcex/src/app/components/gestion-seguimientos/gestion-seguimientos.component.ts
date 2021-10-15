@@ -11,6 +11,8 @@ import { SeguimientosService } from '../../services/seguimientos/seguimientos.se
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import { Router } from '@angular/router';
 import { Seguimiento } from '../../Model/seguimiento';
+import { SoportesService } from '../../services/soportes/soportes.service'
+var moment = require('moment');
 
 import Swal from 'sweetalert2';
 @Component({
@@ -27,15 +29,21 @@ export class GestionSeguimientosComponent implements OnInit {
   responsableseguimiento
   rows = 0;
   page = 10;
-
-  medio
+  file: File;
+  Tipoarchivo = '';
+  tipoArchivo = '';
+  tipo_archivo = '';
+  nombrearchivo: string;
+  medio;
+  fechaAux
+  ID_gestion
   tipoRequerimiento
   categoria
   prestador
   perfil
-  gestionSeguimiento
-  seguimiento1
-  seguimientoObs
+  gestionSeguimiento;
+  seguimiento1;
+  seguimientoObs;
   isReadonly = false;
   isReadonly2 = false;
   isReadonly3 = false;
@@ -71,7 +79,7 @@ export class GestionSeguimientosComponent implements OnInit {
     ID_PERFIL: '',
   }
   constructor(private gestionSeguimientoService: GestionSeguimientosService, activateRoute: ActivatedRoute, public loginservice: LoginService, private modalService: NgbModal, private seguimientosservice: SeguimientosService, private router: Router,
-   private listaComboSeguimientoService: ListacomboseguimientoService,private usuarioService: UsuarioService ) { this.usuario = this.loginservice.getCurrentUser(); this.ID_SEGUIMIENTOS = activateRoute.snapshot.params['id'] }
+   private listaComboSeguimientoService: ListacomboseguimientoService,private usuarioService: UsuarioService, private SoporteService:SoportesService ) { this.usuario = this.loginservice.getCurrentUser(); this.ID_SEGUIMIENTOS = activateRoute.snapshot.params['id'] }
 
   ngOnInit(): void {
     this.cargarGestion();
@@ -124,6 +132,7 @@ export class GestionSeguimientosComponent implements OnInit {
   cargarSeguimiento() {
     this.seguimientosservice.cargarSeguimeiento(this.ID_SEGUIMIENTOS).subscribe(res => {
       this.seguimiento1 = res;
+      this.fechaAux = this.seguimiento1[0].FECHA_ENTREGA;
       for (let i = 0; i < this.seguimiento1.length; i++) {
         if (this.seguimiento1[i].ESTADO == 'Realizado') {
           this.isReadonly = true;
@@ -155,6 +164,7 @@ export class GestionSeguimientosComponent implements OnInit {
     this.gestionseguimiento.USUARIO_CREACION = this.usuario;
     this.gestionseguimiento.USUARIO_MODIFICACION = this.usuario;
     this.gestionSeguimientoService.guardarGestion(this.gestionseguimiento).subscribe(res => {
+      this.ID_gestion = res;
       Swal.fire({
         title: 'Almacenado!',
         text: 'Datos almacenados con exito.',
@@ -165,6 +175,7 @@ export class GestionSeguimientosComponent implements OnInit {
       ).then((result) => {
         if (result.value) {
           this.gestionseguimiento.DESCRIPCION =  '';
+          this.Guargarsoporte();
           this.cargarGestion();
         }
       })
@@ -186,6 +197,9 @@ export class GestionSeguimientosComponent implements OnInit {
   }
 
   cerrarcaso() {
+    let FECHA_FINALIZACION
+    let FECHA_REQUERIMIENTO
+
     delete this.seguimiento.FECHA_REQUERIMIENTO;
     delete this.seguimiento1.Nombres;
     delete this.seguimiento1.Apellidos;
@@ -196,7 +210,6 @@ export class GestionSeguimientosComponent implements OnInit {
       let jstoday = '';
       jstoday = formatDate(today, 'yyyy-MM-dd hh:mm:ss a', 'en-US');
       this.seguimiento.FECHA_FINALIZACION = jstoday;
-      console.log(this.seguimiento1)
       this.seguimiento.EPS = this.seguimiento1[i].EPS;
       this.seguimiento.MEDIO = this.seguimiento1[i].MEDIO;
       this.seguimiento.TIPO_REQUERIMIENTO = this.seguimiento1[i].TIPO_REQUERIMIENTO;
@@ -206,11 +219,15 @@ export class GestionSeguimientosComponent implements OnInit {
       this.seguimiento.SEGUIMIENTO = this.seguimiento1[i].SEGUIMIENTO;
       this.seguimiento.FECHA_ENTREGA = this.seguimiento1[i].FECHA_ENTREGA;
       this.seguimiento.Categoria = this.seguimiento1[i].Categoria;
+      FECHA_FINALIZACION =  moment(new Date(this.seguimiento.FECHA_FINALIZACION)).format('YYYY-MM-DD');
+      FECHA_REQUERIMIENTO =  moment(new Date(this.seguimiento1[i].FECHA_REQUERIMIENTO)).format('YYYY-MM-DD');
+      let fechaFinalizacionC = moment(FECHA_FINALIZACION)
+      this.seguimiento.Dias_Entrega = fechaFinalizacionC.diff(FECHA_REQUERIMIENTO, 'days'), ' dias de diferencia'
+      console.log(this.seguimiento.Dias_Entrega)
       this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
       this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
       this.seguimiento.ID_PERFIL = this.seguimiento1[i].ID_PERFIL;
     }
-
     this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {
       Swal.fire({
         title: 'Almacenado!',
@@ -254,7 +271,9 @@ export class GestionSeguimientosComponent implements OnInit {
   editarSeguimiento() {
     delete this.seguimiento2.FECHA_CREACION;
     delete this.seguimiento2.FECHA_MODIFICACION;
-    console.log(this.seguimiento2)
+    let prueba = []
+    prueba.push(this.seguimiento2)
+    console.log(prueba)
     this.gestionSeguimientoService.ActualizarDatos(this.seguimiento2.ID_GESTION_SEGUIMIENTO, this.seguimiento2).subscribe(res => {
       console.log(res);
       Swal.fire({
@@ -269,6 +288,8 @@ export class GestionSeguimientosComponent implements OnInit {
       })
     })
   }
+
+
 
   redireccionar() {
     if (this.loginservice.isAnalistas || this.loginservice.isSoporte || this.loginservice.isDesarrollo) {
@@ -328,6 +349,41 @@ export class GestionSeguimientosComponent implements OnInit {
         }
       })
     })
+  }
+
+  onphotoselected(event: any): void {
+    this.file = event.target.files[0]
+    this.nombrearchivo = event.target.files[0].name
+  }
+
+  Guargarsoporte() {
+    this.SoporteService.Guardarsoporte(this.nombrearchivo ,this.tipo_archivo, this.usuario,  this.ID_gestion, this.file).subscribe(res => {
+      console.log(res)
+      Swal.fire({
+        title: 'Almacenado!',
+        text: 'Archivo cargado',
+        icon: 'success',
+        allowOutsideClick: false
+      }
+      ).then((result) => {
+        if (result.value) {
+        }
+      })
+    })
+  }
+
+  validacionFecha(fecha) {
+    var startDate = new Date(fecha);
+    var today = new Date();
+    var aux = this.seguimiento1[0].FECHA_ENTREGA
+    if (startDate < today) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la fecha',
+        text: 'la Fecha de entrega debe ser mayor a la fecha actual',
+      })
+      this.seguimiento1[0].FECHA_ENTREGA = this.fechaAux;
+    }
   }
 
   nuevo(){

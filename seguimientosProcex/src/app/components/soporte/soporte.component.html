@@ -10,7 +10,7 @@
     </div>
 
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
-        <p-table [value]="soporte" styleClass="p-datatable-sm " [scrollable]="true" scrollHeight="261px"
+        <p-table [value]="soporte" styleClass="p-datatable-sm p-datatable-gridlines" [scrollable]="true" scrollHeight="flex"
             tableStyleClass="prime-table">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
@@ -44,9 +44,10 @@
 <ng-template #content let-c="close" let-d="dismiss" id="pagina">
     <div class="modal-header" id="soporte">
         <strong class="modal-title" id="modal-basic-title">Carga de soportes </strong>
-        <button type="button" class="close" id="cerrar" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button style="background: transparent; border: transparent;" type="button" class="close" id="cerrar"
+        aria-label="Close" (click)="d('Cross click')">
+        <i class="fas fa-times"></i>
+    </button>
     </div>
     <div class="modal-body">
         <form>
@@ -59,9 +60,10 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <input type="file"  accept="image/gif, image/png, image/jpeg, application/pdf"
-                        (change)="onphotoselected($event)">
-
+                    <label for="guardar" id="cargarArchivo"> <i class="fas fa-folder-open"></i> Seleccionar
+                        archivo</label>
+                    <input style="display: none;" id="guardar" type="file"
+                        accept="image/gif, image/png, image/jpeg, application/pdf" (change)="onphotoselected($event)">
                 </div>
             </div>
         </form>

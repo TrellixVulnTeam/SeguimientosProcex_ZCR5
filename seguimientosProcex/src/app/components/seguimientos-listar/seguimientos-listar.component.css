@@ -60,3 +60,9 @@
       #strong{
         margin-left: 51px;
       }
+
+      .spanError{
+        border-color: red !important;
+        background: #ff000017 !important;
+        color: #000000;
+    }

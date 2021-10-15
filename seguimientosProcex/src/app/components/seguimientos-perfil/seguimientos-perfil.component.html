@@ -36,13 +36,13 @@
     </div>
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
 
-        <p-table [value]="cargaseguimiento" styleClass="p-datatable-sm " tableStyleClass="prime-table"
-            selectionMode="single" dataKey="code" (onRowSelect)="onRowSelect($event,content)">
+        <p-table [value]="cargaseguimiento" styleClass="p-datatable-sm p-datatable-gridlines" tableStyleClass="prime-table"
+            selectionMode="single" dataKey="code"  [scrollable]="true" scrollHeight="flex"  (onRowSelect)="onRowSelect($event,content)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
                     <th style="background-color: #02adb5e0; color: white; ">EPS<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEps(content1)"></i></th>
-                    <th style="background-color: #02adb5e0; color: white;">Fecha de requerimiento</th>
+                    <th style="background-color: #02adb5e0; color: white;">F. Requerimiento</th>
                     <th style="background-color: #02adb5e0; color: white;">Medio</th>
                     <th style="background-color: #02adb5e0; color: white;">T.Requerimiento<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroTiporequerimiento(content2)"></i></th>
@@ -52,6 +52,7 @@
                             style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
                     <th style="background-color: #02adb5e0; color: white;">Fecha entrega</th>
                     <th style="background-color: #02adb5e0; color: white;  width: 10%;">Fecha Finalizacion</th>
+                    <th style="background-color: #02adb5e0; color: white; width: 1%;">D.Solucion</th>
                     <th style="background-color: #02adb5e0; color: white;">Responsable<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroResponsable(content4)"></i> </th>
                             <th style="background-color: #02adb5e0; color: white;">Asignar R.</th>
@@ -69,6 +70,7 @@
                     <td>{{data.ESTADO}}</td>
                     <td>{{data.FECHA_ENTREGA}}</td>
                     <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
+                    <td>{{data.Dias_Entrega}}</td>
                     <td>{{data.Nombres}} - {{data.Apellidos}} </td>
                     <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button" class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"  class="fas fa-user-plus"></i></button></td> 
                 </tr>
@@ -137,7 +139,7 @@
                     <label id="tipo" style="font-size: 12px; color: black;">Fecha de entrega:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span style="height: 38px;" class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+                            <span [ngClass]="{'spanError': fechaEntregaAux == false }" style="height: 38px;" class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-calendar2-date"
                                     viewBox="0 0 16 16">
                                     <path
@@ -149,7 +151,9 @@
                                 </svg></span>
                         </div>
                         <input type="date" class="form-control" name="seguimiento.FECHA_ENTREGA"
-                            [(ngModel)]="seguimiento.FECHA_ENTREGA" style="font-size: 12px;">
+                            [(ngModel)]="seguimiento.FECHA_ENTREGA" style="font-size: 12px;"  (change)="validacionFecha(seguimiento.FECHA_ENTREGA)"
+                            [ngClass]="{'is-invalid': fechaEntregaAux == false }"
+                            (change)="aprobarFecha(seguimiento.FECHA_ENTREGA)">
                     </div>
                 </div>
 
@@ -187,7 +191,9 @@
                 <div class="col-md-2" id="">
                     <label style="font-size: 12px; color: black; margin-left: 16px;">Área</label>
                     <select name="" class="form-control" id="documento" name="seguimiento.ID_PERFIL"
-                        [(ngModel)]="seguimiento.ID_PERFIL" (click)="cargarResponsableSeguimiento()" style="font-size: 12px; margin-left: 16px;">
+                        [(ngModel)]="seguimiento.ID_PERFIL" (click)="cargarResponsableSeguimiento()" style="font-size: 12px; margin-left: 16px;"
+                        style="font-size: 12px; margin-left: 16px;"  [ngClass]="{'is-invalid': areaAux == false }"
+                        (change)="aprobarArea(seguimiento.ID_PERFIL)">
                         <option *ngFor='let perfil of perfil'
                             [ngValue]="perfil.ID_PERFIL">
                             {{perfil.DESCRIPCION}}
@@ -212,7 +218,8 @@
                     <label style="font-size: 12px; color: black;">Descripcion</label>
                     <textarea name="seguimiento.DESCRIPCION_REQUERIMIENTO"
                         [(ngModel)]="seguimiento.DESCRIPCION_REQUERIMIENTO" style="height: 50PX;" class="form-control"
-                        id="" cols="30" rows="10"></textarea>
+                        id="" cols="30" rows="10"    (change)="aprobarDes(seguimiento.DESCRIPCION_REQUERIMIENTO)"
+                        [ngClass]="{'is-invalid': descripcionAux == false }"></textarea>
                 </div>
 
                 <div class="col-md-5" id="requerimiento">

@@ -78,6 +78,23 @@ export class UsuariosComponent implements OnInit {
 
   }
 
+  nuevo() {
+    this.registro = {
+      ID_REGISTRO: '',
+      Nombres: '',
+      Apellidos: '',
+      Correo: '',
+      Telefono: ''
+    }
+    this.usuario = {
+      ID_USUARIO: 0,
+      ID_REGISTRO: '',
+      ID_PERFIL: '',
+      USUARIO: '',
+      Contrasena: ''
+    }
+  }
+
   eliminarUsuario(btnUsuario) {
     if (btnUsuario) {
       Swal.fire({

@@ -33,6 +33,11 @@ export class SeguimientosListarComponent implements OnInit {
   rows = 10;
   page = 0;
   EPS = ''
+
+  fechaEntregaAux = true;
+  areaAux = true;
+  descripcionAux = true;
+
   ID_REGISTRO = ''
   ID_REGISTRO1
   TIPO_REQUERIMIENTO = ''
@@ -58,6 +63,7 @@ export class SeguimientosListarComponent implements OnInit {
     Categoria: '',
     USUARIO_CREACION: '',
     ID_PERFIL: '',
+    Dias_Entrega: ''
   }
   constructor(private modalService: NgbModal, private seguimintoService: SeguimientosService, private listaComboSeguimientoService: ListacomboseguimientoService,
     private usuarioService: UsuarioService, private router: Router, private gestionSeguimientoService: GestionSeguimientosService, private loginservice: LoginService,
@@ -85,7 +91,6 @@ export class SeguimientosListarComponent implements OnInit {
   CargarSeguimientos() {
     this.seguimintoService.cargarTodos(this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_REGISTRO).subscribe(res => {
       this.cargaseguimiento = res;
-
     })
   }
   numerodeRegistros() {
@@ -175,32 +180,60 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   guardarDatos() {
-    delete this.seguimiento.ID_SEGUIMIENTOS;
-    delete this.seguimiento.FECHA_REQUERIMIENTO;
-    if (this.seguimiento.ID_REGISTRO == '') {
-      this.seguimiento.ESTADO = 'En proceso';
+    let entro = false;
+    if (this.seguimiento.FECHA_ENTREGA == '') {
+      this.fechaEntregaAux = false;
+      entro = true;
     } else {
-      this.seguimiento.ESTADO = 'Pendiente';
+      this.fechaEntregaAux = true;
     }
-    this.seguimiento.USUARIO_CREACION = this.usuario;
-    console.log(this.seguimiento)
-
-    this.seguimintoService.guardarSeguimiento(this.seguimiento).subscribe(res => {
-      console.log(res);
+    if (this.seguimiento.ID_PERFIL == '') {
+      this.areaAux = false;
+      entro = true;
+    } else {
+      this.areaAux = true;
+    }
+    if (this.seguimiento.DESCRIPCION_REQUERIMIENTO == '') {
+      this.descripcionAux = false;
+      entro = true;
+    } else {
+      this.descripcionAux = true;
+    }
+    if (entro == true) {
       Swal.fire({
-        title: 'Almacenado!',
-        text: 'Datos almacenados con exito.',
-        icon: 'success',
-        allowOutsideClick: false
-      }
-
-      ).then((result) => {
-        if (result.value) {
-          this.nuevo();
-          this.CargarSeguimientos();
-        }
+        icon: 'error',
+        title: '¡Advertencia!',
+        text: 'Digite los campos obligatorios',
       })
-    })
+    } else {
+      delete this.seguimiento.ID_SEGUIMIENTOS;
+      delete this.seguimiento.FECHA_REQUERIMIENTO;
+      if (this.seguimiento.ID_REGISTRO == '') {
+        this.seguimiento.ESTADO = 'En proceso';
+      } else {
+        this.seguimiento.ESTADO = 'Pendiente';
+      }
+      this.seguimiento.USUARIO_CREACION = this.usuario;
+      console.log(this.seguimiento)
+
+      this.seguimintoService.guardarSeguimiento(this.seguimiento).subscribe(res => {
+        console.log(res);
+        Swal.fire({
+          title: 'Almacenado!',
+          text: 'Datos almacenados con exito.',
+          icon: 'success',
+          allowOutsideClick: false
+        }
+
+        ).then((result) => {
+          if (result.value) {
+            this.nuevo();
+            this.CargarSeguimientos();
+          }
+        })
+      })
+    }
+
   }
 
   editarSeguimiento() {
@@ -268,10 +301,10 @@ export class SeguimientosListarComponent implements OnInit {
         showConfirmButton: true,
         allowOutsideClick: false, // NO PERMITE QUE SE CIERRE AL DAR CLIC POR FUERA
       })
-    }else{
+    } else {
       this.modalService.open(content6, { size: 'sm', centered: true });
     }
-  
+
   }
 
   asignarResponsable() {
@@ -326,5 +359,35 @@ export class SeguimientosListarComponent implements OnInit {
       USUARIO_CREACION: ''
     }
   }
+
+  validacionFecha(fecha) {
+    var startDate = new Date(fecha);
+    var today = new Date();
+    if (startDate <= today) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la fecha',
+        text: 'la Fecha de entrega debe ser mayor o igual a la fecha actual',
+      })
+      this.seguimiento.FECHA_ENTREGA = '';
+    }
+  }
+
+  aprobarFecha(dato) {
+    if (dato != '') {
+      this.fechaEntregaAux = true;
+    }
+  }
+  aprobarDes(dato) {
+    if (dato != '') {
+      this.descripcionAux = true;
+    }
+  }
+  aprobarArea(dato) {
+    if (dato != '') {
+      this.areaAux = true;
+    }
+  }
+
 
 }

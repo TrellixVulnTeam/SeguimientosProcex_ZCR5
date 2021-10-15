@@ -2,34 +2,39 @@
     <div class="y-card-header">
         <div class="row">
             <div class="col-md-6" id="">
-                <img src="../../../assets/graficos.png" style="margin-left: 5px; margin-top: 8px; cursor: pointer;"  [routerLink]="['/reportes']" alt="">
+                <img src="../../../assets/graficos.png" style="margin-left: 5px; margin-top: 8px; cursor: pointer;"
+                    [routerLink]="['/reportes']" alt="">
             </div>
 
 
-            <div class="col-md-3" >
+            <div class="col-md-3">
                 <div class="reporte" style=" float: right; margin-right: -192px;">
-                  <strong id="strong">Estado del caso</strong>
-                  <table>
-                    <tr *ngFor='let reporte of reporte'>
-                      <td>
-                        <button
-                          style="background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%); color: white; border: none;">Realizado - {{reporte.Realizados}}</button>
-                      </td>
-                      <td>
-                        <button
-                          style="border: none; background-image:linear-gradient(to top, #dcbf9b 0%, #eacda3 100%);  color: white;">Pendiente {{reporte.Pendientes}}</button>
-                      </td>
-                      <td>
-                        <button
-                          style="border: none; background-color: rgba(245, 245, 245, 0.692); color: black;">En proceso {{reporte.Proceso}}</button>
-                      </td>
-                    </tr>
-                  </table>
+                    <strong id="strong">Estado del caso</strong>
+                    <table>
+                        <tr *ngFor='let reporte of reporte'>
+                            <td>
+                                <button
+                                    style="background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%); color: white; border: none;">Realizado
+                                    - {{reporte.Realizados}}</button>
+                            </td>
+                            <td>
+                                <button
+                                    style="border: none; background-image:linear-gradient(to top, #dcbf9b 0%, #eacda3 100%);  color: white;">Pendiente
+                                    {{reporte.Pendientes}}</button>
+                            </td>
+                            <td>
+                                <button
+                                    style="border: none; background-color: rgba(245, 245, 245, 0.692); color: black;">En
+                                    proceso {{reporte.Proceso}}</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-              </div>
+            </div>
 
-              <div class="col-md-3" id="">
-                <button id="button" style="margin-top: 20px;" type="button" (click)="formulario(content5)" class="btn btn-secondary">
+            <div class="col-md-3" id="">
+                <button id="button" style="margin-top: 20px;" type="button" (click)="formulario(content5)"
+                    class="btn btn-secondary">
                     <i class="fas fa-folder-plus"></i> Nuevo
                 </button>
             </div>
@@ -38,26 +43,29 @@
     </div>
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
 
-        <p-table [value]="cargaseguimiento" styleClass="p-datatable-sm " tableStyleClass="prime-table"
-            selectionMode="single" dataKey="code" (onRowSelect)="onRowSelect($event,content)">
+        <p-table [value]="cargaseguimiento" styleClass="p-datatable-sm p-datatable-gridlines"
+            tableStyleClass="prime-table" selectionMode="single" dataKey="code" [scrollable]="true" scrollHeight="flex"
+            (onRowSelect)="onRowSelect($event,content)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
                     <th style="background-color: #02adb5e0; color: white; ">EPS<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEps(content1)"></i></th>
-                    <th style="background-color: #02adb5e0; color: white;  width: 10%;">Fecha requerimiento</th>
-                    <th style="background-color: #02adb5e0; color: white;">Medio</th>
-                    <th style="background-color: #02adb5e0; color: white; width: 9%;">T.Requerimiento<i class="fas fa-filter"
-                            style="cursor: pointer;" (click)="filtroTiporequerimiento(content2)"></i></th>
+                    <th style="background-color: #02adb5e0; color: white;  width: 10%;">F. Requerimiento</th>
+                    <th style="background-color: #02adb5e0; color: white; width: 9%;">T.Requerimiento<i
+                            class="fas fa-filter" style="cursor: pointer;"
+                            (click)="filtroTiporequerimiento(content2)"></i></th>
                     <th style="background-color: #02adb5e0; color: white;  width: 9%;">Titulo</th>
                     <th style="background-color: #02adb5e0; color: white;">A. validacion</th>
                     <th style="background-color: #02adb5e0; color: white;">Estado<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
                     <th style="background-color: #02adb5e0; color: white; width: 8%;">Fecha entrega</th>
                     <th style="background-color: #02adb5e0; color: white; width: 10%;">Fecha Finalizacion</th>
+                    <th style="background-color: #02adb5e0; color: white; width: 1%;">D.Solucion</th>
                     <th style="background-color: #02adb5e0; color: white; width: 150px;">Perfil</th>
-                    <th style="background-color: #02adb5e0; color: white; width: 13%;">Responsable<i class="fas fa-filter"
-                            style="cursor: pointer;" (click)="filtroResponsable(content4)"></i> </th>
-                            <th style="background-color: #02adb5e0; color: white;">Asignar R.</th>
+                    <th style="background-color: #02adb5e0; color: white; width: 13%;">Responsable<i
+                            class="fas fa-filter" style="cursor: pointer;" (click)="filtroResponsable(content4)"></i>
+                    </th>
+                    <th style="background-color: #02adb5e0; color: white;">Asignar R.</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
@@ -65,16 +73,18 @@
                     [pSelectableRow]="data">
                     <td>{{data.EPS}}</td>
                     <td>{{data.FECHA_REQUERIMIENTO | date:"dd/MM/yyyy"}}</td>
-                    <td>{{data.MEDIO}}</td>
                     <td>{{data.TIPO_REQUERIMIENTO}}</td>
                     <td style=" width: 9%;">{{data.TITULO_REQUERIMIENTO}}</td>
                     <td>{{data.AREA_VALIDACION}}</td>
                     <td>{{data.ESTADO}}</td>
                     <td>{{data.FECHA_ENTREGA}}</td>
                     <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
+                    <td>{{data.Dias_Entrega}}</td>
                     <td style="width: 130px;">{{data.Area}}</td>
                     <td style="width: 13%;">{{data.Nombres}} - {{data.Apellidos}} </td>
-                    <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button" class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"  class="fas fa-user-plus"></i></button></td> 
+                    <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button"
+                            class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"
+                                class="fas fa-user-plus"></i></button></td>
                 </tr>
             </ng-template>
         </p-table>
@@ -90,8 +100,8 @@
 <ng-template #content5 let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Nuevo Seguimiento</h4>
-        <button type="button" class="close" (click)="nuevo()" aria-label="Close" (click)="d('Cross click')" class="btn btn-light"
-            style="background: transparent; border: transparent;">
+        <button type="button" class="close" (click)="nuevo()" aria-label="Close" (click)="d('Cross click')"
+            class="btn btn-light" style="background: transparent; border: transparent;">
             <i class="fas fa-times"></i>
         </button>
     </div>
@@ -141,7 +151,7 @@
                     <label id="tipo" style="font-size: 12px; color: black;">Fecha de entrega:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span style="height: 38px;" class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+                            <span  [ngClass]="{'spanError': fechaEntregaAux == false }" style="height: 38px;" class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="16" height="16" fill="currentColor" class="bi bi-calendar2-date"
                                     viewBox="0 0 16 16">
                                     <path
@@ -153,7 +163,10 @@
                                 </svg></span>
                         </div>
                         <input type="date" class="form-control" name="seguimiento.FECHA_ENTREGA"
-                            [(ngModel)]="seguimiento.FECHA_ENTREGA" style="font-size: 12px;">
+                            [(ngModel)]="seguimiento.FECHA_ENTREGA" style="font-size: 12px;"
+                            (change)="validacionFecha(seguimiento.FECHA_ENTREGA)"
+                            [ngClass]="{'is-invalid': fechaEntregaAux == false }"
+                            (change)="aprobarFecha(seguimiento.FECHA_ENTREGA)">
                     </div>
                 </div>
 
@@ -180,7 +193,7 @@
             <div class="input-group mb-3">
                 <div class="col-md-5">
                     <label style="font-size: 12px; color: black; margin-left: -21px;">Categoría</label>
-                    <select name="" class="form-control" id="documento"  name="seguimiento.Categoria"
+                    <select name="" class="form-control" id="documento" name="seguimiento.Categoria"
                         [(ngModel)]="seguimiento.Categoria" style="font-size: 12px; margin-left: -21px;">
                         <option *ngFor='let categoria of categoria'>
                             {{categoria.NOMBRE_OPCION}}
@@ -191,9 +204,10 @@
                 <div class="col-md-2" id="">
                     <label style="font-size: 12px; color: black; margin-left: 16px;">Área</label>
                     <select name="" class="form-control" id="documento" name="seguimiento.ID_PERFIL"
-                        [(ngModel)]="seguimiento.ID_PERFIL" (click)="cargarResponsableSeguimiento()" style="font-size: 12px; margin-left: 16px;">
-                        <option *ngFor='let perfil of perfil'
-                            [ngValue]="perfil.ID_PERFIL">
+                        [(ngModel)]="seguimiento.ID_PERFIL" (click)="cargarResponsableSeguimiento()"
+                        style="font-size: 12px; margin-left: 16px;"  [ngClass]="{'is-invalid': areaAux == false }"
+                        (change)="aprobarArea(seguimiento.ID_PERFIL)">
+                        <option *ngFor='let perfil of perfil' [ngValue]="perfil.ID_PERFIL">
                             {{perfil.DESCRIPCION}}
                         </option>
                     </select>
@@ -216,7 +230,8 @@
                     <label style="font-size: 12px; color: black;">Descripcion</label>
                     <textarea name="seguimiento.DESCRIPCION_REQUERIMIENTO"
                         [(ngModel)]="seguimiento.DESCRIPCION_REQUERIMIENTO" style="height: 50PX;" class="form-control"
-                        id="" cols="30" rows="10"></textarea>
+                        id="" cols="30" rows="10"  [ngClass]="{'is-invalid': descripcionAux == false }"
+                        (change)="aprobarDes(seguimiento.DESCRIPCION_REQUERIMIENTO)"></textarea>
                 </div>
 
                 <div class="col-md-5" id="requerimiento">
@@ -356,13 +371,13 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ID_REGISTRO"
-                    [(ngModel)]="ID_REGISTRO" style="font-size: 12px;">
-                    <option *ngFor='let responsableseguimiento of responsableseguimientofilt'
-                        [ngValue]="responsableseguimiento.Nombres" [ngValue]="responsableseguimiento.ID_REGISTRO">
-                        {{responsableseguimiento.Nombres}} - {{responsableseguimiento.Apellidos}}
-                    </option>
-                </select>
+                    <select name="" class="form-control" id="documento" name="ID_REGISTRO" [(ngModel)]="ID_REGISTRO"
+                        style="font-size: 12px;">
+                        <option *ngFor='let responsableseguimiento of responsableseguimientofilt'
+                            [ngValue]="responsableseguimiento.Nombres" [ngValue]="responsableseguimiento.ID_REGISTRO">
+                            {{responsableseguimiento.Nombres}} - {{responsableseguimiento.Apellidos}}
+                        </option>
+                    </select>
                 </div>
             </div>
         </form>
@@ -380,13 +395,13 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ID_REGISTRO1"
-                    [(ngModel)]="ID_REGISTRO1" style="font-size: 12px;">
-                    <option *ngFor='let responsableseguimiento2 of responsableseguimiento2'
-                        [ngValue]="responsableseguimiento2.Nombres" [ngValue]="responsableseguimiento2.ID_REGISTRO">
-                        {{responsableseguimiento2.Nombres}} - {{responsableseguimiento2.Apellidos}}
-                    </option>
-                </select>
+                    <select name="" class="form-control" id="documento" name="ID_REGISTRO1" [(ngModel)]="ID_REGISTRO1"
+                        style="font-size: 12px;">
+                        <option *ngFor='let responsableseguimiento2 of responsableseguimiento2'
+                            [ngValue]="responsableseguimiento2.Nombres" [ngValue]="responsableseguimiento2.ID_REGISTRO">
+                            {{responsableseguimiento2.Nombres}} - {{responsableseguimiento2.Apellidos}}
+                        </option>
+                    </select>
                 </div>
             </div>
         </form>

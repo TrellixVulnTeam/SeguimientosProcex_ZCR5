@@ -16,4 +16,5 @@ export interface Seguimiento {
     RUTA_SOPORTES?: string;
     Categoria?: string;
     USUARIO_CREACION?:string;
+    Dias_Entrega?:string;
 }
