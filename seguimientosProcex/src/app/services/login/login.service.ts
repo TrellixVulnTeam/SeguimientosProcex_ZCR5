@@ -105,6 +105,15 @@ export class LoginService {
     }
   }
 
+  public get isCoorSoporte(): boolean {
+    let logued = JSON.parse(localStorage.getItem('perfil'))
+    if (logued == '6') {
+      return true
+    } else {
+      return false;
+    }
+  }
+
 
 
 }

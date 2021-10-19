@@ -34,8 +34,10 @@ export class UsuarioService {
   cargarResponsableSeguimientoGest(){
     return this.http.get(`${this.API_URI}/listar/responsable`)
   }
-
-
+  actualizarResgistro(dato,ID){
+    return this.http.put(`${this.API_URI}/usuario/${ID}`,dato)
+  }
+  
   eliminarUsuario(usuario){
     return this.http.delete(`${this.API_URI}/usuario/${usuario}`)
   }

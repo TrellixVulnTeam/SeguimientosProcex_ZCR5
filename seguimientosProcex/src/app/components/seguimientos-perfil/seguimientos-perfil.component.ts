@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
 import Swal from 'sweetalert2';
 import { ReportesService } from 'src/app/services/reportes/reportes.service';
-
+var moment = require('moment');
 
 @Component({
   selector: 'app-seguimientos-perfil',
@@ -89,8 +89,10 @@ export class SeguimientosPerfilComponent implements OnInit {
   }
 
   CargarSeguimientos() {
-    this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL, this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_SEGUIMIENTO).subscribe(res => {
+    this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL, this.usuario, this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_SEGUIMIENTO).subscribe(res => {
+      console.log(res)
       this.cargaseguimiento = res;
+     
     })
   }
   numerodeRegistros() {
@@ -150,7 +152,6 @@ export class SeguimientosPerfilComponent implements OnInit {
     let perfil = this.loginservice.getCurrentperfil()
     this.reporteService.cargarReporteCasosPorPerfil(perfil).subscribe(res => {
       this.reporte = res;
-      console.log(this.reporte);
     })
   }
 
@@ -191,12 +192,12 @@ export class SeguimientosPerfilComponent implements OnInit {
     } else {
       this.areaAux = true;
     }
-    if (this.seguimiento.DESCRIPCION_REQUERIMIENTO == '') {
-      this.descripcionAux = false;
-      entro = true;
-    } else {
-      this.descripcionAux = true;
-    }
+    // if (this.seguimiento.DESCRIPCION_REQUERIMIENTO == '') {
+    //   this.descripcionAux = false;
+    //   entro = true;
+    // } else {
+    //   this.descripcionAux = true;
+    // }
     if (entro == true) {
       Swal.fire({
         icon: 'error',
@@ -207,7 +208,7 @@ export class SeguimientosPerfilComponent implements OnInit {
       delete this.seguimiento.ID_SEGUIMIENTOS;
       delete this.seguimiento.FECHA_REQUERIMIENTO;
       if (this.seguimiento.ID_REGISTRO == '') {
-        this.seguimiento.ESTADO = 'En proceso';
+        this.seguimiento.ESTADO = 'Sin asignar';
       } else {
         this.seguimiento.ESTADO = 'Pendiente';
       }
@@ -225,6 +226,8 @@ export class SeguimientosPerfilComponent implements OnInit {
         ).then((result) => {
           if (result.value) {
             this.CargarSeguimientos();
+            this.nuevo();
+            this.modalService.dismissAll();
           }
         })
       })
@@ -355,9 +358,10 @@ export class SeguimientosPerfilComponent implements OnInit {
   }
 
   validacionFecha(fecha) {
-    var startDate = new Date(fecha);
-    var today = new Date();
-    if (startDate <= today) {
+    var startDate =  new Date(fecha)
+    let startDate1  = (startDate.getFullYear()) + '-' + (startDate.getMonth() + 1) + '-' + (startDate.getDate() + 1)
+    var today = moment(new Date()).format('YYYY-MM-DD')
+    if (startDate1 < today) {
       Swal.fire({
         icon: 'error',
         title: 'Error en la fecha',
@@ -372,11 +376,11 @@ export class SeguimientosPerfilComponent implements OnInit {
       this.fechaEntregaAux = true;
     }
   }
-  aprobarDes(dato) {
-    if (dato != '') {
-      this.descripcionAux = true;
-    }
-  }
+  // aprobarDes(dato) {
+  //   if (dato != '') {
+  //     this.descripcionAux = true;
+  //   }
+  // }
   aprobarArea(dato) {
     if (dato != '') {
       this.areaAux = true;

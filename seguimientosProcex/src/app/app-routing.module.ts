@@ -15,7 +15,7 @@ const role = JSON.parse(localStorage.getItem("perfil"))
 const Route = '/Seguimientos-listar'
 const Route2 = '/Seguimientos'
 var redireccionar
-if(role == '3' || role == '4' || role == '5'){
+if(role == '3' || role == '4' || role == '5' || role == '6'){
   redireccionar = Route2
 }else{
   redireccionar = Route

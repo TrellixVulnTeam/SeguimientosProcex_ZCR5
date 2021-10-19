@@ -8,6 +8,7 @@ import { UsuarioService } from '../../services/usuario/usuario.service';
 import { ReportesService } from '../../services/reportes/reportes.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+var moment = require('moment');
 import { LoginService } from 'src/app/services/login/login.service';
 @Component({
   selector: 'app-seguimientos-listar',
@@ -193,12 +194,12 @@ export class SeguimientosListarComponent implements OnInit {
     } else {
       this.areaAux = true;
     }
-    if (this.seguimiento.DESCRIPCION_REQUERIMIENTO == '') {
-      this.descripcionAux = false;
-      entro = true;
-    } else {
-      this.descripcionAux = true;
-    }
+    // if (this.seguimiento.DESCRIPCION_REQUERIMIENTO == '') {
+    //   this.descripcionAux = false;
+    //   entro = true;
+    // } else {
+    //   this.descripcionAux = true;
+    // }
     if (entro == true) {
       Swal.fire({
         icon: 'error',
@@ -209,7 +210,7 @@ export class SeguimientosListarComponent implements OnInit {
       delete this.seguimiento.ID_SEGUIMIENTOS;
       delete this.seguimiento.FECHA_REQUERIMIENTO;
       if (this.seguimiento.ID_REGISTRO == '') {
-        this.seguimiento.ESTADO = 'En proceso';
+        this.seguimiento.ESTADO = 'Sin asignar';
       } else {
         this.seguimiento.ESTADO = 'Pendiente';
       }
@@ -229,6 +230,7 @@ export class SeguimientosListarComponent implements OnInit {
           if (result.value) {
             this.nuevo();
             this.CargarSeguimientos();
+            this.modalService.dismissAll();
           }
         })
       })
@@ -361,9 +363,10 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   validacionFecha(fecha) {
-    var startDate = new Date(fecha);
-    var today = new Date();
-    if (startDate <= today) {
+    var startDate =  new Date(fecha)
+    let startDate1  = (startDate.getFullYear()) + '-' + (startDate.getMonth() + 1) + '-' + (startDate.getDate() + 1)
+    var today = moment(new Date()).format('YYYY-MM-DD')
+    if (startDate1 <= today) {
       Swal.fire({
         icon: 'error',
         title: 'Error en la fecha',
@@ -378,11 +381,11 @@ export class SeguimientosListarComponent implements OnInit {
       this.fechaEntregaAux = true;
     }
   }
-  aprobarDes(dato) {
-    if (dato != '') {
-      this.descripcionAux = true;
-    }
-  }
+  // aprobarDes(dato) {
+  //   if (dato != '') {
+  //     this.descripcionAux = true;
+  //   }
+  // }
   aprobarArea(dato) {
     if (dato != '') {
       this.areaAux = true;

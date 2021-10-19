@@ -3,6 +3,7 @@ import { Registro } from 'src/app/Model/registro';
 import { Usuario } from 'src/app/Model/usuario';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { ListacomboseguimientoService } from '../../services/listacomboseguimiento/listacomboseguimiento.service'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-
+  actualizarInfo
   perfil
   Usuario
   registro: Registro = {
@@ -30,7 +31,7 @@ export class UsuariosComponent implements OnInit {
     Contrasena: ''
   }
 
-  constructor(private listacomboSeguimientoservice: ListacomboseguimientoService, private usuarioService: UsuarioService) { }
+  constructor(private listacomboSeguimientoservice: ListacomboseguimientoService, private usuarioService: UsuarioService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.cargarPerfil();
@@ -74,8 +75,9 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  onRowSelect(event) {
-
+  onRowSelect(event, modal) {
+    this.actualizarInfo = event.data;
+    this.modalService.open(modal, { size: 'lg' });
   }
 
   nuevo() {
@@ -93,6 +95,25 @@ export class UsuariosComponent implements OnInit {
       USUARIO: '',
       Contrasena: ''
     }
+  }
+
+  actualizarRegistro() {
+    delete this.actualizarInfo.DESCRIPCION
+    this.usuarioService.actualizarResgistro(this.actualizarInfo, this.actualizarInfo.ID_REGISTRO).subscribe(res => {
+      console.log(res);
+      console.log(this.actualizarInfo.ID_REGISTRO);
+      Swal.fire({
+        title: 'Actualizado!',
+        text: 'Datos actualizados con exito.',
+        icon: 'success',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+          this.caragarDatos();
+          
+        }
+      })
+    })
   }
 
   eliminarUsuario(btnUsuario) {

@@ -8,17 +8,27 @@
                 <div class="reporte" style=" float: right; margin-right: -192px;">
                     <strong id="strong">Estado y totalidad de casos</strong>
                     <table>
-                        <tr  *ngFor='let reporte of reporte'>
+                        <tr *ngFor='let reporte of reporte'>
                             <td>
                                 <button
-                                    style="background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%); color: white; border: none;">Realizado - {{reporte.Realizados}} </button>
+                                    style="background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%); color: white; border: none;">Realizado
+                                    - {{reporte.Realizados}}</button>
                             </td>
                             <td>
                                 <button
-                                    style="border: none; background-image:linear-gradient(to top, #dcbf9b 0%, #eacda3 100%);  color: white;">Pendiente - {{reporte.Pendientes}}</button>
+                                    style="border: none; background-color: #eca843;  color: white;">Pendiente
+                                    {{reporte.Pendientes}}</button>
                             </td>
                             <td>
-                                <button style="border: none; background-color: whitesmoke; color: black;">En proceso - {{reporte.Proceso}} </button>
+                                <button
+                                    style="border: none; background-color: #FAD912; color: black;">En
+                                    proceso {{reporte.Proceso}}</button>
+                            </td>
+
+                            <td>
+                                <button
+                                    style="border: none; background-color: rgba(245, 245, 245, 0.692); color: black;">Sin
+                                    asignar {{reporte.sinAsignar}}</button>
                             </td>
                         </tr>
                     </table>
@@ -59,7 +69,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
-                <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente' }"
+                <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente', 'Proceso': data.ESTADO === 'En proceso'}"
                     [pSelectableRow]="data">
                     <td>{{data.EPS}}</td>
                     <td>{{data.FECHA_REQUERIMIENTO | date:"dd/MM/yyyy HH:mm:ss"}}</td>
@@ -218,8 +228,7 @@
                     <label style="font-size: 12px; color: black;">Descripcion</label>
                     <textarea name="seguimiento.DESCRIPCION_REQUERIMIENTO"
                         [(ngModel)]="seguimiento.DESCRIPCION_REQUERIMIENTO" style="height: 50PX;" class="form-control"
-                        id="" cols="30" rows="10"    (change)="aprobarDes(seguimiento.DESCRIPCION_REQUERIMIENTO)"
-                        [ngClass]="{'is-invalid': descripcionAux == false }"></textarea>
+                        id="" cols="30" rows="10"></textarea>
                 </div>
 
                 <div class="col-md-5" id="requerimiento">

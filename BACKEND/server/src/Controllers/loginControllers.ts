@@ -15,6 +15,7 @@ class Logincontrollers {
         } catch (error) {
             res.status(404).json({ error: 'No se puedieron obtener Datos' });
         }
+
     }
 }
 

@@ -12,7 +12,7 @@
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
        
         <p-table [value]="Usuario" styleClass="p-datatable-sm  p-datatable-gridlines" [scrollable]="true" scrollHeight="flex" tableStyleClass="prime-table" selectionMode="single"
-            dataKey="code" (onRowSelect)="onRowSelect($event)">
+            dataKey="code"(onRowSelect)="onRowSelect($event,modUsuario)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
                     <th style="background-color: #02adb5e0; color: white;width:16%">Cedula</th>
@@ -121,3 +121,53 @@
             [rowsPerPageOptions]="[5,10,20,30,50]"></p-paginator>
     </div> -->
 </div>
+
+<ng-template #modUsuario let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <strong class="modal-title" id="modal-basic-title">Actualizar datos de usuario</strong>
+        <button style="background: transparent; border: transparent;" type="button" class="close" id="cerrar"
+            aria-label="Close" (click)="d('Cross click')">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <div>Digite la informacion del usuario</div> -->
+        <div class="row">
+            <div class="input-group mb-3" style="justify-content: space-evenly;">
+                <div class="col-md-5">
+                    <label for="">Cedula:</label>
+                    <input type="number" name="actualizarInfo.ID_REGISTRO" class="form-control" disabled
+                        name="actualizarInfo.ID_REGISTRO" [(ngModel)]="actualizarInfo.ID_REGISTRO">
+                </div>
+                <div class="col-md-5">
+                    <label for="">Nombres:</label>
+                    <input type="text" class="form-control" name="actualizarInfo.Nombres"
+                        [(ngModel)]="actualizarInfo.Nombres">
+                </div>
+            </div>
+            <div class="input-group mb-3" style="justify-content: space-evenly;">
+                <div class="col-md-5">
+                    <label for="">Apellidos:</label>
+                    <input type="text" class="form-control" name="actualizarInfo.Apellidos"
+                        [(ngModel)]="actualizarInfo.Apellidos">
+                </div>
+                <div class="col-md-5">
+                    <label for="">Correo:</label>
+                    <input type="text" class="form-control" name="actualizarInfo.Correo"
+                        [(ngModel)]="actualizarInfo.Correo">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="col-md-5" style="margin-left: 5.5%;">
+                    <label for="">Telefono:</label>
+                    <input type="number" class="form-control" name="actualizarInfo.Telefono"
+                        [(ngModel)]="actualizarInfo.Telefono">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="actualizarRegistro()"><i class="fas fa-sync-alt"></i>
+            Modificar</button>
+    </div>
+</ng-template>

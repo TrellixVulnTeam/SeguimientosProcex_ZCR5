@@ -20,9 +20,10 @@ export class SeguimientosService {
     return this.http.post(`${this.API_URI}/`,cargar)
   }
 
-  cargarSeguimientoPerfil(ID_PERFIL,page,row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO){
-    const cargar = {ID_PERFIL, page, row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO }
+  cargarSeguimientoPerfil(ID_PERFIL,USUARIO,page,row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO){
+    const cargar = {ID_PERFIL,USUARIO, page, row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO }
     return this.http.post(`${this.API_URI}/seguimiento/perfil`,cargar)
+    
   }
 
   numerodeRegistros(){

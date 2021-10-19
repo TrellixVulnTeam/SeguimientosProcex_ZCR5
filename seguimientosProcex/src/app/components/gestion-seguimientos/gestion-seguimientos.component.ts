@@ -177,6 +177,29 @@ export class GestionSeguimientosComponent implements OnInit {
           this.gestionseguimiento.DESCRIPCION =  '';
           this.Guargarsoporte();
           this.cargarGestion();
+          delete this.seguimiento.FECHA_REQUERIMIENTO;
+          delete this.seguimiento1.Nombres;
+          delete this.seguimiento1.Apellidos;
+          for (let i = 0; i < this.seguimiento1.length; i++) {
+            this.seguimiento.ESTADO = 'En proceso';
+            this.seguimiento.FECHA_FINALIZACION = this.seguimiento1[i].FECHA_FINALIZACION;
+            this.seguimiento.EPS = this.seguimiento1[i].EPS;
+            this.seguimiento.MEDIO = this.seguimiento1[i].MEDIO;
+            this.seguimiento.TIPO_REQUERIMIENTO = this.seguimiento1[i].TIPO_REQUERIMIENTO;
+            this.seguimiento.TITULO_REQUERIMIENTO = this.seguimiento1[i].TITULO_REQUERIMIENTO;
+            this.seguimiento.DESCRIPCION_REQUERIMIENTO = this.seguimiento1[i].DESCRIPCION_REQUERIMIENTO;
+            this.seguimiento.AREA_VALIDACION = this.seguimiento1[i].AREA_VALIDACION;
+            this.seguimiento.SEGUIMIENTO = this.seguimiento1[i].SEGUIMIENTO;
+            this.seguimiento.FECHA_ENTREGA = this.seguimiento1[i].FECHA_ENTREGA;
+            this.seguimiento.Categoria = this.seguimiento1[i].Categoria;
+            this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
+            this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
+            this.seguimiento.ID_PERFIL =  this.seguimiento1[i].ID_PERFIL;
+            console.log(this.seguimiento)
+            this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {
+            })
+          }
+         
         }
       })
     })
@@ -197,54 +220,58 @@ export class GestionSeguimientosComponent implements OnInit {
   }
 
   cerrarcaso() {
-    let FECHA_FINALIZACION
-    let FECHA_REQUERIMIENTO
-
-    delete this.seguimiento.FECHA_REQUERIMIENTO;
-    delete this.seguimiento1.Nombres;
-    delete this.seguimiento1.Apellidos;
-    this.seguimiento1.ID_PERFIL;
-    for (let i = 0; i < this.seguimiento1.length; i++) {
-      this.seguimiento.ESTADO = 'Realizado'
-      let today = new Date();
-      let jstoday = '';
-      jstoday = formatDate(today, 'yyyy-MM-dd hh:mm:ss a', 'en-US');
-      this.seguimiento.FECHA_FINALIZACION = jstoday;
-      this.seguimiento.EPS = this.seguimiento1[i].EPS;
-      this.seguimiento.MEDIO = this.seguimiento1[i].MEDIO;
-      this.seguimiento.TIPO_REQUERIMIENTO = this.seguimiento1[i].TIPO_REQUERIMIENTO;
-      this.seguimiento.TITULO_REQUERIMIENTO = this.seguimiento1[i].TITULO_REQUERIMIENTO;
-      this.seguimiento.DESCRIPCION_REQUERIMIENTO = this.seguimiento1[i].DESCRIPCION_REQUERIMIENTO;
-      this.seguimiento.AREA_VALIDACION = this.seguimiento1[i].AREA_VALIDACION;
-      this.seguimiento.SEGUIMIENTO = this.seguimiento1[i].SEGUIMIENTO;
-      this.seguimiento.FECHA_ENTREGA = this.seguimiento1[i].FECHA_ENTREGA;
-      this.seguimiento.Categoria = this.seguimiento1[i].Categoria;
-      FECHA_FINALIZACION =  moment(new Date(this.seguimiento.FECHA_FINALIZACION)).format('YYYY-MM-DD');
-      FECHA_REQUERIMIENTO =  moment(new Date(this.seguimiento1[i].FECHA_REQUERIMIENTO)).format('YYYY-MM-DD');
-      let fechaFinalizacionC = moment(FECHA_FINALIZACION)
-      this.seguimiento.Dias_Entrega = fechaFinalizacionC.diff(FECHA_REQUERIMIENTO, 'days'), ' dias de diferencia'
-      console.log(this.seguimiento.Dias_Entrega)
-      this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
-      this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
-      this.seguimiento.ID_PERFIL = this.seguimiento1[i].ID_PERFIL;
-    }
-    this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {
-      Swal.fire({
-        title: 'Almacenado!',
-        text: 'Datos almacenados con exito.',
-        icon: 'success',
-        allowOutsideClick: false
-      }
-
-      ).then((result) => {
-        if (result.value) {
-          if (this.loginservice.isAnalistas || this.loginservice.isSoporte || this.loginservice.isDesarrollo) {
-            this.router.navigate(['/Seguimientos']);
-          } else {
-            this.router.navigate(['/Seguimientos-listar']);
-          }
+    Swal.fire({
+      title: 'Advertencia',
+      text: "¿desea cerrar el caso?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, cierralo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        delete this.seguimiento.FECHA_REQUERIMIENTO;
+        delete this.seguimiento1.Nombres;
+        delete this.seguimiento1.Apellidos;
+        this.seguimiento1.ID_PERFIL;
+        for (let i = 0; i < this.seguimiento1.length; i++) {
+          this.seguimiento.ESTADO = 'Realizado'
+          let today = new Date();
+          let jstoday = '';
+          jstoday = formatDate(today, 'yyyy-MM-dd hh:mm:ss a', 'en-US');
+          this.seguimiento.FECHA_FINALIZACION = jstoday;
+          console.log(this.seguimiento1)
+          this.seguimiento.EPS = this.seguimiento1[i].EPS;
+          this.seguimiento.MEDIO = this.seguimiento1[i].MEDIO;
+          this.seguimiento.TIPO_REQUERIMIENTO = this.seguimiento1[i].TIPO_REQUERIMIENTO;
+          this.seguimiento.TITULO_REQUERIMIENTO = this.seguimiento1[i].TITULO_REQUERIMIENTO;
+          this.seguimiento.DESCRIPCION_REQUERIMIENTO = this.seguimiento1[i].DESCRIPCION_REQUERIMIENTO;
+          this.seguimiento.AREA_VALIDACION = this.seguimiento1[i].AREA_VALIDACION;
+          this.seguimiento.SEGUIMIENTO = this.seguimiento1[i].SEGUIMIENTO;
+          this.seguimiento.FECHA_ENTREGA = this.seguimiento1[i].FECHA_ENTREGA;
+          this.seguimiento.Categoria = this.seguimiento1[i].Categoria;
+          this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
+          this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
+          this.seguimiento.ID_PERFIL = this.seguimiento1[i].ID_PERFIL;
         }
-      })
+        this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {
+          Swal.fire({
+            title: 'Almacenado!',
+            text: 'Datos almacenados con exito.',
+            icon: 'success',
+            allowOutsideClick: false
+          }).then((result) => {
+            if (result.value) {
+              if (this.loginservice.isAnalistas || this.loginservice.isSoporte || this.loginservice.isDesarrollo) {
+                this.router.navigate(['/Seguimientos']);
+              } else {
+                this.router.navigate(['/Seguimientos-listar']);
+              }
+            }
+          })
+        })
+      }
     })
   }
 
@@ -373,10 +400,12 @@ export class GestionSeguimientosComponent implements OnInit {
   }
 
   validacionFecha(fecha) {
-    var startDate = new Date(fecha);
-    var today = new Date();
+    var startDate =  new Date(fecha)
+    let startDate1  = (startDate.getFullYear()) + '-' + (startDate.getMonth() + 1) + '-' + (startDate.getDate() + 1)
+    var today = moment(new Date()).format('YYYY-MM-DD')
     var aux = this.seguimiento1[0].FECHA_ENTREGA
-    if (startDate < today) {
+    if (startDate1 < today) {
+      console.log(startDate)
       Swal.fire({
         icon: 'error',
         title: 'Error en la fecha',

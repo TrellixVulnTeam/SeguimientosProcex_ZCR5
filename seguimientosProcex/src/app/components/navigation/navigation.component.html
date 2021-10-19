@@ -14,7 +14,7 @@
                 <a class="nav-link active" [routerLink]="['/Seguimientos-listar']">Seguimientos</a>
             </li>
 
-            <li class="nav-item"  *ngIf='loginService.isAnalistas || loginService.isSoporte || loginService.isDesarrollo'>
+            <li class="nav-item"  *ngIf='loginService.isAnalistas || loginService.isSoporte || loginService.isDesarrollo || loginService.isCoorSoporte'>
                 <a class="nav-link active" [routerLink]="['/Seguimientos']">Seguimientos</a>
             </li>
             <li class="nav-item dropdown"  *ngIf='loginService.isAdminD || loginService.isAdminJ' >

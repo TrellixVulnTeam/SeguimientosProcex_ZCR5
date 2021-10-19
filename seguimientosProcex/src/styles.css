@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100% !important}
-body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { overflow: auto; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .y-card{
     display: flex;
@@ -99,11 +99,16 @@ body { overflow: hidden; margin: 0; font-family: Roboto, "Helvetica Neue", sans-
 }
 
 .pendiente{
-  background-image: linear-gradient(to top, #dcbf9b 0%, #eacda3 100%) !important;
+  background-color: #eca843 !important;
   color: black !important;
 }
 
 .Proceso{
+  background-color:#FAD912!important;
+  color: black !important;
+}
+
+.sinAsignar{
   background-image:rgba(245, 245, 245, 0.692) !important;
   color: black !important;
 }
