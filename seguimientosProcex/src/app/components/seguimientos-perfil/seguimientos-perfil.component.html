@@ -11,23 +11,23 @@
                         <tr *ngFor='let reporte of reporte'>
                             <td>
                                 <button
-                                    style="background-image: linear-gradient(60deg, #50c9a9 0%, #50c9a9 100%); color: white; border: none;">Realizado
+                                    style="background-color: #b0e4e2; color: black; border: none; font-size: 13px;">Realizado
                                     - {{reporte.Realizados}}</button>
                             </td>
                             <td>
                                 <button
-                                    style="border: none; background-color: #eca843;  color: white;">Pendiente
+                                    style="border: none; background-color: #f2ce9e;  color: black; font-size: 13px;">Pendiente
                                     {{reporte.Pendientes}}</button>
                             </td>
                             <td>
                                 <button
-                                    style="border: none; background-color: #FAD912; color: black;">En
+                                    style="border: none; background-color: #d3c8f2; color: black; font-size: 13px;">En
                                     proceso {{reporte.Proceso}}</button>
                             </td>
 
                             <td>
                                 <button
-                                    style="border: none; background-color: rgba(245, 245, 245, 0.692); color: black;">Sin
+                                    style="border: none; background-color: rgba(245, 245, 245, 0.692); color: black; font-size: 13px;">Sin
                                     asignar {{reporte.sinAsignar}}</button>
                             </td>
                         </tr>
@@ -50,22 +50,22 @@
             selectionMode="single" dataKey="code"  [scrollable]="true" scrollHeight="flex"  (onRowSelect)="onRowSelect($event,content)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
-                    <th style="background-color: #02adb5e0; color: white; ">EPS<i class="fas fa-filter"
+                    <th >EPS<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEps(content1)"></i></th>
-                    <th style="background-color: #02adb5e0; color: white;">F. Requerimiento</th>
-                    <th style="background-color: #02adb5e0; color: white;">Medio</th>
-                    <th style="background-color: #02adb5e0; color: white;">T.Requerimiento<i class="fas fa-filter"
+                    <th >F. Requerimiento</th>
+                    <th >Medio</th>
+                    <th >T.Requerimiento<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroTiporequerimiento(content2)"></i></th>
-                    <th style="background-color: #02adb5e0; color: white;">Titulo</th>
-                    <th style="background-color: #02adb5e0; color: white;">Área validacion</th>
-                    <th style="background-color: #02adb5e0; color: white;">Estado<i class="fas fa-filter"
+                    <th >Titulo</th>
+                    <th >Área validacion</th>
+                    <th >Estado<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
-                    <th style="background-color: #02adb5e0; color: white;">Fecha entrega</th>
-                    <th style="background-color: #02adb5e0; color: white;  width: 10%;">Fecha Finalizacion</th>
-                    <th style="background-color: #02adb5e0; color: white; width: 1%;">D.Solucion</th>
-                    <th style="background-color: #02adb5e0; color: white;">Responsable<i class="fas fa-filter"
+                    <th >Fecha entrega</th>
+                    <th style="width: 10%;">Fecha Finalizacion</th>
+                    <th style="width: 1%;">D.Solucion</th>
+                    <th >Responsable<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroResponsable(content4)"></i> </th>
-                            <th style="background-color: #02adb5e0; color: white;">Asignar R.</th>
+                            <th >Asignar R.</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>

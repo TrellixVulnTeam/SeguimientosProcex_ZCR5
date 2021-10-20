@@ -18,8 +18,14 @@ class Login {
                         if (match) {
                             result = result[0];
                             delete result.Contrasena;
-                            var token = jwt.sign(JSON.stringify(result), JWT_Secret);
-                            resolev({signedUser: result, token: token });
+                            let datos_user = {
+                                ID_USUARIO: result.ID_USUARIO,
+                                ID_REGISTRO: result.ID_REGISTRO,
+                                ID_PERFIL: result.ID_PERFIL,
+                                USUARIO: result.USUARIO
+                            }
+                            var token = jwt.sign(datos_user, JWT_Secret,{expiresIn:"10s"});
+                            resolev({signedUser: datos_user, token: token });
                         } else {
                             let error ="Contraseña no valida"
                             resolev(error)

@@ -21,16 +21,19 @@ class GestionSeguimiento {
         });
     }
     static guardarGestion(newDatos) {
-        try {
-            database_1.default.query('insert into gestion_seguimiento set ?', newDatos, function (err, result, fields) {
-                if (err)
-                    throw err;
-            });
-        }
-        catch (error) {
-            //res.status(404).json({ error: 'No se pudieron almacenar datos' });
-        }
-        ;
+        return new Promise(function (resolev, reject) {
+            try {
+                database_1.default.query('insert into gestion_seguimiento set ?', newDatos, function (err, result, fields) {
+                    if (err)
+                        throw err;
+                    resolev(result['insertId']);
+                });
+            }
+            catch (error) {
+                //res.status(404).json({ error: 'No se pudieron almacenar datos' });
+            }
+            ;
+        });
     }
     static actualizarGestion(newDatos, ID_GESTION_SEGUIMIENTO) {
         return new Promise(function (resolev, reject) {

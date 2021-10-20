@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 import  soportes  from '../dao/soportes'
 
-
-
 class SoportesControllers{
     public async GuardarSoporte(req: Request, res: Response) {
         var almacenar = await soportes.GuardarSoporte(req.body,req)

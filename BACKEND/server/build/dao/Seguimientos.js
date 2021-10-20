@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database"));
 class Seguimientos {
-    static cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row) {
+    static cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, page, row) {
         return new Promise(function (resolev, reject) {
             try {
                 var query = "SELECT S.ID_SEGUIMIENTOS, S.EPS, S.FECHA_REQUERIMIENTO, S.MEDIO, S.TIPO_REQUERIMIENTO, S.TITULO_REQUERIMIENTO, S.DESCRIPCION_REQUERIMIENTO, S.AREA_VALIDACION, ";
-                query += "S.ESTADO, S.FECHA_ENTREGA, S.FECHA_FINALIZACION, S.SEGUIMIENTO, RUTA_SOPORTES, S.Categoria, S.ID_REGISTRO, R.Nombres, R.Apellidos,P.DESCRIPCION as Area, S.ID_PERFIL ";
+                query += "S.ESTADO, S.FECHA_ENTREGA, S.FECHA_FINALIZACION, S.SEGUIMIENTO, RUTA_SOPORTES, S.Categoria, S.ID_REGISTRO, R.Nombres, R.Apellidos,P.DESCRIPCION as Area, S.ID_PERFIL, S.Dias_Entrega ";
                 query += "from seguimientos S left join registro R on R.ID_REGISTRO = S.ID_REGISTRO inner join perfil P on P.ID_PERFIL = S.ID_PERFIL ";
-                query += "where S.EPS LIKE '%" + EPS + "%' and S.TIPO_REQUERIMIENTO LIKE '%" + TIPO_REQUERIMIENTO + "%' and S.ESTADO LIKE '%" + ESTADO + "%' and S.ID_REGISTRO LIKE '%" + ID_REGISTRO + "%' order by FECHA_REQUERIMIENTO desc limit ?,? ";
+                query += "where S.EPS LIKE '%" + EPS + "%' and S.TIPO_REQUERIMIENTO LIKE '%" + TIPO_REQUERIMIENTO + "%' and S.ESTADO LIKE '%" + ESTADO + "%' and S.FECHA_FINALIZACION LIKE '%" + FECHA_FINALIZACION + "%' and S.ID_REGISTRO LIKE '%" + ID_REGISTRO + "%' order by FECHA_REQUERIMIENTO desc limit ?,? ";
                 database_1.default.query(query, [page, row], function (err, result, fields) {
                     if (err)
                         throw err;
@@ -24,14 +24,14 @@ class Seguimientos {
             ;
         });
     }
-    static cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL) {
+    static cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL, USUARIO) {
         return new Promise(function (resolev, reject) {
             try {
                 var query = "SELECT S.ID_SEGUIMIENTOS, S.EPS, S.FECHA_REQUERIMIENTO, S.MEDIO, S.TIPO_REQUERIMIENTO, S.TITULO_REQUERIMIENTO, S.DESCRIPCION_REQUERIMIENTO, S.AREA_VALIDACION, ";
-                query += "S.ESTADO, S.FECHA_ENTREGA, S.FECHA_FINALIZACION, S.SEGUIMIENTO, RUTA_SOPORTES, S.Categoria, S.ID_REGISTRO, R.Nombres, R.Apellidos, S.ID_PERFIL ";
-                query += "from seguimientos S left join registro R on R.ID_REGISTRO = S.ID_REGISTRO ";
-                query += "where S.ID_PERFIL = ? and S.EPS LIKE '%" + EPS + "%' and S.TIPO_REQUERIMIENTO LIKE '%" + TIPO_REQUERIMIENTO + "%' and S.ESTADO LIKE '%" + ESTADO + "%' and S.ID_REGISTRO LIKE '%" + ID_REGISTRO + "%' order by FECHA_REQUERIMIENTO desc limit ?,? ";
-                database_1.default.query(query, [ID_PERFIL, page, row], function (err, result, fields) {
+                query += "S.ESTADO, S.FECHA_ENTREGA, S.FECHA_FINALIZACION, S.SEGUIMIENTO, RUTA_SOPORTES, S.Categoria, S.ID_REGISTRO, R.Nombres, R.Apellidos, S.ID_PERFIL, S.Dias_Entrega ";
+                query += "from seguimientos S left join registro R on R.ID_REGISTRO = S.ID_REGISTRO left join usuario U on U.ID_REGISTRO = R.ID_REGISTRO ";
+                query += "where S.ID_PERFIL = ? and u.USUARIO = ? or  S.ID_REGISTRO = '' and S.EPS LIKE '%" + EPS + "%' and S.TIPO_REQUERIMIENTO LIKE '%" + TIPO_REQUERIMIENTO + "%' and S.ESTADO LIKE '%" + ESTADO + "%' and S.ID_REGISTRO LIKE '%" + ID_REGISTRO + "%' order by FECHA_REQUERIMIENTO desc limit ?,? ";
+                database_1.default.query(query, [ID_PERFIL, USUARIO, page, row], function (err, result, fields) {
                     if (err)
                         throw err;
                     resolev(result);

@@ -16,6 +16,7 @@ class RegistroRoutes {
         this.router.get('/listar/responsable', registroControllers.cargarResponsableSeguimientoGest);
         this.router.delete('/registro/:ID_REGISTRO', registroControllers.eliminarRegistro);
         this.router.delete('/usuario/:ID_REGISTRO', registroControllers.eliminarUsuario);
+        this.router.put('/usuario/:ID_REGISTRO',registroControllers.actualizarRegistro);
     }
 
 }

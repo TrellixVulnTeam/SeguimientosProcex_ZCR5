@@ -30,6 +30,7 @@ class Server {
     }
 
     routes(): void {
+        
         this.app.use(indexRoutes);
         this.app.use('/api/seguimientos',seguimientosRoutes)
         this.app.use('/api/listacomboseguimiento',listaComboSeguimientoRoutes)

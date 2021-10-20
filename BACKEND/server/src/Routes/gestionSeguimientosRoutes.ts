@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { gestionSeguimientoControllers } from '../Controllers/gestionSeguimientoControllers';
 
-
 class GestionSeguimientosRoutes {
     public router: Router = Router()
     constructor() {
@@ -13,6 +12,8 @@ class GestionSeguimientosRoutes {
         this.router.post('/', gestionSeguimientoControllers.guardarGestion);
         this.router.put('/:ID_GESTION_SEGUIMIENTO', gestionSeguimientoControllers.actualizarGestion);
     }
+
+
 }
 
 const gestionSeguimientosRoutes = new GestionSeguimientosRoutes()

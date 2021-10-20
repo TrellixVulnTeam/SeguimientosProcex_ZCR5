@@ -53,6 +53,7 @@
       
       #strong{
         margin-left: 98px;
+        font-size: 14px;
       }
       .spanError{
         border-color: red !important;

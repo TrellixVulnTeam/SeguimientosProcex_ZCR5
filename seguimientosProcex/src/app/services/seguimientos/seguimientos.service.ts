@@ -15,8 +15,8 @@ export class SeguimientosService {
     return this.http.post(`${this.API_URI}/almacenar`, seguimiento)
   }
 
-  cargarTodos(page,row,EPS, TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO){
-    const cargar = { page, row,EPS, TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO }
+  cargarTodos(page,row,EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO){
+    const cargar = { page, row,EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO }
     return this.http.post(`${this.API_URI}/`,cargar)
   }
 

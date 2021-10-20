@@ -11,10 +11,12 @@ class Reportes {
                 var query = "select ";
                 query += "(select count(1) from seguimientos,registro,usuario,perfil where seguimientos.ID_REGISTRO = registro.ID_REGISTRO and usuario.ID_REGISTRO = registro.ID_REGISTRO and usuario.ID_PERFIL = perfil.ID_PERFIL and perfil.ID_PERFIL = ? and seguimientos.ESTADO = 'Realizado') as Realizados, ";
                 query += "(select count(1) from seguimientos,registro,usuario,perfil where seguimientos.ID_REGISTRO = registro.ID_REGISTRO and usuario.ID_REGISTRO = registro.ID_REGISTRO and usuario.ID_PERFIL = perfil.ID_PERFIL and perfil.ID_PERFIL = ? and seguimientos.ESTADO = 'Pendiente') as Pendientes, ";
+                query += "(select count(1) from seguimientos S left join registro R on R.ID_REGISTRO = S.ID_REGISTRO inner join perfil P on P.ID_PERFIL = S.ID_PERFIL where  S.ID_PERFIL = ? and S.ESTADO = 'Sin asignar') as sinAsignar, ";
                 query += "(select count(1) from seguimientos S left join registro R on R.ID_REGISTRO = S.ID_REGISTRO inner join perfil P on P.ID_PERFIL = S.ID_PERFIL where S.ID_PERFIL = ? and S.ESTADO = 'En proceso') as Proceso ";
-                database_1.default.query(query, [ID_PERFIL, ID_PERFIL, ID_PERFIL], function (err, result, fields) {
+                database_1.default.query(query, [ID_PERFIL, ID_PERFIL, ID_PERFIL, ID_PERFIL], function (err, result, fields) {
                     if (err)
                         throw err;
+                    console.log(result);
                     resolev(result);
                 });
             }

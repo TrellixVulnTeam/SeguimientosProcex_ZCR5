@@ -29,6 +29,14 @@ export class LoginService {
     this.router.navigateByUrl('/Login');
   }
 
+   logout2() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('accestoken');
+    localStorage.removeItem('access_token');
+    // this.router.navigate(['/Login']);
+    window.location.reload();
+  }
+
   getCurrentperfil() {
     let perfil_string = localStorage.getItem('perfil');
     if (perfil_string) {

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { seguimientosControllers } from '../Controllers/SeguimientosControllers';
+import {Tokenvalidation} from '../lib/validateToken'
 
 class SeguimientosRoutes {
     public router: Router = Router()
@@ -8,6 +9,7 @@ class SeguimientosRoutes {
     }
     
     config(): void {
+        this.router.use(Tokenvalidation)
         this.router.post('/', seguimientosControllers.CargarDatos);
         this.router.post('/seguimiento/perfil', seguimientosControllers.cararDatosPorPerfil);
         this.router.post('/almacenar', seguimientosControllers.guardarDatos);
@@ -15,6 +17,7 @@ class SeguimientosRoutes {
         this.router.get('/', seguimientosControllers.getNumeroRegistro);
         this.router.get('/:ID_SEGUIMIENTOS', seguimientosControllers.cargarSeguimeintos);
     }
+
 }
 
 const seguimientosRoutes = new SeguimientosRoutes()

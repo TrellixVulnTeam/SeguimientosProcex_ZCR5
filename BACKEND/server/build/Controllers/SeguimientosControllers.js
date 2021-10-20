@@ -18,18 +18,17 @@ const Seguimientos_1 = __importDefault(require("../dao/Seguimientos"));
 class SeguimientosControllers {
     CargarDatos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row } = req.body;
+            const { EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, page, row } = req.body;
             const pagina = row * page;
-            var datos = yield Seguimientos_1.default.cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row);
-            console.log(datos);
+            var datos = yield Seguimientos_1.default.cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, pagina, row);
             res.json(datos);
         });
     }
     cararDatosPorPerfil(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL } = req.body;
+            const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL, USUARIO } = req.body;
             const pagina = row * page;
-            var datos = yield Seguimientos_1.default.cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row, ID_PERFIL);
+            var datos = yield Seguimientos_1.default.cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row, ID_PERFIL, USUARIO);
             res.json(datos);
         });
     }

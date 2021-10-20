@@ -39,9 +39,10 @@ export class SeguimientosListarComponent implements OnInit {
   areaAux = true;
   descripcionAux = true;
 
-  ID_REGISTRO = ''
+  ID_REGISTRO = '';
   ID_REGISTRO1
-  TIPO_REQUERIMIENTO = ''
+  TIPO_REQUERIMIENTO = '';
+  FECHA_FINALIZACION = '';
   ESTADO = ''
   usuario
   reporte
@@ -90,7 +91,7 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   CargarSeguimientos() {
-    this.seguimintoService.cargarTodos(this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_REGISTRO).subscribe(res => {
+    this.seguimintoService.cargarTodos(this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.FECHA_FINALIZACION, this.ID_REGISTRO).subscribe(res => {
       this.cargaseguimiento = res;
     })
   }
@@ -292,6 +293,10 @@ export class SeguimientosListarComponent implements OnInit {
     this.modalService.open(content5, { size: 'sm', centered: true });
   }
 
+  fechaFinalizacion(content7) {
+    this.modalService.open(content7, { size: 'sm', centered: true });
+  }
+
   asignarResponsabl(content6, data) {
     this.responsable = data
     this.cargarResponsableSeguimientoasig(data.ID_PERFIL);
@@ -338,6 +343,7 @@ export class SeguimientosListarComponent implements OnInit {
     this.ID_REGISTRO = '';
     this.TIPO_REQUERIMIENTO = '';
     this.ESTADO = '';
+    this.FECHA_FINALIZACION = '';
     this.CargarSeguimientos();
   }
 
@@ -366,7 +372,7 @@ export class SeguimientosListarComponent implements OnInit {
     var startDate =  new Date(fecha)
     let startDate1  = (startDate.getFullYear()) + '-' + (startDate.getMonth() + 1) + '-' + (startDate.getDate() + 1)
     var today = moment(new Date()).format('YYYY-MM-DD')
-    if (startDate1 <= today) {
+    if (startDate1 < today) {
       Swal.fire({
         icon: 'error',
         title: 'Error en la fecha',

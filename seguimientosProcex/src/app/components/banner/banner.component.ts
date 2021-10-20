@@ -25,7 +25,7 @@ export class BannerComponent implements OnInit {
     }
   }
 
-  constructor(private loginService:LoginService, private UsuarioService:UsuarioService,private loginservice: LoginService, private ngxSpinnerService: NgxUiLoaderService,) { 
+  constructor(private UsuarioService:UsuarioService,private loginservice: LoginService, private ngxSpinnerService: NgxUiLoaderService,) { 
     let user_string = localStorage.getItem('currentUser');
     this.usuario = JSON.parse(user_string);
   }

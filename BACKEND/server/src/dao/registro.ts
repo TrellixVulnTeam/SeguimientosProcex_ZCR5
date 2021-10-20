@@ -162,6 +162,19 @@ class Registro {
         });
     }
 
+    public static actualizarRegistro(dato,ID_REGISTRO){
+        return new Promise(function(resolev,reject){
+            try {
+                pool.query("update registro set ? where registro.ID_REGISTRO = ?",[dato,ID_REGISTRO], function(err, result, fields){
+                    if (err) throw err;
+                    resolev(result) 
+                });
+            } catch (error) {
+                
+            }
+        })
+    }
+
 }
 
 export default Registro;

@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
 import Seguimientos from '../dao/Seguimientos';
+
 // import notificarSeguimientoPorEmail from '../Logica/notificarSeguimientoPorEmail';
 
 class SeguimientosControllers {
   public async CargarDatos(req: Request, res: Response) {
-    const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row } = req.body;
+    const { EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, page, row } = req.body;
     const pagina = row * page
-    var datos = await Seguimientos.cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row);
-    console.log(datos)
+    var datos = await Seguimientos.cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, pagina, row);
     res.json(datos);
   }
 
   public async cararDatosPorPerfil(req: Request, res: Response) {
-    const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL } = req.body;
+    const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL,USUARIO } = req.body;
     const pagina = row * page
-    var datos = await Seguimientos.cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row, ID_PERFIL);
+    var datos = await Seguimientos.cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row, ID_PERFIL,USUARIO);
     res.json(datos);
   }
 

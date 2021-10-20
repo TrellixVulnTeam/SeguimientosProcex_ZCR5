@@ -2,7 +2,8 @@
     <div class="y-card-header">
         <div class="row">
             <div class="col-md-12" id="">
-                <i class="fas fa-arrow-circle-left" (click)="redireccionar()" style="margin-top: 10px; margin-left: 15px; font-size: 25px; color: #02adb5e0;cursor: pointer;"></i>
+                <i class="fas fa-arrow-circle-left" (click)="redireccionar()"
+                    style="margin-top: 10px; margin-left: 15px; font-size: 25px; color: #02adb5e0;cursor: pointer;"></i>
                 <button type="button" id="button" class="btn btn-secondary" (click)="open(content)"><i
                         class="fas fa-file-alt"></i> Nuevo</button>
             </div>
@@ -10,17 +11,15 @@
     </div>
 
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
-        <p-table [value]="soporte" styleClass="p-datatable-sm p-datatable-gridlines" [scrollable]="true" scrollHeight="flex"
-            tableStyleClass="prime-table">
+        <p-table [value]="soporte" styleClass="p-datatable-sm p-datatable-gridlines" [scrollable]="true"
+            scrollHeight="flex" tableStyleClass="prime-table">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
-                    <th style="width:90px;background-color: #02adb5e0; color: white;">Tipo Archivo<i class="fas fa-filter"
-                            style="cursor: pointer;"></i> </th>
-                    <th style="width:150px;background-color: #02adb5e0; color: white;">Nombre Archivo <i
-                            class="fas fa-filter" style="cursor: pointer;"></i> </th>
-                    <th style="width:110px;background-color: #02adb5e0; color: white;">Fecha creacion</th>
-                    <th style="width:100px;background-color: #02adb5e0; color: white;">Usuario creacion</th>
-                    <th style="width:100px;background-color: #02adb5e0; color: white;">Descargar</th>
+                    <th>Tipo Archivo <i class="fas fa-filter" style="cursor: pointer;"></i> </th>
+                    <th>Nombre Archivo <i class="fas fa-filter" style="cursor: pointer;"></i> </th>
+                    <th>Fecha creacion</th>
+                    <th>Usuario creacion</th>
+                    <th>Descargar</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
@@ -29,7 +28,8 @@
                     <td style="width:145px">{{data.nombre_archivo}}</td>
                     <td style="width:118px">{{data.fecha_creacion | date:"dd/MM/yyyy HH:mm:ss"}}</td>
                     <td style="width:100px">{{data.usuario_creacion}}</td>
-                    <td style="width:80px"><i class="fas fa-download" style="cursor: pointer" (click)="(Descargarsoporte(data.ID_soporte))"></i></td>
+                    <td style="width:80px"><i class="fas fa-download" style="cursor: pointer"
+                            (click)="(Descargarsoporte(data.ID_soporte))"></i></td>
                 </tr>
             </ng-template>
         </p-table>
@@ -45,9 +45,9 @@
     <div class="modal-header" id="soporte">
         <strong class="modal-title" id="modal-basic-title">Carga de soportes </strong>
         <button style="background: transparent; border: transparent;" type="button" class="close" id="cerrar"
-        aria-label="Close" (click)="d('Cross click')">
-        <i class="fas fa-times"></i>
-    </button>
+            aria-label="Close" (click)="d('Cross click')">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
     <div class="modal-body">
         <form>

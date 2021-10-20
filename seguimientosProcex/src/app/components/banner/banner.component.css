@@ -41,12 +41,7 @@
     line-height: 18px;
     right: 20%;
 }
-b{
-    color: #16655b;
-    font-family: auto;
-    font-size: 19px;
-    margin-right: 7px;
-}
+
 #soporte{
     margin-left: 250px;
     background: #4e92ce;
@@ -99,6 +94,8 @@ button.mat-focus-indicator.mat-button.mat-button-base.mat-primary {
     display: flex;
     height:22px;
     font-weight: 600;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    font-weight: normal;
 
 }
 

@@ -47,6 +47,13 @@ class RegistroControllers {
         res.json(datos);
     }
 
+    public async actualizarRegistro(req:Request,res:Response){
+        const {ID_REGISTRO} = req.params;
+        const datos = await registro.actualizarRegistro(req.body,ID_REGISTRO)
+        res.json(datos)
+    }
+
+
 }
 
 
