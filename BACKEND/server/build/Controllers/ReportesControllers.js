@@ -22,6 +22,13 @@ class ReportesControllers {
             res.json(datos);
         });
     }
+    cargarReporteCasosPorUsuarios(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { ID_PERFIL, ID_REGISTRO } = req.body;
+            var datos = yield reportes_1.default.cargarReporteCasosPorUsuarios(ID_PERFIL, ID_REGISTRO);
+            res.json(datos);
+        });
+    }
     cargarReportePerfilDesarrollo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { ID_REGISTRO } = req.body;

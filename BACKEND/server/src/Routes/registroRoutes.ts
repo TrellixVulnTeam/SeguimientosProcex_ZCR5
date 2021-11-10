@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { registroControllers } from '../Controllers/RegistroControllers';
+import { Tokenvalidation } from '../lib/validateToken';
 
 class RegistroRoutes {
     public router: Router = Router()
@@ -8,9 +9,11 @@ class RegistroRoutes {
     }
 
     config(): void {
+         this.router.use(Tokenvalidation)
         this.router.post('/registrar', registroControllers.registrar);
         this.router.post('/usuario', registroControllers.crearUsuario);
         this.router.get('/:usuario', registroControllers.listarDatosUsuarios);
+        this.router.get('/perfil/:ID_REGISTRO', registroControllers.CargarPerfil);
         this.router.get('/listar/usuario', registroControllers.listarDatosRegistro);
         this.router.get('/responsable/:ID_PERFIL', registroControllers.listarResponsableSeguimiento);
         this.router.get('/listar/responsable', registroControllers.cargarResponsableSeguimientoGest);

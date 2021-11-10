@@ -9,6 +9,12 @@ class ReportesControllers {
         res.json(datos);
     }
 
+    public async cargarReporteCasosPorUsuarios(req: Request, res: Response) {
+        const { ID_PERFIL,ID_REGISTRO } = req.body;
+        var datos = await Reportes.cargarReporteCasosPorUsuarios(ID_PERFIL,ID_REGISTRO)
+        res.json(datos);
+    }
+
     public async cargarReportePerfilDesarrollo(req: Request, res: Response) {
         const { ID_REGISTRO } = req.body;
         var datos = await Reportes.cargarReportePerfilDesarrollo(ID_REGISTRO)
@@ -37,6 +43,7 @@ class ReportesControllers {
         var datos = await Reportes.cargarReportePerfilcoordinadorSoporte()
         res.json(datos);
     }
+
 }
 
 export const reportesControllers = new ReportesControllers();

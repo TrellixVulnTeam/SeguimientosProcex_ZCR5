@@ -14,7 +14,7 @@
                     <i class="fas fa-folder-plus"> Nueva gestión</i>
                 </button>
                 <button type="button" (click)="actualizarSeguimiento()"
-                    *ngIf='loginservice.isAdminD || loginservice.isAdminJ'
+                    *ngIf='loginservice.isAdminD || loginservice.isAdminJ || loginservice.isAdmin'
                     style="margin-right: 30px; margin-top: 5px; " id="button" class="btn btn-primary"><i
                         class="fas fa-sync-alt"></i> Actalizar Seguimiento</button>
             </div>

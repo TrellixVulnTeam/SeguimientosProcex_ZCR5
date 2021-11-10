@@ -36,9 +36,9 @@ export class ReportesComponent implements OnInit {
   yAxisLabel = 'Total casos';
   legendTitle = 'Estados'
   customColors = [
-    { name: 'Realizados', value: '#50c9a9' },
-    { name: 'Pendientes', value: '#dcbf9b' },
-    { name: 'En proceso', value: '#e0e0e0' }
+    { name: 'Realizados', value: '#b0e4e2' },
+    { name: 'Pendientes', value: '#f2ce9e' },
+    { name: 'En proceso', value: '#d3c8f2' }
   ];
 
   colorScheme = {
@@ -50,7 +50,6 @@ export class ReportesComponent implements OnInit {
   }
 
   onSelect(event) {
-    console.log(event);
   }
 
   ngOnInit(): void {
@@ -78,21 +77,18 @@ export class ReportesComponent implements OnInit {
   cargarResponsableSeguimientoDesarrollo(ID_PERFIL) {
     this.usuarioService.cargarResponsableSeguimiento(ID_PERFIL).subscribe(res => {
       this.responsableseguimientoDesa = res;
-      console.log(this.responsableseguimientoDesa)
     })
   }
 
   cargarResponsableSeguimientoAnalista(ID_PERFIL) {
     this.usuarioService.cargarResponsableSeguimiento(ID_PERFIL).subscribe(res => {
       this.responsableseguimientoAnalist = res;
-      console.log(this.responsableseguimientoAnalist)
     })
   }
 
   cargarResponsableSeguimientoSoporte(ID_PERFIL) {
     this.usuarioService.cargarResponsableSeguimiento(ID_PERFIL).subscribe(res => {
       this.responsableseguimientoSoport = res;
-      console.log(this.responsableseguimientoSoport)
     })
   }
 
@@ -175,14 +171,11 @@ export class ReportesComponent implements OnInit {
         }
       ];
       this.adminD = single;
-      console.log('adminD')
-      console.log(this.adminD)
     })
   }
 
   cargarReporteAdminJ() {
     this.reportesService.cargarReportePerfilAdminJ().subscribe(res => {
-      console.log(res);
       var single = [
         {
           "name": "Realizados",

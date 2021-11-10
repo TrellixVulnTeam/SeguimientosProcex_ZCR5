@@ -42,7 +42,6 @@ export class SoporteComponent implements OnInit {
   cargarsoporte() {
     this.SoporteService.Cargarsoportes(this.nombreArchivo, this.tipoArchivo,this.ID_GESTION_SEGUIMIENTO,this.page, this.rows).subscribe(res => {
       this.soporte = res;
-      console.log(this.soporte)
     })
   }
 
@@ -82,12 +81,9 @@ export class SoporteComponent implements OnInit {
   }
 
   Descargarsoporte(ID_soporte: string) {
-    console.log(ID_soporte)
-    console.log('descarga')
     for (let i = 0; i < this.soporte.length; i++) {
       if (ID_soporte == this.soporte[i].ID_soporte) {
-        const ruta = 'http://192.168.1.25:3000/' + this.soporte[i].RUTA_SOPORTES
-        console.log(ruta)
+        const ruta = 'http://192.168.1.27:3000/' + this.soporte[i].RUTA_SOPORTES
         saveAs(ruta)
       }
     }
@@ -102,7 +98,6 @@ export class SoporteComponent implements OnInit {
   }
   
   paginador(event) {
-    console.log(event);
     this.rows = event.rows;
     this.page = event.page;
     this.cargarsoporte();

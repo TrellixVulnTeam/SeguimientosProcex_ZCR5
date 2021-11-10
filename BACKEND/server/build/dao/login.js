@@ -38,7 +38,7 @@ class Login {
                                     ID_PERFIL: result.ID_PERFIL,
                                     USUARIO: result.USUARIO
                                 };
-                                var token = jsonwebtoken_1.default.sign(datos_user, JWT_Secret, { expiresIn: "10s" });
+                                var token = jsonwebtoken_1.default.sign(datos_user, JWT_Secret, { expiresIn: "1h" });
                                 resolev({ signedUser: datos_user, token: token });
                             }
                             else {

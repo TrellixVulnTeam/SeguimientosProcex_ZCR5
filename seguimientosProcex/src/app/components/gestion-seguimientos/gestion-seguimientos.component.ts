@@ -119,7 +119,6 @@ export class GestionSeguimientosComponent implements OnInit {
   cargarperfil(){
     this.listaComboSeguimientoService.cargarPerfil().subscribe(res=>{
       this.perfil = res;
-      console.log(this.perfil)
     })
   }
 
@@ -136,7 +135,6 @@ export class GestionSeguimientosComponent implements OnInit {
       for (let i = 0; i < this.seguimiento1.length; i++) {
         if (this.seguimiento1[i].ESTADO == 'Realizado') {
           this.isReadonly = true;
-          console.log('entro')
         } else {
           this.isReadonly = false;
         }
@@ -195,7 +193,6 @@ export class GestionSeguimientosComponent implements OnInit {
             this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
             this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
             this.seguimiento.ID_PERFIL =  this.seguimiento1[i].ID_PERFIL;
-            console.log(this.seguimiento)
             this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {
             })
           }
@@ -210,7 +207,6 @@ export class GestionSeguimientosComponent implements OnInit {
     for (let i = 0; i < this.seguimiento1.length; i++) {
       if (this.seguimiento1[i].ESTADO == 'Realizado') {
         this.isReadonly = true;
-        console.log('entro')
       } else {
         this.isReadonly = false;
       }
@@ -241,7 +237,6 @@ export class GestionSeguimientosComponent implements OnInit {
           let jstoday = '';
           jstoday = formatDate(today, 'yyyy-MM-dd hh:mm:ss a', 'en-US');
           this.seguimiento.FECHA_FINALIZACION = jstoday;
-          console.log(this.seguimiento1)
           this.seguimiento.EPS = this.seguimiento1[i].EPS;
           this.seguimiento.MEDIO = this.seguimiento1[i].MEDIO;
           this.seguimiento.TIPO_REQUERIMIENTO = this.seguimiento1[i].TIPO_REQUERIMIENTO;
@@ -278,20 +273,16 @@ export class GestionSeguimientosComponent implements OnInit {
   actualizarIformacion(){
     if (this.loginservice.isAnalistas || this.loginservice.isSoporte || this.loginservice.isDesarrollo) {
       this.isReadonly2 = true;
-      console.log('entro -----------------')
     } else {
       this.isReadonly2 = false;
-      console.log('no entro -----------------')
     }
   }
 
   actualizarDescripcion(){
     if (this.loginservice.isAdminD || this.loginservice.isAdminJ) {
       this.isReadonly3 = true;
-      console.log('entro -----------------')
     } else {
       this.isReadonly3 = false;
-      console.log('no entro -----------------')
     }
   }
 
@@ -300,9 +291,7 @@ export class GestionSeguimientosComponent implements OnInit {
     delete this.seguimiento2.FECHA_MODIFICACION;
     let prueba = []
     prueba.push(this.seguimiento2)
-    console.log(prueba)
     this.gestionSeguimientoService.ActualizarDatos(this.seguimiento2.ID_GESTION_SEGUIMIENTO, this.seguimiento2).subscribe(res => {
-      console.log(res);
       Swal.fire({
         title: 'Actualizado!',
         text: 'Datos actualizados con exito.',
@@ -327,7 +316,6 @@ export class GestionSeguimientosComponent implements OnInit {
   }
 
   paginador(event) {
-    console.log(event);
     // this.rows = event.rows;
     // this.page = event.page;
     this.cargarGestion();
@@ -360,7 +348,6 @@ export class GestionSeguimientosComponent implements OnInit {
       this.seguimiento.ID_REGISTRO = this.seguimiento1[i].ID_REGISTRO;
       this.seguimiento.USUARIO_CREACION = this.seguimiento1[i].USUARIO_CREACION;
       this.seguimiento.ID_PERFIL =  this.seguimiento1[i].ID_PERFIL;
-      console.log(this.seguimiento)
     }
     this.seguimientosservice.ActualizarDatos(this.ID_SEGUIMIENTOS, this.seguimiento).subscribe(res => {
       Swal.fire({
@@ -385,7 +372,6 @@ export class GestionSeguimientosComponent implements OnInit {
 
   Guargarsoporte() {
     this.SoporteService.Guardarsoporte(this.nombrearchivo ,this.tipo_archivo, this.usuario,  this.ID_gestion, this.file).subscribe(res => {
-      console.log(res)
       Swal.fire({
         title: 'Almacenado!',
         text: 'Archivo cargado',

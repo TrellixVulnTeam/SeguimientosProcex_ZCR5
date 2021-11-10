@@ -74,5 +74,12 @@ class RegistroControllers {
             res.json(datos);
         });
     }
+    CargarPerfil(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { ID_REGISTRO } = req.params;
+            const datos = yield registro_1.default.cargarPerfil(ID_REGISTRO);
+            res.json(datos);
+        });
+    }
 }
 exports.registroControllers = new RegistroControllers();

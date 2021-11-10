@@ -35,6 +35,29 @@ export class SeguimientosListarComponent implements OnInit {
   page = 0;
   EPS = ''
 
+  static EPS = ''
+  static TIPO_REQUERIMIENTO = '';
+  static FECHA_FINALIZACION = '';
+  static ESTADO = ''
+  static ID_REGISTRO = '';
+
+  set staticEPS(aaa) {
+    SeguimientosListarComponent.EPS = aaa;
+  }
+  set staticTIPO_REQUERIMIENTO(aaa) {
+    SeguimientosListarComponent.TIPO_REQUERIMIENTO = aaa;
+  }
+  set staticESTADO(aaa) {
+    SeguimientosListarComponent.ESTADO = aaa;
+  }
+  set staticFECHA_FINALIZACION(aaa) {
+    SeguimientosListarComponent.FECHA_FINALIZACION = aaa;
+  }
+  set staticID_REGISTRO(aaa) {
+    SeguimientosListarComponent.ID_REGISTRO = aaa;
+  }
+
+
   fechaEntregaAux = true;
   areaAux = true;
   descripcionAux = true;
@@ -91,10 +114,12 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   CargarSeguimientos() {
-    this.seguimintoService.cargarTodos(this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.FECHA_FINALIZACION, this.ID_REGISTRO).subscribe(res => {
+    this.seguimintoService.cargarTodos(this.page, this.rows,SeguimientosListarComponent.EPS, SeguimientosListarComponent.TIPO_REQUERIMIENTO, SeguimientosListarComponent.ESTADO, SeguimientosListarComponent.FECHA_FINALIZACION, SeguimientosListarComponent.ID_REGISTRO).subscribe(res => {
       this.cargaseguimiento = res;
     })
   }
+
+
   numerodeRegistros() {
     this.seguimintoService.numerodeRegistros().subscribe(res => {
       this.totalRecords = res;
@@ -102,7 +127,6 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   paginador(event) {
-    console.log(event);
     this.rows = event.rows;
     this.page = event.page;
     this.CargarSeguimientos();
@@ -140,7 +164,6 @@ export class SeguimientosListarComponent implements OnInit {
   cargarResponsableSeguimiento() {
     this.usuarioService.cargarResponsableSeguimiento(this.seguimiento.ID_PERFIL).subscribe(res => {
       this.responsableseguimiento = res;
-      console.log(this.responsableseguimiento)
     })
   }
 
@@ -151,10 +174,28 @@ export class SeguimientosListarComponent implements OnInit {
     })
   }
 
+
   cargarResponsableSeguimientoFil() {
     this.usuarioService.cargarResponsableSeguimientoGest().subscribe(res => {
       this.responsableseguimientofilt = res;
     })
+  }
+
+  cargarReporteCasosUsuarios(){
+    let perfil;
+    console.log(this.ID_REGISTRO)
+     this.usuarioService.cargarPerfil(this.ID_REGISTRO).subscribe(res=>{
+     perfil = res;
+      for (let index = 0; index < perfil.length; index++) {
+        const element = perfil[index];
+        console.log(element.ID_PERFIL)
+        if(this.ID_REGISTRO == element.ID_REGISTRO){
+          this.reporteService.cargarReportePorUsuarios(element.ID_PERFIL,this.ID_REGISTRO).subscribe(res=>{
+            this.reporte = res;
+          })
+        }
+      }
+   })
   }
 
 
@@ -216,10 +257,8 @@ export class SeguimientosListarComponent implements OnInit {
         this.seguimiento.ESTADO = 'Pendiente';
       }
       this.seguimiento.USUARIO_CREACION = this.usuario;
-      console.log(this.seguimiento)
 
       this.seguimintoService.guardarSeguimiento(this.seguimiento).subscribe(res => {
-        console.log(res);
         Swal.fire({
           title: 'Almacenado!',
           text: 'Datos almacenados con exito.',
@@ -322,9 +361,7 @@ export class SeguimientosListarComponent implements OnInit {
     this.responsable.ID_REGISTRO = this.ID_REGISTRO1;
     this.responsable.ESTADO = 'Pendiente'
     this.isReadonly = true;
-    console.log(this.responsable)
     this.seguimintoService.ActualizarDatos(this.responsable.ID_SEGUIMIENTOS, this.responsable).subscribe(res => {
-      console.log(res);
       Swal.fire({
         title: 'Actualizado!',
         text: 'Datos actualizados con exito.',
@@ -339,12 +376,13 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   limpiarFiltros() {
-    this.EPS = '';
-    this.ID_REGISTRO = '';
-    this.TIPO_REQUERIMIENTO = '';
-    this.ESTADO = '';
-    this.FECHA_FINALIZACION = '';
+    SeguimientosListarComponent.EPS = '';
+    SeguimientosListarComponent.ID_REGISTRO = '';
+    SeguimientosListarComponent.TIPO_REQUERIMIENTO = '';
+    SeguimientosListarComponent.ESTADO = '';
+    SeguimientosListarComponent.FECHA_FINALIZACION = '';
     this.CargarSeguimientos();
+    this.cargarReporteCasosPerfil();
   }
 
   nuevo() {

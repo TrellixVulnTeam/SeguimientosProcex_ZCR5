@@ -46,5 +46,9 @@ export class UsuarioService {
     return this.http.delete(`${this.API_URI}/registro/${registro}`)
   }
 
+  cargarPerfil(registro){
+    return this.http.get(`${this.API_URI}/perfil/${registro}`)
+  }
+
 
 }

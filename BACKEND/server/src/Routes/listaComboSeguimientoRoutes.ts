@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { listaComboSeguimientoControllers } from '../Controllers/listaComboSeguimientoControllers';
+import { Tokenvalidation } from '../lib/validateToken';
 
 class ListaComboSeguimientoRoutes {
     public router: Router = Router()
@@ -8,6 +9,7 @@ class ListaComboSeguimientoRoutes {
     }
     
     config(): void {
+        this.router.use(Tokenvalidation)
         this.router.get('/medio', listaComboSeguimientoControllers.cargarMedio);
         this.router.get('/tipoR', listaComboSeguimientoControllers.cargarTipoRequerimiento);
         this.router.get('/categoria', listaComboSeguimientoControllers.cargarCategoria);

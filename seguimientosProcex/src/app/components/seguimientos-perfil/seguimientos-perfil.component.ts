@@ -90,7 +90,6 @@ export class SeguimientosPerfilComponent implements OnInit {
 
   CargarSeguimientos() {
     this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL, this.usuario, this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_SEGUIMIENTO).subscribe(res => {
-      console.log(res)
       this.cargaseguimiento = res;
      
     })
@@ -102,7 +101,6 @@ export class SeguimientosPerfilComponent implements OnInit {
   }
 
   paginador(event) {
-    console.log(event);
     this.rows = event.rows;
     this.page = event.page;
     this.CargarSeguimientos();
@@ -215,7 +213,6 @@ export class SeguimientosPerfilComponent implements OnInit {
       this.seguimiento.USUARIO_CREACION = this.usuario;
 
       this.seguimintoService.guardarSeguimiento(this.seguimiento).subscribe(res => {
-        console.log(res);
         Swal.fire({
           title: 'Almacenado!',
           text: 'Datos almacenados con exito.',
@@ -242,7 +239,6 @@ export class SeguimientosPerfilComponent implements OnInit {
       this.isReadonly = true;
     }
     this.seguimintoService.ActualizarDatos(this.seguimiento2.ID_SEGUIMIENTOS, this.seguimiento2).subscribe(res => {
-      console.log(res);
       Swal.fire({
         title: 'Actualizado!',
         text: 'Datos actualizados con exito.',
@@ -259,7 +255,6 @@ export class SeguimientosPerfilComponent implements OnInit {
   cargarResponsableSeguimientoasig(ID_PERFIL) {
     this.usuarioService.cargarResponsableSeguimiento(ID_PERFIL).subscribe(res => {
       this.responsableseguimiento2 = res;
-      console.log(this.responsableseguimiento2)
     })
   }
 
@@ -312,7 +307,6 @@ export class SeguimientosPerfilComponent implements OnInit {
     this.responsable.ID_REGISTRO = this.ID_REGISTRO1;
     this.responsable.ESTADO = 'Pendiente'
     this.isReadonly = true;
-    console.log(this.responsable)
     this.seguimintoService.ActualizarDatos(this.responsable.ID_SEGUIMIENTOS, this.responsable).subscribe(res => {
       console.log(res);
       Swal.fire({

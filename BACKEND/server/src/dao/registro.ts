@@ -162,6 +162,23 @@ class Registro {
         });
     }
 
+    public static cargarPerfil(ID_REGISTRO) {
+        return new Promise(function (resolev, reject) {
+            try {
+                var query = "select R.ID_REGISTRO, U.ID_PERFIL "
+                query += "from registro R, usuario U "
+                query += "where R.ID_REGISTRO = U.ID_REGISTRO AND U.ID_REGISTRO = ?"
+                pool.query(query, [ID_REGISTRO], function (err, result, fields) {
+                    if (err) throw err;
+                    resolev(result);
+                });
+            }
+            catch (error) {
+                //res.status(404).json({ error: 'No se pudieron almacenar datos' });
+            };
+        });
+    }
+
     public static actualizarRegistro(dato,ID_REGISTRO){
         return new Promise(function(resolev,reject){
             try {
@@ -174,6 +191,8 @@ class Registro {
             }
         })
     }
+
+    
 
 }
 

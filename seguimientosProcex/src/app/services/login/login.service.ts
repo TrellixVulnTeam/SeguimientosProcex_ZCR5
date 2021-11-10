@@ -86,6 +86,15 @@ export class LoginService {
     }
   }
 
+  public get isAdmin(): boolean {
+    let logued = JSON.parse(localStorage.getItem('perfil'))
+    if (logued == '7') {
+      return true
+    } else {
+      return false;
+    }
+  }
+
   public get isAnalistas(): boolean {
     let logued = JSON.parse(localStorage.getItem('perfil'))
     if (logued == '3') {

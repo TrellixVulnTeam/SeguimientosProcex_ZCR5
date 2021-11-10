@@ -14,6 +14,12 @@ export class ReportesService {
     return this.http.get(`${this.API_URI}/${ID_PERFIL}`)
   }
 
+  
+  cargarReportePorUsuarios(ID_PERFIL,ID_REGISTRO){
+    const cargar = {ID_PERFIL,ID_REGISTRO }
+    return this.http.post(`${this.API_URI}/reporte/usuarios`,cargar)
+  }
+
   cargarReportePerfilDesarrollo(ID_REGISTRO){
     const cargar = {ID_REGISTRO }
     return this.http.post(`${this.API_URI}/desarrollo`,cargar)

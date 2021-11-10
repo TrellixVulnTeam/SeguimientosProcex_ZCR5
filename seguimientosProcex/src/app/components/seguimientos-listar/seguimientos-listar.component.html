@@ -67,7 +67,6 @@
                     <th style=" color: white; width: 8%;">Fecha entrega</th>
                     <th style=" color: white; width: 10%;">Fecha Finalizacion  <i
                         class="fas fa-filter" style="cursor: pointer;" (click)="fechaFinalizacion(content7)"></i></th>
-                    <th style=" color: white; width: 1%;">D.Solucion</th>
                     <th style=" color: white; width: 150px;">Perfil</th>
                     <th style=" color: white; width: 13%;">Responsable  <i
                             class="fas fa-filter" style="cursor: pointer;" (click)="filtroResponsable(content4)"></i>
@@ -77,7 +76,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-data>
                 <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente', 'Proceso': data.ESTADO === 'En proceso'}"
-                    [pSelectableRow]="data">
+                    [pSelectableRowDblClick]="data">
                     <td>{{data.EPS}}</td>
                     <td>{{data.FECHA_REQUERIMIENTO | date:"dd/MM/yyyy"}}</td>
                     <td>{{data.TIPO_REQUERIMIENTO}}</td>
@@ -86,7 +85,6 @@
                     <td>{{data.ESTADO}}</td>
                     <td>{{data.FECHA_ENTREGA}}</td>
                     <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
-                    <td>{{data.Dias_Entrega}}</td>
                     <td style="width: 130px;">{{data.Area}}</td>
                     <td style="width: 13%;">{{data.Nombres}} - {{data.Apellidos}} </td>
                     <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button"
@@ -309,7 +307,7 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="EPS" [(ngModel)]="EPS"
+                    <select name="" class="form-control" id="documento" name="EPS" [(ngModel)]="staticEPS"
                         style="font-size: 12px;">
                         <option *ngFor='let prestador of prestador'>
                             {{prestador.NOMBRE_OPCION}}
@@ -333,7 +331,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <select name="" class="form-control" id="documento" name="TIPO_REQUERIMIENTO"
-                        [(ngModel)]="TIPO_REQUERIMIENTO" style="font-size: 12px;">
+                        [(ngModel)]="staticTIPO_REQUERIMIENTO" style="font-size: 12px;">
                         <option *ngFor='let tipoRequerimiento of tipoRequerimiento'>
                             {{tipoRequerimiento.NOMBRE_OPCION}}
                         </option>
@@ -355,10 +353,12 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ESTADO" [(ngModel)]="ESTADO"
+                    <select name="" class="form-control" id="documento" name="ESTADO" [(ngModel)]="staticESTADO"
                         style="font-size: 12px;">
                         <option value="Pendiente">Pendiente</option>
                         <option value="Realizado">Realizado</option>
+                        <option value="Sin asignar">Sin asignar</option>
+                        <option value="En proceso">En proceso</option>
                     </select>
                 </div>
             </div>
@@ -377,7 +377,7 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ID_REGISTRO" [(ngModel)]="ID_REGISTRO"
+                    <select name="" class="form-control" id="documento" name="ID_REGISTRO" [(ngModel)]="staticID_REGISTRO"
                         style="font-size: 12px;">
                         <option *ngFor='let responsableseguimiento of responsableseguimientofilt'
                             [ngValue]="responsableseguimiento.Nombres" [ngValue]="responsableseguimiento.ID_REGISTRO">
@@ -389,7 +389,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()"
+        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()" (click)="cargarReporteCasosUsuarios()"
             (click)="d('Cross click')" style="margin-right: 4px;"></button>
         <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
             (click)="limpiarFiltros()" (click)="d('Cross click')"></button>
@@ -425,7 +425,7 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <input type="date" class="form-control" id="documento" name="FECHA_FINALIZACION" [(ngModel)]="FECHA_FINALIZACION"
+                    <input type="date" class="form-control" id="documento" name="FECHA_FINALIZACION" [(ngModel)]="staticFECHA_FINALIZACION"
                         style="font-size: 12px;">
                 </div>
             </div>

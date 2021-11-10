@@ -8,7 +8,6 @@ import {SoporteComponent} from './components/soporte/soporte.component';
 import {SeguimientosPerfilComponent} from './components/seguimientos-perfil/seguimientos-perfil.component';
 import {GestionSeguimientosComponent} from './components/gestion-seguimientos/gestion-seguimientos.component';
 import {ReportesComponent} from './components/reportes/reportes.component';
-import { LoginService } from './services/login/login.service'
 
 
 const role = JSON.parse(localStorage.getItem("perfil"))

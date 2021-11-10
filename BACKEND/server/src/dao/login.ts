@@ -1,7 +1,6 @@
 import pool from '../database';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
-import { helpers } from '../lib/helpers';
 class Login {
 
     public static Login(body) {
@@ -24,7 +23,7 @@ class Login {
                                 ID_PERFIL: result.ID_PERFIL,
                                 USUARIO: result.USUARIO
                             }
-                            var token = jwt.sign(datos_user, JWT_Secret,{expiresIn:"10s"});
+                            var token = jwt.sign(datos_user, JWT_Secret,{expiresIn:"1h"});
                             resolev({signedUser: datos_user, token: token });
                         } else {
                             let error ="Contraseña no valida"

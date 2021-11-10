@@ -52,7 +52,11 @@ class RegistroControllers {
         const datos = await registro.actualizarRegistro(req.body,ID_REGISTRO)
         res.json(datos)
     }
-
+    public async CargarPerfil(req: Request, res: Response) {
+        const { ID_REGISTRO } = req.params;
+        const datos = await registro.cargarPerfil(ID_REGISTRO);
+        res.json(datos);
+    }
 
 }
 
