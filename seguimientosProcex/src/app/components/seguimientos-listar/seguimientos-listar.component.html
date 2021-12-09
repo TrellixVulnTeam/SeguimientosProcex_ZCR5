@@ -4,6 +4,9 @@
             <div class="col-md-6" id="">
                 <img src="../../../assets/graficos.png" style="margin-left: 5px; margin-top: 8px; cursor: pointer;"
                     [routerLink]="['/reportes']" alt="">
+
+                    <img src="../../../assets/icons8-export-excel-48.png" (click)="exportExcel()" style="margin-left: -2px; margin-top: 8px; cursor: pointer; width: 39px; height: 39px;"
+                     alt="">
             </div>
 
 
@@ -50,33 +53,35 @@
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
 
         <p-table [value]="cargaseguimiento" styleClass="p-datatable-sm p-datatable-gridlines"
-            tableStyleClass="prime-table" selectionMode="single" dataKey="code" [scrollable]="true" scrollHeight="flex"
+            tableStyleClass="prime-table"  selectionMode="single" dataKey="code" [scrollable]="true" scrollHeight="flex"
             (onRowSelect)="onRowSelect($event,content)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
-                    <th style=" color: white; ">EPS   <i class="fas fa-filter"
+                    <th style="flex: 0.1; justify-content: space-around;">#</th>
+                    <th style=" color: white; " >EPS   <i class={{epsFiltro}}
                             style="cursor: pointer;" (click)="filtroEps(content1)"> </i> </th>
                     <th style=" color: white;  width: 10%;">F. Requerimiento</th>
                     <th style=" color: white; width: 9%;">T.Requerimiento  <i
-                            class="fas fa-filter" style="cursor: pointer;"
+                            class={{requerimientoFiltro}} style="cursor: pointer;"
                             (click)="filtroTiporequerimiento(content2)">  </i></th>
                     <th style=" color: white;  width: 9%;">Titulo</th>
                     <th style=" color: white;">A. validacion</th>
-                    <th style=" color: white;">Estado<i class="fas fa-filter"
+                    <th style=" color: white;">Estado<i class={{estadoFiltro}}
                             style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
                     <th style=" color: white; width: 8%;">Fecha entrega</th>
                     <th style=" color: white; width: 10%;">Fecha Finalizacion  <i
-                        class="fas fa-filter" style="cursor: pointer;" (click)="fechaFinalizacion(content7)"></i></th>
+                        class={{fechaFinFiltro}} style="cursor: pointer;" (click)="fechaFinalizacion(content7)"></i></th>
                     <th style=" color: white; width: 150px;">Perfil</th>
                     <th style=" color: white; width: 13%;">Responsable  <i
-                            class="fas fa-filter" style="cursor: pointer;" (click)="filtroResponsable(content4)"></i>
+                            class={{responsableFiltro}} style="cursor: pointer;" (click)="filtroResponsable(content4)"></i>
                     </th>
-                    <th style=" color: white;">Asignar R.</th>
+                    <th style=" color: white; flex: 0.5;">Asignar R.</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-data>
+            <ng-template pTemplate="body" let-data  let-i="rowIndex">
                 <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente', 'Proceso': data.ESTADO === 'En proceso'}"
                     [pSelectableRowDblClick]="data">
+                    <td style="flex: 0.1; justify-content: space-around;">{{i + 1}}</td>
                     <td>{{data.EPS}}</td>
                     <td>{{data.FECHA_REQUERIMIENTO | date:"dd/MM/yyyy"}}</td>
                     <td>{{data.TIPO_REQUERIMIENTO}}</td>
@@ -87,7 +92,7 @@
                     <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
                     <td style="width: 130px;">{{data.Area}}</td>
                     <td style="width: 13%;">{{data.Nombres}} - {{data.Apellidos}} </td>
-                    <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button"
+                    <td style="flex: 0.5;" (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button"
                             class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"
                                 class="fas fa-user-plus"></i></button></td>
                 </tr>

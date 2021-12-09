@@ -59,5 +59,12 @@ class SeguimientosControllers {
             res.json(result);
         });
     }
+    exportarSeguimientos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO } = req.body;
+            var result = yield Seguimientos_1.default.exportarSeguimiento(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO);
+            res.json(result);
+        });
+    }
 }
 exports.seguimientosControllers = new SeguimientosControllers();

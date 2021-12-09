@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registroControllers = void 0;
 const registro_1 = __importDefault(require("../dao/registro"));
+const notificarSeguimientoPorEmail_1 = __importDefault(require("../Logica/notificarSeguimientoPorEmail"));
 class RegistroControllers {
     registrar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -79,6 +80,18 @@ class RegistroControllers {
             const { ID_REGISTRO } = req.params;
             const datos = yield registro_1.default.cargarPerfil(ID_REGISTRO);
             res.json(datos);
+        });
+    }
+    resetearContraseña(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield registro_1.default.resetearContraseña(req.body);
+            if (datos == 'Usuario o correo invalidos') {
+                res.status(404).json({ text: "Usuario y/o correo invalido" });
+            }
+            else {
+                notificarSeguimientoPorEmail_1.default.notificarSeguimiento(datos);
+                res.json(datos);
+            }
         });
     }
 }

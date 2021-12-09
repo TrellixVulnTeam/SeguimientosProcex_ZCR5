@@ -41,6 +41,12 @@ class SeguimientosControllers {
     res.json(result);
   }
 
+  public async exportarSeguimientos(req: Request, res: Response) {
+    const { EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO } = req.body;
+    var result = await Seguimientos.exportarSeguimiento(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO );
+    res.json(result);
+  }
+
 }
 
 export const seguimientosControllers = new SeguimientosControllers();

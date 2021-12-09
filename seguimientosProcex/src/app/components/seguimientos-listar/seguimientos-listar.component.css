@@ -67,3 +67,17 @@
         background: #ff000017 !important;
         color: #000000;
     }
+
+    .fa-sort-down{
+      font-size: 15px;
+      margin-left: 2px;
+      top: -3px ;
+      position: relative;
+    }
+    #img2{
+      margin-left: 5px;
+      margin-top: 8px;
+      cursor: pointer; 
+      height: 39px; 
+      width: 39px;
+    }

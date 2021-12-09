@@ -50,5 +50,9 @@ export class UsuarioService {
     return this.http.get(`${this.API_URI}/perfil/${registro}`)
   }
 
+  resetContraseña(newDatos) {
+    return this.http.post(`${this.API_URI}/rcontrasena`, newDatos)
+  }
+
 
 }

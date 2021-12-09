@@ -11,5 +11,8 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  refrescar(){
+    window.location.reload();
+  }
 
 }

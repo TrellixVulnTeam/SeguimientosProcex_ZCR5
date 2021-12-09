@@ -38,4 +38,11 @@ export class SeguimientosService {
     return this.http.get(`${this.API_URI}/${ID_SEGUIMIENTOS}`)
   }
 
+  exportarSeguimientos(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO) {
+    const cargar = {EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO }
+    return this.http.post(`${this.API_URI}//seguimientos/exportar`,cargar)
+  }
+
 }
+
+

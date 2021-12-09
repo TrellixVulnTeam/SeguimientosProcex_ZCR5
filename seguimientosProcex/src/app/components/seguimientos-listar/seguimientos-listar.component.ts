@@ -8,8 +8,11 @@ import { UsuarioService } from '../../services/usuario/usuario.service';
 import { ReportesService } from '../../services/reportes/reportes.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-var moment = require('moment');
+import { saveAs } from 'file-saver'
 import { LoginService } from 'src/app/services/login/login.service';
+var moment = require('moment');
+
+
 @Component({
   selector: 'app-seguimientos-listar',
   templateUrl: './seguimientos-listar.component.html',
@@ -17,6 +20,13 @@ import { LoginService } from 'src/app/services/login/login.service';
 })
 export class SeguimientosListarComponent implements OnInit {
 
+  epsFiltro = 'fas fa-sort-down'
+  requerimientoFiltro = 'fas fa-sort-down'
+  estadoFiltro = 'fas fa-sort-down'
+  fechaFinFiltro = 'fas fa-sort-down'
+  responsableFiltro = 'fas fa-sort-down'
+
+  exportar
   medio
   isReadonly = false;
   tipoRequerimiento
@@ -116,6 +126,7 @@ export class SeguimientosListarComponent implements OnInit {
   CargarSeguimientos() {
     this.seguimintoService.cargarTodos(this.page, this.rows,SeguimientosListarComponent.EPS, SeguimientosListarComponent.TIPO_REQUERIMIENTO, SeguimientosListarComponent.ESTADO, SeguimientosListarComponent.FECHA_FINALIZACION, SeguimientosListarComponent.ID_REGISTRO).subscribe(res => {
       this.cargaseguimiento = res;
+      this.hayFiltro();
     })
   }
 
@@ -183,14 +194,13 @@ export class SeguimientosListarComponent implements OnInit {
 
   cargarReporteCasosUsuarios(){
     let perfil;
-    console.log(this.ID_REGISTRO)
-     this.usuarioService.cargarPerfil(this.ID_REGISTRO).subscribe(res=>{
+    let ID_REGISTRO = SeguimientosListarComponent.ID_REGISTRO
+     this.usuarioService.cargarPerfil(SeguimientosListarComponent.ID_REGISTRO).subscribe(res=>{
      perfil = res;
       for (let index = 0; index < perfil.length; index++) {
         const element = perfil[index];
-        console.log(element.ID_PERFIL)
-        if(this.ID_REGISTRO == element.ID_REGISTRO){
-          this.reporteService.cargarReportePorUsuarios(element.ID_PERFIL,this.ID_REGISTRO).subscribe(res=>{
+        if(ID_REGISTRO == element.ID_REGISTRO){
+          this.reporteService.cargarReportePorUsuarios(element.ID_PERFIL,ID_REGISTRO).subscribe(res=>{
             this.reporte = res;
           })
         }
@@ -383,6 +393,7 @@ export class SeguimientosListarComponent implements OnInit {
     SeguimientosListarComponent.FECHA_FINALIZACION = '';
     this.CargarSeguimientos();
     this.cargarReporteCasosPerfil();
+    this.hayFiltro();
   }
 
   nuevo() {
@@ -434,6 +445,69 @@ export class SeguimientosListarComponent implements OnInit {
     if (dato != '') {
       this.areaAux = true;
     }
+  }
+
+  hayFiltro() {
+
+    if (SeguimientosListarComponent.EPS == '') {
+      this.epsFiltro = 'fas fa-sort-down'
+    } else {
+      this.epsFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosListarComponent.ID_REGISTRO == '') {
+      this.responsableFiltro = 'fas fa-sort-down'
+    } else {
+      this.responsableFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosListarComponent.TIPO_REQUERIMIENTO == '') {
+      this.requerimientoFiltro = 'fas fa-sort-down'
+    } else {
+      this.requerimientoFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosListarComponent.ESTADO == '') {
+      this.estadoFiltro = 'fas fa-sort-down'
+    } else {
+      this.estadoFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosListarComponent.FECHA_FINALIZACION == '') {
+      this.fechaFinFiltro = 'fas fa-sort-down'
+    } else {
+      this.fechaFinFiltro = 'fas fa-filter'
+    }
+  }
+
+  ExportarSeguimiento(){
+    this.seguimintoService.exportarSeguimientos(SeguimientosListarComponent.EPS, SeguimientosListarComponent.TIPO_REQUERIMIENTO, SeguimientosListarComponent.ESTADO, SeguimientosListarComponent.FECHA_FINALIZACION, SeguimientosListarComponent.ID_REGISTRO).subscribe(res=>{
+      this.exportar = res;
+    })
+  }
+
+  exportExcel() {
+    this.ExportarSeguimiento();
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.exportar);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array"
+      });
+      this.saveAsExcelFile(excelBuffer, "Seguimientos");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import("file-saver").then(FileSaver => {
+      let EXCEL_TYPE =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+      let EXCEL_EXTENSION = ".xlsx";
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      saveAs(
+        data,
+        fileName + new Date().getTime() + EXCEL_EXTENSION
+      );
+    });
   }
 
 

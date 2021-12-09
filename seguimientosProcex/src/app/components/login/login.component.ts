@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login/login.service'
+import { UsuarioService } from '../../services/usuario/usuario.service'
 import { Login } from '../../Model/login'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -17,9 +18,15 @@ export class LoginComponent implements OnInit {
     Contrasena: '',
     ID_PERFIL: ''
   }
+
+  newDatos= {
+    USUARIO:'',
+    Correo:''
+  }
   constructor(private loginserve: LoginService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private usuarioService:UsuarioService,
     private ngxSpinnerService: NgxUiLoaderService) { }
 
   ngOnInit(): void {
@@ -51,4 +58,35 @@ export class LoginComponent implements OnInit {
 
   }
 
+  pressEnter(event){
+    if(event.key == "Enter"){
+      this.Iniciarsesion();
+    }
+  }
+
+  limpiar(){
+    this.newDatos= {
+      USUARIO:'',
+      Correo:''
+    }
+  }
+
+
+  resetContrasena(){
+    this.usuarioService.resetContraseña(this.newDatos).subscribe(res=>{
+      Swal.fire({
+        title: 'Contraseña reseteada con exito!',
+        text: 'Resiva el correo electrónico ingresado, ',
+        icon: 'success',
+        allowOutsideClick: false
+      }
+
+      ).then((result) => {
+        if (result.value) {
+        }
+      })
+    })
+  }
+
 }
+

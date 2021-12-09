@@ -50,6 +50,7 @@
             selectionMode="single" dataKey="code"  [scrollable]="true" scrollHeight="flex"  (onRowSelect)="onRowSelect($event,content)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
+                    <th style="flex: 0.1; justify-content: space-around;">#</th>
                     <th >EPS<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroEps(content1)"></i></th>
                     <th >F. Requerimiento</th>
@@ -64,12 +65,13 @@
                     <th style="width: 10%;">Fecha Finalizacion</th>
                     <th >Responsable<i class="fas fa-filter"
                             style="cursor: pointer;" (click)="filtroResponsable(content4)"></i> </th>
-                            <th >Asignar R.</th>
+                            <th style="flex: 0.5;">Asignar R.</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-data>
+            <ng-template pTemplate="body" let-data let-i="rowIndex">
                 <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente', 'Proceso': data.ESTADO === 'En proceso'}"
                     [pSelectableRowDblClick]="data">
+                    <td style="flex: 0.1; justify-content: space-around;">{{i + 1}}</td>
                     <td>{{data.EPS}}</td>
                     <td>{{data.FECHA_REQUERIMIENTO | date:"dd/MM/yyyy HH:mm:ss"}}</td>
                     <td>{{data.MEDIO}}</td>
@@ -80,7 +82,7 @@
                     <td>{{data.FECHA_ENTREGA}}</td>
                     <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
                     <td>{{data.Nombres}} - {{data.Apellidos}} </td>
-                    <td (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button" class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"  class="fas fa-user-plus"></i></button></td> 
+                    <td style="flex: 0.5;" (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button" class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"  class="fas fa-user-plus"></i></button></td> 
                 </tr>
             </ng-template>
         </p-table>

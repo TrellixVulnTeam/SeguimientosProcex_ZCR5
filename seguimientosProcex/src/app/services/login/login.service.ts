@@ -26,6 +26,7 @@ export class LoginService {
     localStorage.removeItem('currentUser')
     localStorage.removeItem('accestoken')
     localStorage.removeItem('access_token');
+    localStorage.removeItem('perfil');
     this.router.navigateByUrl('/Login');
   }
 
@@ -33,6 +34,7 @@ export class LoginService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('accestoken');
     localStorage.removeItem('access_token');
+    localStorage.removeItem('perfil');
     // this.router.navigate(['/Login']);
     window.location.reload();
   }

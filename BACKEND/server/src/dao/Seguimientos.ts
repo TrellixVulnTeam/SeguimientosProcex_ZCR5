@@ -93,5 +93,26 @@ class Seguimientos {
             };
         });
     }
+
+    public static exportarSeguimiento(EPS,TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO){
+        return new Promise(function (resolev, reject) {
+            try {
+                var query = "SELECT seguimientos.EPS, seguimientos.FECHA_REQUERIMIENTO, seguimientos.MEDIO, seguimientos.TIPO_REQUERIMIENTO, seguimientos.TITULO_REQUERIMIENTO, seguimientos.DESCRIPCION_REQUERIMIENTO, ";
+                query += "seguimientos.AREA_VALIDACION, seguimientos.ESTADO, seguimientos.FECHA_ENTREGA, seguimientos.FECHA_FINALIZACION,seguimientos.Categoria, seguimientos.USUARIO_CREACION,registro.Nombres as Responsable, ";
+                query += "gestion_seguimiento.DESCRIPCION as DESCRIPCION_GESTION,gestion_seguimiento.USUARIO_CREACION as USUARIO_CREACION_GESTION ,gestion_seguimiento.FECHA_CREACION as FECHA_CREACION_GESTION ";
+                query += "FROM seguimientos ";
+                query += "left join gestion_seguimiento on seguimientos.ID_SEGUIMIENTOS = gestion_seguimiento.ID_SEGUIMIENTOS left join registro on registro.ID_REGISTRO = seguimientos.ID_REGISTRO ";
+                query += "where seguimientos.EPS LIKE '%" + EPS + "%' and seguimientos.TIPO_REQUERIMIENTO LIKE '%" + TIPO_REQUERIMIENTO + "%' and seguimientos.ESTADO LIKE '%" + ESTADO + "%' and seguimientos.FECHA_FINALIZACION LIKE '%" + FECHA_FINALIZACION + "%' and seguimientos.ID_REGISTRO LIKE '%" + ID_REGISTRO + "%' order by field(ESTADO,'Pendiente','En proceso','Sin asignar','Realizado') ";
+                pool.query(query, function (err, result, fields) {
+                    if (err) throw err;
+                    resolev(result)
+                });
+            }
+            catch (error) {
+                // res.status(404).json({ error: 'No se obtuvieron datos' });
+            };
+        });
+    }
+
 }
 export default Seguimientos;

@@ -9,7 +9,7 @@ class RegistroRoutes {
     }
 
     config(): void {
-         this.router.use(Tokenvalidation)
+        this.router.use(Tokenvalidation)
         this.router.post('/registrar', registroControllers.registrar);
         this.router.post('/usuario', registroControllers.crearUsuario);
         this.router.get('/:usuario', registroControllers.listarDatosUsuarios);
@@ -20,6 +20,8 @@ class RegistroRoutes {
         this.router.delete('/registro/:ID_REGISTRO', registroControllers.eliminarRegistro);
         this.router.delete('/usuario/:ID_REGISTRO', registroControllers.eliminarUsuario);
         this.router.put('/usuario/:ID_REGISTRO',registroControllers.actualizarRegistro);
+        this.router.post('/rcontrasena', registroControllers.resetearContraseña);
+        // this.router.post('/cContrasena', registroControllers.cambiarContrasena);
     }
 
 }

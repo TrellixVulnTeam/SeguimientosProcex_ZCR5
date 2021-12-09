@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import registro from '../dao/registro';
+import notificarSeguimientoPorEmail from "../Logica/notificarSeguimientoPorEmail";
 
 class RegistroControllers {
 
@@ -57,6 +58,23 @@ class RegistroControllers {
         const datos = await registro.cargarPerfil(ID_REGISTRO);
         res.json(datos);
     }
+
+    public async resetearContraseña(req: Request, res: Response) {
+        const datos = await registro.resetearContraseña(req.body);
+        if(datos == 'Usuario o correo invalidos'){
+            res.status(404).json({ text: "Usuario y/o correo invalido"});
+        }else{
+             notificarSeguimientoPorEmail.notificarSeguimiento(datos)
+            res.json(datos);
+        }
+       
+    }
+
+    // public async cambiarContrasena(req: Request, res: Response) {
+    //     const {Usuario,Contrasena} = req.params;
+    //     const datos = await registro.cambiarContrasena(req.body,Usuario,Contrasena);
+    //     res.json(datos);
+    // }
 
 }
 

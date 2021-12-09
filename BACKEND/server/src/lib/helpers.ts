@@ -7,6 +7,7 @@ class Helpers {
         const hash = bcrypt.hashSync(password, salt);
         return hash;
     }
+
 }
 
 export const  helpers = new Helpers();

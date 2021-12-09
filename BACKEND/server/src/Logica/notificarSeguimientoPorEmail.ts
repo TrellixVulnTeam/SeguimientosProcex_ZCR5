@@ -1,29 +1,29 @@
-// import { transporter } from '../lib/nodemailer'
-// import registro from '../dao/registro';
-// class notificarSeguimientoPorEmail {
+import { transporter } from '../lib/nodemailer'
+class notificarSeguimientoPorEmail {
 
-//   public static async notificarSeguimiento(destinatario) {
-    
-//     if (destinatario.ID_REGISTRO == '') {
+    public static async notificarSeguimiento(destinatario) {
+        for (let i = 0; i < destinatario.length; i++) {
+            const element = destinatario[i].Correo;
+            if (element == '') {
 
-//     } else {
-//       var EmailDestinatario = await registro.cargarcorreoDestinatario(destinatario.ID_REGISTRO);
+            } else {
+              let html = '<h1>Reset Contraseña!</h1><br>';
+              html += 'Se ha reseteado su contraseña exitosamente.';
+              html += '<br>';
+              html += '<br>';
+              html += 'Contraseña: pr1234 <br> <br>';
+              html += 'Por su seguridad proceda a cambiarla lo mas pronto posible.';
+              await transporter.sendMail({
+                from: '"Administracion Procex" <seguimientosprocex@gmail.com>', // sender address
+                to: element, // correo de quien recibe
+                subject: "Reset Contraseña ✔", // Asunto
+                html: html //cuerpo del email
+              });
+            }
+        }
+    }
 
-//       var creadorSeguimiento = await registro.cargarDatosResponsable(destinatario.USUARIO_CREACION);
-//       console.log(EmailDestinatario)
-//       let html = '<h1>Nuevo Caso!</h1><br>';
-//       html += 'se le ha asignado un nuevo caso en el aplicativo de seguimientos, ';
-//       html += 'esperamos pueda darle gestion lo mas pronto posible.';
-//       await transporter.sendMail({
-//         from: '"Administracion Procex" <ydmosquera17@misena.edu.co>', // sender address
-//         to: EmailDestinatario, // correo de quien recibe
-//         subject: "Gestion de casos ✔", // Asunto
-//         html: html //cuerpo del email
-//       });
-//     }
-//   }
 
+}
 
-// }
-
-// export default notificarSeguimientoPorEmail;
+export default notificarSeguimientoPorEmail;
