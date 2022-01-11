@@ -43,10 +43,47 @@ export class SeguimientosPerfilComponent implements OnInit {
   ID_REGISTRO = ''
   TIPO_REQUERIMIENTO = ''
   ESTADO = ''
+  TITULOREQUERIMIENTO = ''
 
   fechaEntregaAux = true;
   areaAux = true;
   descripcionAux = true;
+
+  epsFiltro = 'fas fa-sort-down'
+  requerimientoFiltro = 'fas fa-sort-down'
+  estadoFiltro = 'fas fa-sort-down'
+  fechaFinFiltro = 'fas fa-sort-down'
+  responsableFiltro = 'fas fa-sort-down'
+  tituloRequerimientoFiltro = 'fas fa-sort-down'
+
+  
+  static EPS = ''
+  static TIPO_REQUERIMIENTO = '';
+  static FECHA_FINALIZACION = '';
+  static ESTADO = ''
+  static ID_REGISTRO = '';
+  static TITULOREQUERIMIENTO = '';
+  static ID_SEGUIMIENTO = '';
+
+  set staticEPS(aaa) {
+    SeguimientosPerfilComponent.EPS = aaa;
+  }
+  set staticTIPO_REQUERIMIENTO(aaa) {
+    SeguimientosPerfilComponent.TIPO_REQUERIMIENTO = aaa;
+  }
+  set staticESTADO(aaa) {
+    SeguimientosPerfilComponent.ESTADO = aaa;
+  }
+  set staticFECHA_FINALIZACION(aaa) {
+    SeguimientosPerfilComponent.FECHA_FINALIZACION = aaa;
+  }
+  set staticID_REGISTRO(aaa) {
+    SeguimientosPerfilComponent.ID_REGISTRO = aaa;
+  }
+
+  set staticTITULO_REQUERIMIENTO(aaa) {
+    SeguimientosPerfilComponent.TITULOREQUERIMIENTO = aaa;
+  }
 
 
   seguimiento: Seguimiento = {
@@ -89,9 +126,9 @@ export class SeguimientosPerfilComponent implements OnInit {
   }
 
   CargarSeguimientos() {
-    this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL, this.usuario, this.page, this.rows, this.EPS, this.TIPO_REQUERIMIENTO, this.ESTADO, this.ID_SEGUIMIENTO).subscribe(res => {
+    this.seguimintoService.cargarSeguimientoPerfil(this.ID_PERFIL, this.usuario, this.page, this.rows, SeguimientosPerfilComponent.EPS, SeguimientosPerfilComponent.TIPO_REQUERIMIENTO, SeguimientosPerfilComponent.ESTADO, SeguimientosPerfilComponent.ID_SEGUIMIENTO, SeguimientosPerfilComponent.TITULOREQUERIMIENTO).subscribe(res => {
       this.cargaseguimiento = res;
-     
+      this.hayFiltro();
     })
   }
   numerodeRegistros() {
@@ -282,6 +319,10 @@ export class SeguimientosPerfilComponent implements OnInit {
     this.modalService.open(content5, { size: 'sm', centered: true });
   }
 
+  tituloRequerimiento(content8) {
+    this.modalService.open(content8, { size: 'sm', centered: true });
+  }
+
   asignarResponsabl(content6, data) {
     this.responsable = data
     this.cargarResponsableSeguimientoasig(data.ID_PERFIL);
@@ -323,11 +364,13 @@ export class SeguimientosPerfilComponent implements OnInit {
   }
 
   limpiarFiltros() {
-    this.EPS = '';
-    this.ID_REGISTRO = '';
-    this.TIPO_REQUERIMIENTO = '';
-    this.ESTADO = '';
+    SeguimientosPerfilComponent.EPS = '';
+    SeguimientosPerfilComponent.ID_REGISTRO = '';
+    SeguimientosPerfilComponent.TIPO_REQUERIMIENTO = '';
+    SeguimientosPerfilComponent.ESTADO = '';
+    SeguimientosPerfilComponent.TITULOREQUERIMIENTO = '';
     this.CargarSeguimientos();
+    this.hayFiltro();
   }
 
   nuevo() {
@@ -378,6 +421,40 @@ export class SeguimientosPerfilComponent implements OnInit {
   aprobarArea(dato) {
     if (dato != '') {
       this.areaAux = true;
+    }
+  }
+
+  hayFiltro() {
+
+    if (SeguimientosPerfilComponent.EPS == '') {
+      this.epsFiltro = 'fas fa-sort-down'
+    } else {
+      this.epsFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosPerfilComponent.ID_REGISTRO == '') {
+      this.responsableFiltro = 'fas fa-sort-down'
+    } else {
+      this.responsableFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosPerfilComponent.TIPO_REQUERIMIENTO == '') {
+      this.requerimientoFiltro = 'fas fa-sort-down'
+    } else {
+      this.requerimientoFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosPerfilComponent.ESTADO == '') {
+      this.estadoFiltro = 'fas fa-sort-down'
+    } else {
+      this.estadoFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosPerfilComponent.FECHA_FINALIZACION == '') {
+      this.fechaFinFiltro = 'fas fa-sort-down'
+    } else {
+      this.fechaFinFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosPerfilComponent.TITULOREQUERIMIENTO == '') {
+      this.tituloRequerimientoFiltro = 'fas fa-sort-down'
+    } else {
+      this.tituloRequerimientoFiltro = 'fas fa-filter'
     }
   }
 

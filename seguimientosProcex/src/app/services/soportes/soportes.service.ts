@@ -15,7 +15,6 @@ export class SoportesService {
     fd.append('usuario_creacion',usuario_creacion );
     fd.append('ID_GESTION_SEGUIMIENTO',ID_GESTION_SEGUIMIENTO);
     fd.append('soporte', soporte)
-    console.log(fd)
     return  this.http.post(`${this.API_URI}`, fd );
 
    }

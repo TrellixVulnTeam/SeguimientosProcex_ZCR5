@@ -25,6 +25,7 @@ export class SeguimientosListarComponent implements OnInit {
   estadoFiltro = 'fas fa-sort-down'
   fechaFinFiltro = 'fas fa-sort-down'
   responsableFiltro = 'fas fa-sort-down'
+  tituloRequerimientoFiltro = 'fas fa-sort-down'
 
   exportar
   medio
@@ -44,12 +45,14 @@ export class SeguimientosListarComponent implements OnInit {
   rows = 10;
   page = 0;
   EPS = ''
+  TITULO_REQUERIMIENTO = ''
 
   static EPS = ''
   static TIPO_REQUERIMIENTO = '';
   static FECHA_FINALIZACION = '';
   static ESTADO = ''
   static ID_REGISTRO = '';
+  static TITULO_REQUERIMIENTO = '';
 
   set staticEPS(aaa) {
     SeguimientosListarComponent.EPS = aaa;
@@ -65,6 +68,10 @@ export class SeguimientosListarComponent implements OnInit {
   }
   set staticID_REGISTRO(aaa) {
     SeguimientosListarComponent.ID_REGISTRO = aaa;
+  }
+
+  set stataticTITULO_REQUERIMIENTO(aaa) {
+    SeguimientosListarComponent.TITULO_REQUERIMIENTO = aaa;
   }
 
 
@@ -124,7 +131,7 @@ export class SeguimientosListarComponent implements OnInit {
   }
 
   CargarSeguimientos() {
-    this.seguimintoService.cargarTodos(this.page, this.rows,SeguimientosListarComponent.EPS, SeguimientosListarComponent.TIPO_REQUERIMIENTO, SeguimientosListarComponent.ESTADO, SeguimientosListarComponent.FECHA_FINALIZACION, SeguimientosListarComponent.ID_REGISTRO).subscribe(res => {
+    this.seguimintoService.cargarTodos(this.page, this.rows,SeguimientosListarComponent.EPS, SeguimientosListarComponent.TIPO_REQUERIMIENTO, SeguimientosListarComponent.ESTADO, SeguimientosListarComponent.FECHA_FINALIZACION, SeguimientosListarComponent.ID_REGISTRO, SeguimientosListarComponent.TITULO_REQUERIMIENTO).subscribe(res => {
       this.cargaseguimiento = res;
       this.hayFiltro();
     })
@@ -346,6 +353,10 @@ export class SeguimientosListarComponent implements OnInit {
     this.modalService.open(content7, { size: 'sm', centered: true });
   }
 
+  tituloRequerimiento(content8) {
+    this.modalService.open(content8, { size: 'sm', centered: true });
+  }
+
   asignarResponsabl(content6, data) {
     this.responsable = data
     this.cargarResponsableSeguimientoasig(data.ID_PERFIL);
@@ -391,6 +402,7 @@ export class SeguimientosListarComponent implements OnInit {
     SeguimientosListarComponent.TIPO_REQUERIMIENTO = '';
     SeguimientosListarComponent.ESTADO = '';
     SeguimientosListarComponent.FECHA_FINALIZACION = '';
+    SeguimientosListarComponent.TITULO_REQUERIMIENTO = '';
     this.CargarSeguimientos();
     this.cargarReporteCasosPerfil();
     this.hayFiltro();
@@ -473,6 +485,11 @@ export class SeguimientosListarComponent implements OnInit {
       this.fechaFinFiltro = 'fas fa-sort-down'
     } else {
       this.fechaFinFiltro = 'fas fa-filter'
+    }
+    if (SeguimientosListarComponent.TITULO_REQUERIMIENTO == '') {
+      this.tituloRequerimientoFiltro = 'fas fa-sort-down'
+    } else {
+      this.tituloRequerimientoFiltro = 'fas fa-filter'
     }
   }
 

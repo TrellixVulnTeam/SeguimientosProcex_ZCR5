@@ -5,16 +5,16 @@ import Seguimientos from '../dao/Seguimientos';
 
 class SeguimientosControllers {
   public async CargarDatos(req: Request, res: Response) {
-    const { EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, page, row } = req.body;
+    const { EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, TITULO_REQUERIMIENTO, page, row } = req.body;
     const pagina = row * page
-    var datos = await Seguimientos.cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, pagina, row);
+    var datos = await Seguimientos.cargarTodos(EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO, TITULO_REQUERIMIENTO, pagina, row);
     res.json(datos);
   }
 
   public async cararDatosPorPerfil(req: Request, res: Response) {
-    const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, page, row, ID_PERFIL,USUARIO } = req.body;
+    const { EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, TITULO_REQUERIMIENTO, page, row, ID_PERFIL,USUARIO } = req.body;
     const pagina = row * page
-    var datos = await Seguimientos.cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, pagina, row, ID_PERFIL,USUARIO);
+    var datos = await Seguimientos.cargarSeguimientoPorPerfil(EPS, TIPO_REQUERIMIENTO, ESTADO, ID_REGISTRO, TITULO_REQUERIMIENTO, pagina, row, ID_PERFIL,USUARIO);
     res.json(datos);
   }
 

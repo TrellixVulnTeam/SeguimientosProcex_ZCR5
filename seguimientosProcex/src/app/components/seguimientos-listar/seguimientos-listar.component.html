@@ -5,8 +5,8 @@
                 <img src="../../../assets/graficos.png" style="margin-left: 5px; margin-top: 8px; cursor: pointer;"
                     [routerLink]="['/reportes']" alt="">
 
-                    <img src="../../../assets/icons8-export-excel-48.png" (click)="exportExcel()" style="margin-left: -2px; margin-top: 8px; cursor: pointer; width: 39px; height: 39px;"
-                     alt="">
+                <img src="../../../assets/icons8-export-excel-48.png" (click)="exportExcel()"
+                    style="margin-left: -2px; margin-top: 8px; cursor: pointer; width: 39px; height: 39px;" alt="">
             </div>
 
 
@@ -53,32 +53,32 @@
     <div class="y-card-body" style="overflow: hidden; padding: 5px;">
 
         <p-table [value]="cargaseguimiento" styleClass="p-datatable-sm p-datatable-gridlines"
-            tableStyleClass="prime-table"  selectionMode="single" dataKey="code" [scrollable]="true" scrollHeight="flex"
+            tableStyleClass="prime-table" selectionMode="single" dataKey="code" [scrollable]="true" scrollHeight="flex"
             (onRowSelect)="onRowSelect($event,content)">
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
                     <th style="flex: 0.1; justify-content: space-around;">#</th>
-                    <th style=" color: white; " >EPS   <i class={{epsFiltro}}
-                            style="cursor: pointer;" (click)="filtroEps(content1)"> </i> </th>
+                    <th style=" color: white; ">EPS <i class={{epsFiltro}} style="cursor: pointer;"
+                            (click)="filtroEps(content1)"> </i> </th>
                     <th style=" color: white;  width: 10%;">F. Requerimiento</th>
-                    <th style=" color: white; width: 9%;">T.Requerimiento  <i
-                            class={{requerimientoFiltro}} style="cursor: pointer;"
-                            (click)="filtroTiporequerimiento(content2)">  </i></th>
-                    <th style=" color: white;  width: 9%;">Titulo</th>
+                    <th style=" color: white; width: 9%;">T.Requerimiento <i class={{requerimientoFiltro}}
+                            style="cursor: pointer;" (click)="filtroTiporequerimiento(content2)"> </i></th>
+                    <th style=" color: white;  width: 9%;">Titulo  <i class={{tituloRequerimientoFiltro}}
+                        style="cursor: pointer;" (click)="tituloRequerimiento(content8)"> </i></th>
                     <th style=" color: white;">A. validacion</th>
-                    <th style=" color: white;">Estado<i class={{estadoFiltro}}
-                            style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
+                    <th style=" color: white;">Estado<i class={{estadoFiltro}} style="cursor: pointer;"
+                            (click)="filtroEstado(content3)"></i> </th>
                     <th style=" color: white; width: 8%;">Fecha entrega</th>
-                    <th style=" color: white; width: 10%;">Fecha Finalizacion  <i
-                        class={{fechaFinFiltro}} style="cursor: pointer;" (click)="fechaFinalizacion(content7)"></i></th>
+                    <th style=" color: white; width: 10%;">Fecha Finalizacion <i class={{fechaFinFiltro}}
+                            style="cursor: pointer;" (click)="fechaFinalizacion(content7)"></i></th>
                     <th style=" color: white; width: 150px;">Perfil</th>
-                    <th style=" color: white; width: 13%;">Responsable  <i
-                            class={{responsableFiltro}} style="cursor: pointer;" (click)="filtroResponsable(content4)"></i>
+                    <th style=" color: white; width: 13%;">Responsable <i class={{responsableFiltro}}
+                            style="cursor: pointer;" (click)="filtroResponsable(content4)"></i>
                     </th>
                     <th style=" color: white; flex: 0.5;">Asignar R.</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-data  let-i="rowIndex">
+            <ng-template pTemplate="body" let-data let-i="rowIndex">
                 <tr [ngClass]="{'cerrado': data.ESTADO === 'Realizado', 'pendiente': data.ESTADO === 'Pendiente', 'Proceso': data.ESTADO === 'En proceso'}"
                     [pSelectableRowDblClick]="data">
                     <td style="flex: 0.1; justify-content: space-around;">{{i + 1}}</td>
@@ -92,9 +92,9 @@
                     <td style="width: 10%;">{{data.FECHA_FINALIZACION}}</td>
                     <td style="width: 130px;">{{data.Area}}</td>
                     <td style="width: 13%;">{{data.Nombres}} - {{data.Apellidos}} </td>
-                    <td style="flex: 0.5;" (click)="asignarResponsabl(content6,data)"><button pButton pRipple type="button"
-                            class="p-button-secondary p-button-text" style="height: 10px;"><i style="font-size: 10px;"
-                                class="fas fa-user-plus"></i></button></td>
+                    <td style="flex: 0.5;" (click)="asignarResponsabl(content6,data)"><button pButton pRipple
+                            type="button" class="p-button-secondary p-button-text" style="height: 10px;"><i
+                                style="font-size: 10px;" class="fas fa-user-plus"></i></button></td>
                 </tr>
             </ng-template>
         </p-table>
@@ -161,9 +161,9 @@
                     <label id="tipo" style="font-size: 12px; color: black;">Fecha de entrega:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span  [ngClass]="{'spanError': fechaEntregaAux == false }" style="height: 38px;" class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="16" height="16" fill="currentColor" class="bi bi-calendar2-date"
-                                    viewBox="0 0 16 16">
+                            <span [ngClass]="{'spanError': fechaEntregaAux == false }" style="height: 38px;"
+                                class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-calendar2-date" viewBox="0 0 16 16">
                                     <path
                                         d="M6.445 12.688V7.354h-.633A12.6 12.6 0 0 0 4.5 8.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z" />
                                     <path
@@ -215,7 +215,7 @@
                     <label style="font-size: 12px; color: black; margin-left: 16px;">Área</label>
                     <select name="" class="form-control" id="documento" name="seguimiento.ID_PERFIL"
                         [(ngModel)]="seguimiento.ID_PERFIL" (click)="cargarResponsableSeguimiento()"
-                        style="font-size: 12px; margin-left: 16px;"  [ngClass]="{'is-invalid': areaAux == false }"
+                        style="font-size: 12px; margin-left: 16px;" [ngClass]="{'is-invalid': areaAux == false }"
                         (change)="aprobarArea(seguimiento.ID_PERFIL)">
                         <option *ngFor='let perfil of perfil' [ngValue]="perfil.ID_PERFIL">
                             {{perfil.DESCRIPCION}}
@@ -240,7 +240,7 @@
                     <label style="font-size: 12px; color: black;">Descripcion</label>
                     <textarea name="seguimiento.DESCRIPCION_REQUERIMIENTO"
                         [(ngModel)]="seguimiento.DESCRIPCION_REQUERIMIENTO" style="height: 50PX;" class="form-control"
-                        id="" cols="30" rows="10" ></textarea>
+                        id="" cols="30" rows="10"></textarea>
                 </div>
 
                 <div class="col-md-5" id="requerimiento">
@@ -382,8 +382,8 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ID_REGISTRO" [(ngModel)]="staticID_REGISTRO"
-                        style="font-size: 12px;">
+                    <select name="" class="form-control" id="documento" name="ID_REGISTRO"
+                        [(ngModel)]="staticID_REGISTRO" style="font-size: 12px;">
                         <option *ngFor='let responsableseguimiento of responsableseguimientofilt'
                             [ngValue]="responsableseguimiento.Nombres" [ngValue]="responsableseguimiento.ID_REGISTRO">
                             {{responsableseguimiento.Nombres}} - {{responsableseguimiento.Apellidos}}
@@ -394,8 +394,8 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()" (click)="cargarReporteCasosUsuarios()"
-            (click)="d('Cross click')" style="margin-right: 4px;"></button>
+        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()"
+            (click)="cargarReporteCasosUsuarios()" (click)="d('Cross click')" style="margin-right: 4px;"></button>
         <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
             (click)="limpiarFiltros()" (click)="d('Cross click')"></button>
     </div>
@@ -430,8 +430,27 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <input type="date" class="form-control" id="documento" name="FECHA_FINALIZACION" [(ngModel)]="staticFECHA_FINALIZACION"
-                        style="font-size: 12px;">
+                    <input type="date" class="form-control" id="documento" name="FECHA_FINALIZACION"
+                        [(ngModel)]="staticFECHA_FINALIZACION" style="font-size: 12px;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()"
+            (click)="d('Cross click')" style="margin-right: 4px;"></button>
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+            (click)="limpiarFiltros()" (click)="d('Cross click')"></button>
+    </div>
+</ng-template>
+
+<ng-template #content8 let-c="close" let-d="dismiss" id="pagina">
+    <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" id="documento" name="TITULO_REQUERIMIENTO"
+                    style="font-size: 12px;" [(ngModel)]="stataticTITULO_REQUERIMIENTO">
                 </div>
             </div>
         </form>

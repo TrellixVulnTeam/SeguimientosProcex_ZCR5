@@ -51,19 +51,20 @@
             <ng-template pTemplate="header">
                 <tr tableStyleClass="header">
                     <th style="flex: 0.1; justify-content: space-around;">#</th>
-                    <th >EPS<i class="fas fa-filter"
+                    <th >EPS<i class={{epsFiltro}}
                             style="cursor: pointer;" (click)="filtroEps(content1)"></i></th>
                     <th >F. Requerimiento</th>
                     <th >Medio</th>
-                    <th >T.Requerimiento<i class="fas fa-filter"
+                    <th >T.Requerimiento<i class={{requerimientoFiltro}}
                             style="cursor: pointer;" (click)="filtroTiporequerimiento(content2)"></i></th>
-                    <th >Titulo</th>
+                    <th >Titulo  <i class={{tituloRequerimientoFiltro}}
+                        style="cursor: pointer;" (click)="tituloRequerimiento(content8)"> </i></th>
                     <th >Área validacion</th>
-                    <th >Estado<i class="fas fa-filter"
+                    <th >Estado<i class={{estadoFiltro}}
                             style="cursor: pointer;" (click)="filtroEstado(content3)"></i> </th>
                     <th >Fecha entrega</th>
                     <th style="width: 10%;">Fecha Finalizacion</th>
-                    <th >Responsable<i class="fas fa-filter"
+                    <th >Responsable<i class={{responsableFiltro}}
                             style="cursor: pointer;" (click)="filtroResponsable(content4)"></i> </th>
                             <th style="flex: 0.5;">Asignar R.</th>
                 </tr>
@@ -299,7 +300,7 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="EPS" [(ngModel)]="EPS"
+                    <select name="" class="form-control" id="documento" name="EPS" [(ngModel)]="staticEPS"
                         style="font-size: 12px;">
                         <option *ngFor='let prestador of prestador'>
                             {{prestador.NOMBRE_OPCION}}
@@ -323,7 +324,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <select name="" class="form-control" id="documento" name="TIPO_REQUERIMIENTO"
-                        [(ngModel)]="TIPO_REQUERIMIENTO" style="font-size: 12px;">
+                        [(ngModel)]="staticTIPO_REQUERIMIENTO" style="font-size: 12px;">
                         <option *ngFor='let tipoRequerimiento of tipoRequerimiento'>
                             {{tipoRequerimiento.NOMBRE_OPCION}}
                         </option>
@@ -345,10 +346,12 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ESTADO" [(ngModel)]="ESTADO"
+                    <select name="" class="form-control" id="documento" name="ESTADO" [(ngModel)]="staticESTADO"
                         style="font-size: 12px;">
                         <option value="Pendiente">Pendiente</option>
                         <option value="Realizado">Realizado</option>
+                        <option value="Sin asignar">Sin asignar</option>
+                        <option value="En proceso">En proceso</option>
                     </select>
                 </div>
             </div>
@@ -367,7 +370,7 @@
         <form>
             <div class="row">
                 <div class="col-md-12">
-                    <select name="" class="form-control" id="documento" name="ID_REGISTRO" [(ngModel)]="ID_REGISTRO"
+                    <select name="" class="form-control" id="documento" name="ID_REGISTRO" [(ngModel)]="staticID_REGISTRO"
                         style="font-size: 12px;">
                         <option *ngFor='let responsableseguimiento of responsableseguimiento'
                             [ngValue]="responsableseguimiento.Nombres" [ngValue]="responsableseguimiento.ID_REGISTRO">
@@ -404,6 +407,25 @@
     </div>
     <div class="modal-footer">
         <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="asignarResponsable()"
+            (click)="d('Cross click')" style="margin-right: 4px;"></button>
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+            (click)="limpiarFiltros()" (click)="d('Cross click')"></button>
+    </div>
+</ng-template>
+
+<ng-template #content8 let-c="close" let-d="dismiss" id="pagina">
+    <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" id="documento" name="TITULO_REQUERIMIENTO"
+                        [(ngModel)]="staticTITULO_REQUERIMIENTO" style="font-size: 12px;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" (click)="CargarSeguimientos()"
             (click)="d('Cross click')" style="margin-right: 4px;"></button>
         <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
             (click)="limpiarFiltros()" (click)="d('Cross click')"></button>

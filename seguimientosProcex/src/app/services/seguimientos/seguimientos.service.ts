@@ -15,13 +15,13 @@ export class SeguimientosService {
     return this.http.post(`${this.API_URI}/almacenar`, seguimiento)
   }
 
-  cargarTodos(page,row,EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO){
-    const cargar = { page, row,EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO }
+  cargarTodos(page,row,EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO,TITULO_REQUERIMIENTO){
+    const cargar = { page, row,EPS, TIPO_REQUERIMIENTO, ESTADO, FECHA_FINALIZACION, ID_REGISTRO,TITULO_REQUERIMIENTO }
     return this.http.post(`${this.API_URI}/`,cargar)
   }
 
-  cargarSeguimientoPerfil(ID_PERFIL,USUARIO,page,row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO){
-    const cargar = {ID_PERFIL,USUARIO, page, row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO }
+  cargarSeguimientoPerfil(ID_PERFIL,USUARIO,page,row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO,TITULO_REQUERIMIENTO){
+    const cargar = {ID_PERFIL,USUARIO, page, row,EPS,TIPO_REQUERIMIENTO, ESTADO,ID_REGISTRO,TITULO_REQUERIMIENTO }
     return this.http.post(`${this.API_URI}/seguimiento/perfil`,cargar)
     
   }
