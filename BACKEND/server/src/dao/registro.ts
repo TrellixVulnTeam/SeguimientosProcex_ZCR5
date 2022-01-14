@@ -35,25 +35,25 @@ class Registro {
     }
 
 
-    public static resetearContraseña(newDatos){
-        let {USUARIO,Correo} = newDatos
+    public static resetearContraseña(newDatos) {
+        let { USUARIO, Correo } = newDatos
         let Contrasena
         return new Promise(function (resolev, reject) {
             try {
                 pool.query('select U.Contrasena, U.USUARIO, R.Correo from registro R,usuario U where R.ID_REGISTRO = U.ID_REGISTRO and R.Correo = ? and U.USUARIO = ?', [Correo, USUARIO], async function (err, result2, fields) {
                     if (err) throw err;
-                    if(result2.length > 0){
+                    if (result2.length > 0) {
                         console.log('entro')
                         Contrasena = helpers.encriptPassword('pr1234')
                         pool.query('update usuario set Contrasena = ? where USUARIO = ?', [Contrasena, USUARIO], function (err, result, fields) {
                             if (err) throw err;
                             resolev(result2)
                         });
-                    }else{
-                        let error ="Usuario o correo invalidos"
+                    } else {
+                        let error = "Usuario o correo invalidos"
                         resolev(error)
                     }
-                   // resolev(result)
+                    // resolev(result)
                 });
             }
             catch (error) {
@@ -62,23 +62,40 @@ class Registro {
         });
     }
 
-    // public static cambiarContrasena(newDatos,Usuario,Contrasena){
-        
-       
-    //     return new Promise(function(resolev,reject){
-    //         try {
-    //             newDatos = helpers.encriptPassword(newDatos)  
-    //           const prueba =   pool.query("update usuario set Contrasena = ? where USUARIO = ? and Contrasena = ?",[newDatos,Usuario,Contrasena], function(err, result, fields){
-    //             console.log('prueba ---------------------------------')
-    //             console.log(prueba)
-    //                 if (err) throw err;
-    //                     resolev(result) 
-    //             });
-    //         } catch (error) {
-                
-    //         }
-    //     })
-    // }
+    public static cambiarContrasena(newDatos, USUARIO, Contrasena) {
+
+        return new Promise(function (resolev, reject) {
+            try {
+                pool.query("SELECT * FROM usuario WHERE USUARIO = ?", [USUARIO], async function (err, result, fields) {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        let match = await bcrypt.compare(Contrasena, result[0].Contrasena)
+                        if (match) {
+                            result = result[0];
+                            newDatos = helpers.encriptPassword(newDatos)
+                            console.log(result)
+                            console.log('entrando')
+                            console.log('entrando a cambiar contraseña')
+                            pool.query("update usuario set Contrasena = ? where USUARIO = ? ", [newDatos, USUARIO], function (err, result, fields) {
+                                if (err) throw err;
+                                resolev(result)
+                            });
+                            // resolev(result)
+                        } else {
+                            let error = "Contraseña no valida"
+                            resolev(error)
+                        }
+                    } else {
+                        let error = "Usuario no valido"
+                        resolev(error)
+                    }
+                })
+
+            } catch (error) {
+
+            }
+        })
+    }
 
 
     public static datosUsuario(Usuario) {
@@ -130,7 +147,7 @@ class Registro {
         });
     }
 
-   public static cargarResponsableSeguimientoGest() {
+    public static cargarResponsableSeguimientoGest() {
         return new Promise(function (resolev, reject) {
             try {
                 pool.query("select R.ID_REGISTRO, R.Nombres, R.Apellidos from registro R ", function (err, result, fields) {
@@ -227,20 +244,20 @@ class Registro {
         });
     }
 
-    public static actualizarRegistro(dato,ID_REGISTRO){
-        return new Promise(function(resolev,reject){
+    public static actualizarRegistro(dato, ID_REGISTRO) {
+        return new Promise(function (resolev, reject) {
             try {
-                pool.query("update registro set ? where registro.ID_REGISTRO = ?",[dato,ID_REGISTRO], function(err, result, fields){
+                pool.query("update registro set ? where registro.ID_REGISTRO = ?", [dato, ID_REGISTRO], function (err, result, fields) {
                     if (err) throw err;
-                    resolev(result) 
+                    resolev(result)
                 });
             } catch (error) {
-                
+
             }
         })
     }
 
-    
+
 
 }
 

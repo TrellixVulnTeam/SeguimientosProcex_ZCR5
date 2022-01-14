@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database"));
 const helpers_1 = require("../lib/helpers");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class Registro {
     static registrar(newDatos) {
         return new Promise(function (resolev, reject) {
@@ -79,20 +80,44 @@ class Registro {
             ;
         });
     }
-    // public static cambiarContrasena(newDatos,Usuario,Contrasena){
-    //     return new Promise(function(resolev,reject){
-    //         try {
-    //             newDatos = helpers.encriptPassword(newDatos)  
-    //           const prueba =   pool.query("update usuario set Contrasena = ? where USUARIO = ? and Contrasena = ?",[newDatos,Usuario,Contrasena], function(err, result, fields){
-    //             console.log('prueba ---------------------------------')
-    //             console.log(prueba)
-    //                 if (err) throw err;
-    //                     resolev(result) 
-    //             });
-    //         } catch (error) {
-    //         }
-    //     })
-    // }
+    static cambiarContrasena(newDatos, USUARIO, Contrasena) {
+        return new Promise(function (resolev, reject) {
+            try {
+                database_1.default.query("SELECT * FROM usuario WHERE USUARIO = ?", [USUARIO], function (err, result, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err)
+                            throw err;
+                        if (result.length > 0) {
+                            let match = yield bcrypt_1.default.compare(Contrasena, result[0].Contrasena);
+                            if (match) {
+                                result = result[0];
+                                newDatos = helpers_1.helpers.encriptPassword(newDatos);
+                                console.log(result);
+                                console.log('entrando');
+                                console.log('entrando a cambiar contraseña');
+                                database_1.default.query("update usuario set Contrasena = ? where USUARIO = ? ", [newDatos, USUARIO], function (err, result, fields) {
+                                    if (err)
+                                        throw err;
+                                    resolev(result);
+                                });
+                                // resolev(result)
+                            }
+                            else {
+                                let error = "Contraseña no valida";
+                                resolev(error);
+                            }
+                        }
+                        else {
+                            let error = "Usuario no valido";
+                            resolev(error);
+                        }
+                    });
+                });
+            }
+            catch (error) {
+            }
+        });
+    }
     static datosUsuario(Usuario) {
         return new Promise(function (resolev, reject) {
             try {

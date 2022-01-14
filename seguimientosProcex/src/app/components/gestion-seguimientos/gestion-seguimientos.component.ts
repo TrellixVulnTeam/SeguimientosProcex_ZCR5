@@ -400,7 +400,7 @@ export class GestionSeguimientosComponent implements OnInit {
       this.seguimiento1[0].FECHA_ENTREGA = this.fechaAux;
     }
   }
-
+  
   nuevo(){
     this.gestionseguimiento.DESCRIPCION =  '';
   }

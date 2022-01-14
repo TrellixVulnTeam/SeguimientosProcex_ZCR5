@@ -21,7 +21,7 @@ class RegistroRoutes {
         this.router.delete('/usuario/:ID_REGISTRO', registroControllers.eliminarUsuario);
         this.router.put('/usuario/:ID_REGISTRO',registroControllers.actualizarRegistro);
         this.router.post('/rcontrasena', registroControllers.resetearContraseña);
-        // this.router.post('/cContrasena', registroControllers.cambiarContrasena);
+        this.router.post('/cContrasena/user', registroControllers.cambiarContrasena);
     }
 
 }

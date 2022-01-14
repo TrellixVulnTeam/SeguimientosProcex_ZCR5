@@ -54,5 +54,11 @@ export class UsuarioService {
     return this.http.post(`${this.API_URI}/rcontrasena`, newDatos)
   }
 
+  cambiarContrasena(newDatos,USUARIO,Contrasena){
+   const newDatos2 = {newDatos,USUARIO,Contrasena}
+    return this.http.post(`${this.API_URI}/cContrasena/user`, newDatos2)
+  }
+
+
 
 }

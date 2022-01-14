@@ -70,11 +70,15 @@ class RegistroControllers {
        
     }
 
-    // public async cambiarContrasena(req: Request, res: Response) {
-    //     const {Usuario,Contrasena} = req.params;
-    //     const datos = await registro.cambiarContrasena(req.body,Usuario,Contrasena);
-    //     res.json(datos);
-    // }
+    public async cambiarContrasena(req: Request, res: Response) {
+        const {newDatos,USUARIO,Contrasena} = req.body;
+        const datos = await registro.cambiarContrasena(newDatos,USUARIO,Contrasena);
+        if(datos == 'Contraseña no valida' || datos == 'Usuario no valido'){
+            res.status(404).json({ text: "Usuario y/o Contraseña incorrecto"});
+        }else{
+            res.json(datos);
+        }     
+    }
 
 }
 

@@ -19,14 +19,24 @@ export class LoginComponent implements OnInit {
     ID_PERFIL: ''
   }
 
-  newDatos= {
-    USUARIO:'',
-    Correo:''
+  newDatos = {
+    USUARIO: '',
+    Correo: ''
   }
+
+  newDatos2 = {
+    USUARIO: '',
+    Contrasena: '',
+    Contrasena1: '',
+    newDatos: ''
+  }
+
+
+
   constructor(private loginserve: LoginService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private usuarioService:UsuarioService,
+    private usuarioService: UsuarioService,
     private ngxSpinnerService: NgxUiLoaderService) { }
 
   ngOnInit(): void {
@@ -41,7 +51,7 @@ export class LoginComponent implements OnInit {
       this.ngxSpinnerService.stop();
       if (this.loginserve.isAnalistas || this.loginserve.isSoporte || this.loginserve.isDesarrollo) {
         this.router.navigate(['/Seguimientos']);
-      }else{
+      } else {
         this.router.navigate(['/Seguimientos-listar']);
       }
     },
@@ -58,25 +68,34 @@ export class LoginComponent implements OnInit {
 
   }
 
-  pressEnter(event){
-    if(event.key == "Enter"){
+  pressEnter(event) {
+    if (event.key == "Enter") {
       this.Iniciarsesion();
     }
   }
 
-  limpiar(){
-    this.newDatos= {
-      USUARIO:'',
-      Correo:''
+  limpiar() {
+    this.newDatos = {
+      USUARIO: '',
+      Correo: ''
+    }
+  }
+
+  limpiar2() {
+    this.newDatos2 = {
+      USUARIO: '',
+      Contrasena: '',
+      Contrasena1: '',
+      newDatos: ''
     }
   }
 
 
-  resetContrasena(){
-    this.usuarioService.resetContraseña(this.newDatos).subscribe(res=>{
+  resetContrasena() {
+    this.usuarioService.resetContraseña(this.newDatos).subscribe(res => {
       Swal.fire({
         title: 'Contraseña reseteada con exito!',
-        text: 'Resiva el correo electrónico ingresado, ',
+        text: 'Revisa el correo electrónico ingresado, ',
         icon: 'success',
         allowOutsideClick: false
       }
@@ -86,6 +105,39 @@ export class LoginComponent implements OnInit {
         }
       })
     })
+  }
+
+  cambiarContrasena() {
+    if (this.newDatos2.Contrasena1 == this.newDatos2.newDatos) {
+      this.usuarioService.cambiarContrasena(this.newDatos2.newDatos, this.newDatos2.USUARIO, this.newDatos2.Contrasena).subscribe(res => {
+        Swal.fire({
+          text: 'Contraseña actualizada con exito!',
+          icon: 'success',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.value) {
+            window.location.reload();
+          }
+        })
+      },
+        () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "Usuario y/o Contraseña incorrecto",
+            showConfirmButton: true,
+            allowOutsideClick: false, // NO PERMITE QUE SE CIERRE AL DAR CLIC POR FUERA
+          })
+        })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: "Las contraseñas no cohinciden",
+        showConfirmButton: true,
+        allowOutsideClick: false, // NO PERMITE QUE SE CIERRE AL DAR CLIC POR FUERA
+      })
+    }
   }
 
 }

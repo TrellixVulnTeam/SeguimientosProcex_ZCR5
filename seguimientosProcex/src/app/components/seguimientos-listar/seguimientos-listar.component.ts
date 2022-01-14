@@ -526,6 +526,4 @@ export class SeguimientosListarComponent implements OnInit {
       );
     });
   }
-
-
 }

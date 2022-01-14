@@ -9,7 +9,7 @@ class SeguimientosRoutes {
     }
     
     config(): void {
-        // this.router.use(Tokenvalidation)
+        this.router.use(Tokenvalidation)
         this.router.post('/', seguimientosControllers.CargarDatos);
         this.router.post('/seguimiento/perfil', seguimientosControllers.cararDatosPorPerfil);
         this.router.post('/almacenar', seguimientosControllers.guardarDatos);

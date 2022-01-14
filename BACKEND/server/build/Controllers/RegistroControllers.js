@@ -94,5 +94,17 @@ class RegistroControllers {
             }
         });
     }
+    cambiarContrasena(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { newDatos, USUARIO, Contrasena } = req.body;
+            const datos = yield registro_1.default.cambiarContrasena(newDatos, USUARIO, Contrasena);
+            if (datos == 'Contraseña no valida' || datos == 'Usuario no valido') {
+                res.status(404).json({ text: "Usuario y/o Contraseña incorrecto" });
+            }
+            else {
+                res.json(datos);
+            }
+        });
+    }
 }
 exports.registroControllers = new RegistroControllers();

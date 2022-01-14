@@ -2,13 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const SeguimientosControllers_1 = require("../Controllers/SeguimientosControllers");
+const validateToken_1 = require("../lib/validateToken");
 class SeguimientosRoutes {
     constructor() {
         this.router = (0, express_1.Router)();
         this.config();
     }
     config() {
-        // this.router.use(Tokenvalidation)
+        this.router.use(validateToken_1.Tokenvalidation);
         this.router.post('/', SeguimientosControllers_1.seguimientosControllers.CargarDatos);
         this.router.post('/seguimiento/perfil', SeguimientosControllers_1.seguimientosControllers.cararDatosPorPerfil);
         this.router.post('/almacenar', SeguimientosControllers_1.seguimientosControllers.guardarDatos);

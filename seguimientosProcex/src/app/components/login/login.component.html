@@ -51,33 +51,35 @@
                                         solicitada a continuación para el cambio de su contraseña:</h3>
                                     <div class="form-floating , cambioC">
                                         <input type="text" class="form-control" id="floatingPassword"
-                                            placeholder="Usuario">
+                                            placeholder="Usuario"  [(ngModel)]="newDatos2.USUARIO">
                                         <label for="floatingPassword">Usuario:</label>
                                     </div>
                                     <div class="form-floating , cambioC">
                                         <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
+                                            placeholder="Password"  [(ngModel)]="newDatos2.Contrasena">
                                         <label for="floatingPassword">Contraseña actual:</label>
                                     </div>
                                     <div class="form-floating , cambioC">
                                         <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
+                                            placeholder="Password"  [(ngModel)]="newDatos2.Contrasena1">
                                         <label for="floatingPassword">Contraseña nueva:</label>
                                     </div>
                                     <div class="form-floating , cambioC">
-                                        <input type="password" class="form-control" id="floatingPassword"
+                                        <input  [(ngModel)]="newDatos2.newDatos" type="password" class="form-control" id="floatingPassword"
                                             placeholder="Password">
                                         <label for="floatingPassword">Confirmar contraseña nueva:</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary">Cambiar contraseña</button>
+                                <button type="button" class="btn btn-danger" (click)="limpiar2()" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" (click)="cambiarContrasena()" class="btn btn-primary" >Cambiar contraseña</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">

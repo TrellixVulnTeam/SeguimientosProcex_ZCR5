@@ -10,8 +10,8 @@ class ReportesControllers {
     }
 
     public async cargarReporteCasosPorUsuarios(req: Request, res: Response) {
-        const { ID_PERFIL,ID_REGISTRO } = req.body;
-        var datos = await Reportes.cargarReporteCasosPorUsuarios(ID_PERFIL,ID_REGISTRO)
+        const { ID_PERFIL, ID_REGISTRO } = req.body;
+        var datos = await Reportes.cargarReporteCasosPorUsuarios(ID_PERFIL, ID_REGISTRO)
         res.json(datos);
     }
 
